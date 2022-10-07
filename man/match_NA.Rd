@@ -7,8 +7,16 @@
 match_NA(data1, data2)
 }
 \arguments{
-\item{input_var}{}
+\item{data1}{first data frame}
+
+\item{data2}{second data frame}
+}
+\value{
+comparison of sum of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
 }
 \description{
 A standardization function
+}
+\examples{
+match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
 }

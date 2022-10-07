@@ -7,8 +7,18 @@
 match_missing_values(data1, data2, ...)
 }
 \arguments{
-\item{input_var}{}
+\item{data1}{first data.frame}
+
+\item{data2}{second data.frame}
+
+\item{...}{are grouping variables used to arrange the data}
+}
+\value{
+for each pair of corresponding source and output columns a check column with true/false values returned within a data.frame
 }
 \description{
-A standardization function
+rowwise comparison of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
+}
+\examples{
+match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
 }

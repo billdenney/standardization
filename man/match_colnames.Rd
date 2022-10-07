@@ -6,9 +6,16 @@
 \usage{
 match_colnames(data, file, coltype)
 }
+\arguments{
+\item{data}{is a data frame}
+
+\item{file}{is path for specifications file that informs selection of variables}
+
+\item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
+}
 \value{
-data frame with selected columns
+a data frame with specified variables selected
 }
 \description{
-matches for standard column names and selects from source dataset and prints columns not present in source dataset
+matches for standard column names present in specifications file path, selects applicable variables present in source dataset, and creates empty columns for missing variables
 }

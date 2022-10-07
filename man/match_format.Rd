@@ -7,8 +7,15 @@
 match_format(data, file, coltype)
 }
 \arguments{
-\item{coltype}{}
+\item{data}{is a data frame}
+
+\item{file}{is path for specifications file that informs selection of variables}
+
+\item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
+}
+\value{
+a data frame with specified variables converted to required format
 }
 \description{
-A standardization function
+matches for specified format(numeric or character) of the variable and converts variables to required format
 }

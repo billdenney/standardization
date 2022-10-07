@@ -2,16 +2,16 @@
 #' A standardization function
 #'
 #' @name datetime_comparison_prior_condition
-#' @param file_name1
-#' @param file_name2
-#' @param datetimecol1
-#' @param datetimecol2
-#' @param datetimecol3
-#' @param colwithconditions
-#' @param filter_val
-#' @param condition1
+#' @param file_name1 is first data frame with dosing dtc variable
+#' @param file_name2 is second data frame with dtc variable
+#' @param datetimecol1 is datetime variable (ADTC) in first data frame
+#' @param datetimecol2 is datetime variable (ADTC) in second data frame
+#' @param datetimecol3 is second datetime variable (AENDTC) in second data frame
+#' @param colwithconditions is variable with multiple disease or conditions
+#' @param filter_val character vector to filter specific diseases or conditions
+#' @param condition1 creates variable for subjects with prior disease or condition eg. prior_diabetes
 #' @description compares datetime with earliest dosing datetime to extract prior condition
-#' @return
+#' @return data frame with prior disease/condition variable
 #' @export
 #'
 #' @examples
@@ -57,3 +57,5 @@ datetime_comparison_prior_condition <-
 
 
   }
+
+utils::globalVariables(c("STUDYID","USUBJID","STATUS"))

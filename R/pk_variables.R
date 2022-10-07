@@ -1,12 +1,12 @@
 #' A standardization function
 #'
-#' @param data
-#' @param col
+#' @param data is a data frame containing AVALC variable for recoding
+#' @param col is the equivalent for AVALC variable
 #'
-#' @return
+#' @return AVALN, ALLOQ and AULOQ
 #' @export
 #'
-#' @examples
+#' @examples pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")
 pk_variables <- function(data, col) {
   col <- as.name(col)
 

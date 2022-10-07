@@ -1,11 +1,12 @@
 #' A standardization function
 #'
-#' @param data
+#' @param data is a data frame containing variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD
 #'
-#' @return
+#' @return returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, chk_NTSFM, chk_NTAD, chk_TAD
 #' @export
 #'
 #' @examples
+#'
 check_dependent_variables<-function(data){
 
   print("checking NTSFD")
@@ -82,4 +83,10 @@ check_dependent_variables<-function(data){
            chk_NTSFD,chk_NTSFM,chk_TSFM,chk_TSFD,chk_NTAD,chk_TAD)
 
   return(check_var)
+
+
 }
+
+utils::globalVariables(c("chk_NTSFD","chk_TSFD","chk_NTSFM","chk_TSFM","chk_NTAD","chk_TAD",
+                         "NTSFD","TSFD","NTSFM","TSFM","NTAD","TAD","STUDYID","USUBJID",
+                         "ADTC","VISITDY","ATPTN"))

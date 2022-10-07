@@ -7,7 +7,10 @@
 check_dependent_variables(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{is a data frame containing variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD}
+}
+\value{
+returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, chk_NTSFM, chk_NTAD, chk_TAD
 }
 \description{
 A standardization function

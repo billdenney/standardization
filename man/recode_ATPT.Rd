@@ -4,11 +4,17 @@
 \alias{recode_ATPT}
 \title{A standardization function}
 \usage{
-recode_ATPT(data, string, value)
+recode_ATPT(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{containing ATPT variable for recoding}
+}
+\value{
+\code{data} with the column ATPTN
 }
 \description{
 A standardization function
+}
+\examples{
+recode_ATPT(data.frame(ATPT=c("Pre-dose","2 hrs postdose","drug A (2 hours before)","34")))
 }

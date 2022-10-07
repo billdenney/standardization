@@ -1,14 +1,11 @@
 #' A standardization function
 #'
-#' @param data1
-#' @param data2
-#' @param output_var
-#' @param input_var
-#'
-#' @return
+#' @param data1 first data frame
+#' @param data2 second data frame
+#' @return comparison of sum of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
 #' @export
 #'
-#' @examples
+#' @examples match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
 match_NA<-function(data1, data2){
 
   common_names <- intersect(names(data2),names(data1))

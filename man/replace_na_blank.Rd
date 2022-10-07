@@ -7,8 +7,18 @@
 replace_na_blank(data, columns, replacement)
 }
 \arguments{
-\item{replacement}{}
+\item{data}{is a data frame}
+
+\item{columns}{to replace}
+
+\item{replacement}{pattern to replace NA and blanks in columns}
+}
+\value{
+data frame with missing rows ("", NA) replaced with specified replacement pattern
 }
 \description{
 A standardization function
+}
+\examples{
+replace_na_blank(data.frame(col1=c(1,"",NA_character_)),c("col1"),"U")
 }

@@ -1,12 +1,11 @@
 #' A standardization function
 #'
-#' @param data
-#'
-#' @return
+#' @param data containing ATPT variable for recoding
+#' @return`data` with the column ATPTN
 #' @export
 #'
-#' @examples
-recode_ATPT <- function(data,string, value) {
+#' @examples recode_ATPT(data.frame(ATPT=c("Pre-dose","2 hrs postdose","drug A (2 hours before)","34")))
+recode_ATPT <- function(data) {
 
   recode_ret <-
    data %>%
@@ -62,4 +61,4 @@ recode_ATPT <- function(data,string, value) {
   recode_ret
 }
 
-
+utils::globalVariables(c('ATPTN','ATPTN_ret','ATPT'))

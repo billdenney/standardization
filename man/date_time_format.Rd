@@ -6,9 +6,17 @@
 \usage{
 date_time_format(data, col)
 }
+\arguments{
+\item{data}{is a data frame with datetime variables}
+
+\item{col}{is datetime variable}
+}
 \value{
-mod_column with datetime in ISO 8601 format
+datetime variable in ISO 8601 format with UN for missing date and time parts
 }
 \description{
-converts different datetime formats (time, hms, difftime, character, date) in a column to ISO 8601: yyyy-MM-dd'T'HH:mm:ss
+converts datetime variable to ISO 8601
+}
+\examples{
+date_time_format(data.frame(ADTC=c("2012-04-05T09:10")),"ADTC")
 }

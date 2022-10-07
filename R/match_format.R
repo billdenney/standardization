@@ -1,10 +1,10 @@
 #' A standardization function
 #'
-#' @param data
-#' @param file
-#' @param coltype
-#'
-#' @return
+#' @param data is a data frame
+#' @param file is path for specifications file that informs selection of variables
+#' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
+#' @description matches for specified format(numeric or character) of the variable and converts variables to required format
+#' @return a data frame with specified variables converted to required format
 #' @export
 #'
 #' @examples
@@ -88,3 +88,11 @@ match_format<-function(data,file,coltype){
   data.frame(data)
 
 }
+
+utils::globalVariables(c("Specification.Source.Data.Column.Name",
+                         "Specification.Source.Data.Column.Name.Variants",
+                         "Specification.Source.Data.Column.Type",
+                         "col_type","spec_namevariants","select_col","final_name",
+                         'spec_namevariants','source_data_format',
+                         'Specification.Source.Data.Format',
+                         "."))

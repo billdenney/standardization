@@ -15,6 +15,26 @@ datetime_comparison_prior_condition(
   condition1
 )
 }
+\arguments{
+\item{file_name1}{is first data frame with dosing dtc variable}
+
+\item{file_name2}{is second data frame with dtc variable}
+
+\item{datetimecol1}{is datetime variable (ADTC) in first data frame}
+
+\item{datetimecol2}{is datetime variable (ADTC) in second data frame}
+
+\item{datetimecol3}{is second datetime variable (AENDTC) in second data frame}
+
+\item{colwithconditions}{is variable with multiple disease or conditions}
+
+\item{filter_val}{character vector to filter specific diseases or conditions}
+
+\item{condition1}{creates variable for subjects with prior disease or condition eg. prior_diabetes}
+}
+\value{
+data frame with prior disease/condition variable
+}
 \description{
 compares datetime with earliest dosing datetime to extract prior condition
 }

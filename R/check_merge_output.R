@@ -1,12 +1,12 @@
 #' A standardization function
 #'
 #' @name check_merge_output
-#' @param data
-#' @param study
-#' @param ...
-#' @description checks for dupplicate rows
+#' @param data is a data frame
+#' @param study is a character STUDYID pattern to check data frame for duplicate rows for each study
+#' @param ... are grouping variables
+#' @description checks for duplicate rows
 #'
-#' @return returns duplicate rows
+#' @return throws an error and prints duplicate rows
 #' @export
 #'
 #' @examples
@@ -23,3 +23,5 @@ check_merge_output <- function(data, study, ...) {
       verify(row %in% 1)
   }
 }
+
+utils::globalVariables(c("STUDYID","row_number"))

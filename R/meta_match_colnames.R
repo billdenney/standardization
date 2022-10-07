@@ -1,10 +1,10 @@
 #' A standardization function
 #'
-#' @param data
-#' @param file
-#' @param coltype
-#'
-#' @return
+#' @param data is a data frame
+#' @param file is path for specifications file that informs selection of variables
+#' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
+#' @description matches for variables based on metadata, selects applicable variables present in source dataset, and creates empty columns for missing variables
+#' @return a data frame with specified variables selected
 #' @export
 #'
 #' @examples
@@ -93,3 +93,16 @@ meta_match_colnames <- function(data, file, coltype) {
 
   return(data_ret)
 }
+
+utils::globalVariables(c("Specification.Source.Data.Column.Name",
+                         "Specification.Source.Data.Column.Name.Variants",
+                         "Specification.Source.Data.Column.Type",
+                         "col_type","spec_namevariants","select_col","final_name",
+                         ".",
+                         'Specification.Source.Data.Column.Name',
+                         'Specification.Source.Data.Labels',
+                         'Specification.Source.Data.Column.Type',
+                         'Contents.Columns',
+                         'Columns_spec',
+                         'Labels',
+                         'contents.Labels'))

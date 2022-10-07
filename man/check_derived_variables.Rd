@@ -7,7 +7,7 @@
 check_derived_variables(data)
 }
 \arguments{
-\item{data}{}
+\item{data}{is a data frame with derived variables}
 }
 \description{
 A standardization function

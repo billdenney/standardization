@@ -1,10 +1,11 @@
 #' A standardization function
 #'
-#' @param data
-#' @param col1
-#' @param col2
+#' @param data is a data frame
+#' @param col1 is for study1
+#' @param col2 is for study2
+#' @param exclude_var excluded specific parameter names where units do not apply eg. scores
 #'
-#' @return
+#' @return compares and checks for uniformity of units within a parameter name between two studies
 #' @export
 #'
 #' @examples
@@ -43,3 +44,8 @@ check_units<-function(data,col1,col2,exclude_var){
 
 
 }
+
+utils::globalVariables(c("STUDYID","USUBJID","ECDOSEU","PARAM","EXDOSEU","AVALU","check_AVALU",
+                         "check_EXDOSEU","check_ECDOSEU","."))
+
+

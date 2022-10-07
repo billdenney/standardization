@@ -7,8 +7,16 @@
 recode_VISIT(data, cycle_length)
 }
 \arguments{
-\item{cycle_length}{}
+\item{data}{is a data frame containing VISIT variable for recoding}
+
+\item{cycle_length}{is a numeric vector}
+}
+\value{
+VISITDY when VISIT column is present in data frame
 }
 \description{
 A standardization function
+}
+\examples{
+recode_VISIT(data.frame(VISIT=c("Cycle 1 Day 1","cycle 2 day 2","week 10")),cycle_length = 21)
 }

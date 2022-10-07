@@ -7,8 +7,15 @@
 meta_match_colnames(data, file, coltype)
 }
 \arguments{
-\item{coltype}{}
+\item{data}{is a data frame}
+
+\item{file}{is path for specifications file that informs selection of variables}
+
+\item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
+}
+\value{
+a data frame with specified variables selected
 }
 \description{
-A standardization function
+matches for variables based on metadata, selects applicable variables present in source dataset, and creates empty columns for missing variables
 }

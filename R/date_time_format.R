@@ -1,13 +1,13 @@
 #' A standardization function
 #'
 #' @name date_time_format
-#' @param data
-#' @param col
-#' @description converts different datetime formats (time, hms, difftime, character, date) in a column to ISO 8601: yyyy-MM-dd'T'HH:mm:ss
-#' @return mod_column with datetime in ISO 8601 format
+#' @param data is a data frame with datetime variables
+#' @param col is datetime variable
+#' @description converts datetime variable to ISO 8601
+#' @return datetime variable in ISO 8601 format with UN for missing date and time parts
 #' @export
 #'
-#' @examples
+#' @examples date_time_format(data.frame(ADTC=c("2012-04-05T09:10")),"ADTC")
 date_time_format <- function(data, col) {
 
   col <- as.name(col)
@@ -112,3 +112,7 @@ date_time_format <- function(data, col) {
 
 
 }
+
+
+utils::globalVariables("length_format")
+

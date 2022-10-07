@@ -7,7 +7,16 @@
 check_units(data, col1, col2, exclude_var)
 }
 \arguments{
-\item{col2}{}
+\item{data}{is a data frame}
+
+\item{col1}{is for study1}
+
+\item{col2}{is for study2}
+
+\item{exclude_var}{excluded specific parameter names where units do not apply eg. scores}
+}
+\value{
+compares and checks for uniformity of units within a parameter name between two studies
 }
 \description{
 A standardization function

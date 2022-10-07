@@ -1,15 +1,14 @@
 #' A standardization function
 #'
 #' @name match_missing_values
-#' @param data1
-#' @param data2
-#' @param output_var
-#' @param input_var
-#'
-#' @return
+#' @param data1 first data.frame
+#' @param data2 second data.frame
+#' @param ... are grouping variables used to arrange the data
+#' @description  rowwise comparison of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
+#' @return for each pair of corresponding source and output columns a check column with true/false values returned within a data.frame
 #' @export
 #'
-#' @examples
+#' @examples match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
 match_missing_values<-function(data1,data2,...){
 
   common_names <- intersect(names(data2),names(data1))
@@ -93,3 +92,5 @@ match_missing_values<-function(data1,data2,...){
   data_ret
 
 }
+
+utils::globalVariables('.')

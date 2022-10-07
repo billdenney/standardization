@@ -1,6 +1,6 @@
 #' A standardization function
 #'
-#' @param data
+#' @param data is a data frame with derived variables
 #'
 #' @return
 #' @export
@@ -19,3 +19,6 @@ check_derived_variables<-function(data){
   return(check)
 
 }
+
+utils::globalVariables(c("STUDYID","USUBJID","STUDYIDN","PARAM","PARAMN",
+                         "PARAMN_check","STUDYIDN_check"))

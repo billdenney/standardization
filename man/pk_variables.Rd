@@ -7,8 +7,16 @@
 pk_variables(data, col)
 }
 \arguments{
-\item{col}{}
+\item{data}{is a data frame containing AVALC variable for recoding}
+
+\item{col}{is the equivalent for AVALC variable}
+}
+\value{
+AVALN, ALLOQ and AULOQ
 }
 \description{
 A standardization function
+}
+\examples{
+pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")
 }
