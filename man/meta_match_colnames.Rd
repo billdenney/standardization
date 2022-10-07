@@ -12,6 +12,3 @@ meta_match_colnames(data, file, coltype)
 \description{
 A standardization function
 }
-\examples{
-meta_match_colnames()
-}

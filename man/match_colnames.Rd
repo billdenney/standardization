@@ -12,6 +12,3 @@ data frame with selected columns
 \description{
 matches for standard column names and selects from source dataset and prints columns not present in source dataset
 }
-\examples{
-match_colnames()
-}

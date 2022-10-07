@@ -12,6 +12,3 @@ check_dependent_variables(data)
 \description{
 A standardization function
 }
-\examples{
-check_dependent_variables()
-}

@@ -12,6 +12,3 @@ check_derived_variables(data)
 \description{
 A standardization function
 }
-\examples{
-check_derived_variables()
-}

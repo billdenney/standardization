@@ -7,15 +7,8 @@
 replace_na_blank(data, columns, replacement)
 }
 \arguments{
-\item{data}{}
-
-\item{columns}{}
-
 \item{replacement}{}
 }
 \description{
 A standardization function
-}
-\examples{
-replace_na_blank()
 }

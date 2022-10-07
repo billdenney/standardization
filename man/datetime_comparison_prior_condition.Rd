@@ -15,12 +15,6 @@ datetime_comparison_prior_condition(
   condition1
 )
 }
-\value{
-dataframe with prior condition and col1 and col2
-}
 \description{
-compares condition datetime with earliest dosing datetime to extract prior condition
-}
-\examples{
-datetime_comparison_prior_condition()
+compares datetime with earliest dosing datetime to extract prior condition
 }

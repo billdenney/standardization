@@ -12,6 +12,3 @@ mod_column with datetime in ISO 8601 format
 \description{
 converts different datetime formats (time, hms, difftime, character, date) in a column to ISO 8601: yyyy-MM-dd'T'HH:mm:ss
 }
-\examples{
-date_time_format()
-}

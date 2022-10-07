@@ -12,6 +12,3 @@ recode_VISIT(data, cycle_length)
 \description{
 A standardization function
 }
-\examples{
-recode_VISIT()
-}

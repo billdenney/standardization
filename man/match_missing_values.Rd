@@ -12,6 +12,3 @@ match_missing_values(data1, data2, ...)
 \description{
 A standardization function
 }
-\examples{
-match_missing_values()
-}

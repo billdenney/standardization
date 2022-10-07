@@ -12,6 +12,3 @@ pk_variables(data, col)
 \description{
 A standardization function
 }
-\examples{
-pk_variables()
-}

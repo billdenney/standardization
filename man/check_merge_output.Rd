@@ -12,6 +12,3 @@ returns duplicate rows
 \description{
 checks for dupplicate rows
 }
-\examples{
-check_merge_output()
-}

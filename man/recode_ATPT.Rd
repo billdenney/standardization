@@ -12,6 +12,3 @@ recode_ATPT(data, string, value)
 \description{
 A standardization function
 }
-\examples{
-recode_ATPT()
-}

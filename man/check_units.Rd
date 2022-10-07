@@ -12,6 +12,3 @@ check_units(data, col1, col2, exclude_var)
 \description{
 A standardization function
 }
-\examples{
-check_units()
-}
