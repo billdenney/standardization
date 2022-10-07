@@ -11,6 +11,7 @@
 #' check_units()
 check_units<-function(data,col1,col2,exclude_var){
 
+
   check<-data %>%
     select(STUDYID,USUBJID,PARAM,ECDOSEU,EXDOSEU,AVALU) %>%
     group_by(STUDYID, PARAM) %>%
