@@ -7,7 +7,6 @@
 #' @export
 #'
 #' @examples
-#' pk_variables()
 pk_variables <- function(data, col) {
   col <- as.name(col)
 

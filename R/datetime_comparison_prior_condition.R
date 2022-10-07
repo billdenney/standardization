@@ -15,7 +15,6 @@
 #' @export
 #'
 #' @examples
-#' datetime_comparison_prior_condition()
 datetime_comparison_prior_condition <-
   function(file_name1, file_name2, datetimecol1, datetimecol2, datetimecol3,
            colwithconditions, filter_val, condition1) {

@@ -6,7 +6,6 @@
 #' @export
 #'
 #' @examples
-#' recode_ATPT()
 recode_ATPT <- function(data,string, value) {
 
   recode_ret <-

@@ -13,3 +13,18 @@ RoxygenNote: 7.2.0.9000
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Imports: 
+    assertr,
+    bsd.report,
+    compare,
+    dplyr,
+    drake,
+    Hmisc,
+    magrittr,
+    purrr,
+    rio,
+    rlang,
+    stats,
+    tibble,
+    tidyr,
+    utils

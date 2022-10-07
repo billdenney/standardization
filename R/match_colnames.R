@@ -10,11 +10,11 @@
 #' @export
 #'
 #' @examples
-#' match_colnames()
+#' @importFrom dplyr filter
 match_colnames <- function(data, file, coltype) {
   d_specification <- import_list(file_in(file), guess_max = 1e6)
   source_cols <-
-    get_data_manage_standard_cols(
+    bsd.report::get_data_manage_standard_cols(
       d_specification[["Specification-Source Data"]],
       coltype
     )
@@ -24,47 +24,47 @@ match_colnames <- function(data, file, coltype) {
 
   d_spec <- d_specification["Specification-Source Data"]
   spec_df <- as.data.frame(d_spec) %>%
-    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
-    mutate(
+    dplyr::select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    dplyr::mutate(
       spec_names = Specification.Source.Data.Column.Name,
       spec_namevariants = Specification.Source.Data.Column.Name.Variants,
       col_type = Specification.Source.Data.Column.Type
     ) %>%
-    filter(col_type %in% coltype) %>%
-    group_by(spec_names, col_type, spec_namevariants) %>%
-    mutate(spec_namevariants = strsplit(spec_namevariants, ", |,| ,")) %>%
-    unnest(cols = spec_namevariants) %>%
+    dplyr::filter(col_type %in% coltype) %>%
+    dplyr::group_by(spec_names, col_type, spec_namevariants) %>%
+    dplyr::mutate(spec_namevariants = strsplit(spec_namevariants, ", |,| ,")) %>%
+    purr::unnest(cols = spec_namevariants) %>%
     ungroup()
 
 
   spec_cols_df <-
     spec_df %>%
-    mutate(select_col = case_when(
+    dplyr::mutate(select_col = case_when(
       spec_names %in% source_data_names ~ spec_names,
       spec_namevariants %in% source_data_names ~ spec_namevariants,
       TRUE ~ ""
     )) %>%
-    mutate(
+    dplyr::mutate(
       final_name = case_when(
         !(is.na(select_col) | select_col == "") ~ spec_names,
         TRUE ~ ""
       )
     ) %>%
-    select(spec_names, spec_namevariants, col_type, select_col, final_name)
+    dplyr::select(spec_names, spec_namevariants, col_type, select_col, final_name)
 
   names_df <-
     spec_cols_df %>%
-    select(select_col) %>%
-    filter(!(select_col %in% "")) %>%
-    distinct() %>%
-    pull(select_col)
+    dplyr::select(select_col) %>%
+    dplyr::filter(!(select_col %in% "")) %>%
+    dplyr::distinct() %>%
+    dplyr::pull(select_col)
 
   rename_df <-
     spec_cols_df %>%
     select(final_name) %>%
-    filter(!(final_name %in% "")) %>%
-    distinct() %>%
-    pull(final_name)
+    dplyr::filter(!(final_name %in% "")) %>%
+    dplyr::distinct() %>%
+    dplyr::pull(final_name)
 
   ifelse(!duplicated(rename_df) %in% TRUE, print(rename_df[duplicated(rename_df) | duplicated(rename_df, fromLast = TRUE)]),
          NULL

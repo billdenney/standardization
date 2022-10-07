@@ -10,7 +10,6 @@
 #' @export
 #'
 #' @examples
-#' match_missing_values()
 match_missing_values<-function(data1,data2,...){
 
   common_names <- intersect(names(data2),names(data1))

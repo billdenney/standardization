@@ -8,9 +8,7 @@
 #' @export
 #'
 #' @examples
-#' check_units()
 check_units<-function(data,col1,col2,exclude_var){
-
 
   check<-data %>%
     select(STUDYID,USUBJID,PARAM,ECDOSEU,EXDOSEU,AVALU) %>%
@@ -42,5 +40,6 @@ check_units<-function(data,col1,col2,exclude_var){
     filter(!compare %in% TRUE)
 
   print(check_df)
+
 
 }

@@ -8,7 +8,6 @@
 #' @export
 #'
 #' @examples
-#' date_time_format()
 date_time_format <- function(data, col) {
 
   col <- as.name(col)
@@ -110,5 +109,6 @@ date_time_format <- function(data, col) {
     mutate({{col}}:=({{ mod_col }})) %>%
     select(-{{ mod_col }}) %>%
     select(-{{ NA_col }},-{{ date_col }},-{{ time_col }},-{{ ret_col }},-{{ ret_col }}, -length_format)
+
 
 }

@@ -8,7 +8,6 @@
 #' @export
 #'
 #' @examples
-#' recode_VISIT()
 recode_VISIT <- function(data, cycle_length) {
 
   recode_ret <- data %>%

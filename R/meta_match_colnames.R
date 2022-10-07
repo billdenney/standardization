@@ -8,7 +8,6 @@
 #' @export
 #'
 #' @examples
-#' meta_match_colnames()
 meta_match_colnames <- function(data, file, coltype) {
   meta_df <- Hmisc::contents(data)
   meta_dat <- data.frame(meta_df[1])
@@ -43,7 +42,7 @@ meta_match_colnames <- function(data, file, coltype) {
 
   #merging meta_file(labels,columns) with specifications file
   spec <- full_join(spec_df, meta_file, by = "Labels", type = "full")
-  view(spec)
+
 
   spec_cols_df <-
     spec %>%
@@ -62,7 +61,7 @@ meta_match_colnames <- function(data, file, coltype) {
         TRUE ~ ""
       )
     )
-  view(spec_cols_df)
+
 
   names_df <-
     spec_cols_df %>%

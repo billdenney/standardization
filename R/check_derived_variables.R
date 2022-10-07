@@ -6,7 +6,6 @@
 #' @export
 #'
 #' @examples
-#' check_derived_variables()
 check_derived_variables<-function(data){
 
   check<-data %>% select(STUDYID,PARAM,PARAMN,STUDYIDN) %>%
