@@ -19,7 +19,6 @@ Imports:
     Hmisc,
     lubridate,
     magrittr,
-    purrr,
     remotes,
     rio,
     rlang,
@@ -28,4 +27,3 @@ Imports:
     tibble,
     tidyr,
     utils
-remotes::install_github("billdenney/bsd.report")

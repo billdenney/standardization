@@ -32,7 +32,6 @@
 #' @importFrom drake file_in
 #' @importFrom lubridate format_ISO8601
 #' @importFrom magrittr %>%
-#' @importFrom purrr is_empty
 #' @importFrom rio import_list
 #' @importFrom rlang :=
 #' @importFrom rlang enquo

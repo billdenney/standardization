@@ -14,10 +14,17 @@
 match_colnames <- function(data, file, coltype) {
   d_specification <- import_list(file_in(file), guess_max = 1e6)
   source_cols <-
-    bsd.report::get_data_manage_standard_cols(
-      d_specification[["Specification-Source Data"]],
-      coltype
-    )
+    d_specification["Specification-Source Data"] %>%
+    as.data.frame() %>%
+    dplyr::select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    dplyr::mutate(
+      spec_names = Specification.Source.Data.Column.Name,
+      spec_namevariants = Specification.Source.Data.Column.Name.Variants,
+      col_type = Specification.Source.Data.Column.Type
+    ) %>%
+    dplyr::filter(col_type %in% c("Dosing", "Common", "Timing", "Dosing,Measurement")) %>%
+    select(Specification.Source.Data.Column.Name) %>%
+    pull()
 
   spec_names <- source_cols
   source_data_names <- c(colnames(data))
@@ -67,28 +74,28 @@ match_colnames <- function(data, file, coltype) {
     dplyr::pull(final_name)
 
   ifelse(!duplicated(rename_df) %in% TRUE, print(rename_df[duplicated(rename_df) | duplicated(rename_df, fromLast = TRUE)]),
-         NULL
+    NULL
   )
 
   data_ret <- data %>% select(all_of(names_df))
   colnames(data_ret) <- rename_df
   print(paste0(colnames(data_ret), " :present"))
 
-  addmissingcols<-setdiff(spec_names, colnames(data_ret))
+  addmissingcols <- setdiff(spec_names, colnames(data_ret))
 
   print(paste0(setdiff(spec_names, colnames(data_ret)), ":Assigned to NA"))
 
-  data_ret[,addmissingcols] <- NA
+  data_ret[, addmissingcols] <- NA
 
 
   return(data_ret)
 }
 
 
-utils::globalVariables(c("Specification.Source.Data.Column.Name",
-                         "Specification.Source.Data.Column.Name.Variants",
-                         "Specification.Source.Data.Column.Type",
-                         "col_type","spec_namevariants","select_col","final_name",
-                         "."))
-
-
+utils::globalVariables(c(
+  "Specification.Source.Data.Column.Name",
+  "Specification.Source.Data.Column.Name.Variants",
+  "Specification.Source.Data.Column.Type",
+  "col_type", "spec_namevariants", "select_col", "final_name",
+  "."
+))

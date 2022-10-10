@@ -8,14 +8,19 @@
 #' @export
 #'
 #' @examples
-match_format<-function(data,file,coltype){
-
+match_format <- function(data, file, coltype) {
   d_specification <- import_list(file_in(file), guess_max = 1e6)
-  source_cols <-
-    get_data_manage_standard_cols(
-      d_specification[["Specification-Source Data"]],
-      coltype
-    )
+  source_cols <- d_specification["Specification-Source Data"] %>%
+    as.data.frame() %>%
+    dplyr::select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    dplyr::mutate(
+      spec_names = Specification.Source.Data.Column.Name,
+      spec_namevariants = Specification.Source.Data.Column.Name.Variants,
+      col_type = Specification.Source.Data.Column.Type
+    ) %>%
+    dplyr::filter(col_type %in% coltype) %>%
+    select(Specification.Source.Data.Column.Name) %>%
+    pull()
 
   spec_names <- source_cols
   source_data_names <- c(colnames(data))
@@ -23,16 +28,18 @@ match_format<-function(data,file,coltype){
 
   d_spec <- d_specification["Specification-Source Data"]
   spec_df <- as.data.frame(d_spec) %>%
-    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants,
-           Specification.Source.Data.Column.Type,
-           Specification.Source.Data.Format) %>%
+    select(
+      Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants,
+      Specification.Source.Data.Column.Type,
+      Specification.Source.Data.Format
+    ) %>%
     mutate(
       spec_names = Specification.Source.Data.Column.Name,
       spec_namevariants = Specification.Source.Data.Column.Name.Variants,
       col_type = Specification.Source.Data.Column.Type,
-      source_data_format= Specification.Source.Data.Format
+      source_data_format = Specification.Source.Data.Format
     ) %>%
-    filter(col_type %in%    coltype) %>%
+    filter(col_type %in% coltype) %>%
     group_by(spec_names, col_type, spec_namevariants) %>%
     mutate(spec_namevariants = strsplit(spec_namevariants, ", |,| ,")) %>%
     unnest(cols = spec_namevariants) %>%
@@ -51,8 +58,10 @@ match_format<-function(data,file,coltype){
         TRUE ~ ""
       )
     ) %>%
-    select(spec_names, spec_namevariants, col_type, select_col, final_name, source_data_format#,column_format
-    ) %>% mutate(source_data_format=case_when(
+    select(
+      spec_names, spec_namevariants, col_type, select_col, final_name, source_data_format # ,column_format
+    ) %>%
+    mutate(source_data_format = case_when(
       grepl("ADTC|AENDTC", final_name) ~ "Character",
       TRUE ~ source_data_format
     ))
@@ -68,7 +77,7 @@ match_format<-function(data,file,coltype){
   format_df <-
     spec_cols_df %>%
     filter(!(select_col %in% "")) %>%
-    select(select_col,source_data_format) %>%
+    select(select_col, source_data_format) %>%
     distinct() %>%
     select(source_data_format) %>%
     mutate_all(funs(tolower)) %>%
@@ -77,22 +86,21 @@ match_format<-function(data,file,coltype){
 
 
   for (i in 1:length(names_df)) {
-
-    if(!(class(data[,names_df[i]]) %in% format_df[i])){
-      data[,names_df[i]] <-eval(call(paste0( "as.", format_df[i]), data[,names_df[i]] ))
-
-    }else {
+    if (!(class(data[, names_df[i]]) %in% format_df[i])) {
+      data[, names_df[i]] <- eval(call(paste0("as.", format_df[i]), data[, names_df[i]]))
+    } else {
       NULL
     }
   }
   data.frame(data)
-
 }
 
-utils::globalVariables(c("Specification.Source.Data.Column.Name",
-                         "Specification.Source.Data.Column.Name.Variants",
-                         "Specification.Source.Data.Column.Type",
-                         "col_type","spec_namevariants","select_col","final_name",
-                         'spec_namevariants','source_data_format',
-                         'Specification.Source.Data.Format',
-                         "."))
+utils::globalVariables(c(
+  "Specification.Source.Data.Column.Name",
+  "Specification.Source.Data.Column.Name.Variants",
+  "Specification.Source.Data.Column.Type",
+  "col_type", "spec_namevariants", "select_col", "final_name",
+  "spec_namevariants", "source_data_format",
+  "Specification.Source.Data.Format",
+  "."
+))
