@@ -15,19 +15,27 @@ meta_match_colnames <- function(data, file, coltype) {
   colnames(meta_file) <- substring(colnames(meta_file), 10, 17)
 
   d_specification <- import_list(file_in(file), guess_max = 1e6)
-  source_cols <-
-    get_data_manage_standard_cols(
-      d_specification[["Specification-Source Data"]],
-      coltype
-    )
+  source_cols <- d_specification["Specification-Source Data"] %>%
+    as.data.frame() %>%
+    dplyr::select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    dplyr::mutate(
+      spec_names = Specification.Source.Data.Column.Name,
+      spec_namevariants = Specification.Source.Data.Column.Name.Variants,
+      col_type = Specification.Source.Data.Column.Type
+    ) %>%
+    dplyr::filter(col_type %in% coltype) %>%
+    select(Specification.Source.Data.Column.Name) %>%
+    pull()
 
   spec_names <- source_cols
   source_data_names <- c(colnames(data))
 
   d_spec <- d_specification["Specification-Source Data"]
   spec_df <- as.data.frame(d_spec) %>%
-    select(Specification.Source.Data.Column.Name,Specification.Source.Data.Labels,
-           Specification.Source.Data.Column.Type ) %>%
+    select(
+      Specification.Source.Data.Column.Name, Specification.Source.Data.Labels,
+      Specification.Source.Data.Column.Type
+    ) %>%
     mutate(
       "Columns_spec" = Specification.Source.Data.Column.Name,
       "Labels" = Specification.Source.Data.Labels,
@@ -35,12 +43,12 @@ meta_match_colnames <- function(data, file, coltype) {
     ) %>%
     filter(col_type %in% coltype) %>%
     select(Columns_spec, Labels, col_type) %>%
-  group_by(Columns_spec, col_type, Labels) %>%
-    mutate(Labels = strsplit(Labels, ", |,| ,")) %>%  #For cases where there are different labels for different files/domains eg: EX and PC PARAM labels are different
+    group_by(Columns_spec, col_type, Labels) %>%
+    mutate(Labels = strsplit(Labels, ", |,| ,")) %>% # For cases where there are different labels for different files/domains eg: EX and PC PARAM labels are different
     unnest(cols = Labels) %>%
     ungroup()
 
-  #merging meta_file(labels,columns) with specifications file
+  # merging meta_file(labels,columns) with specifications file
   spec <- full_join(spec_df, meta_file, by = "Labels", type = "full")
 
 
@@ -78,31 +86,33 @@ meta_match_colnames <- function(data, file, coltype) {
     pull(final_name)
 
   ifelse(!duplicated(rename_df) %in% TRUE, print(rename_df[duplicated(rename_df) | duplicated(rename_df, fromLast = TRUE)]),
-         NULL
+    NULL
   )
 
   data_ret <- data %>% select(all_of(names_df))
   colnames(data_ret) <- rename_df
   print(paste0(colnames(data_ret), " :present"))
 
-  addmissingcols<-setdiff(spec_names, colnames(data_ret))
+  addmissingcols <- setdiff(spec_names, colnames(data_ret))
 
   print(paste0(setdiff(spec_names, colnames(data_ret)), ":Assigned to NA"))
 
-  data_ret[,addmissingcols] <- NA
+  data_ret[, addmissingcols] <- NA
 
   return(data_ret)
 }
 
-utils::globalVariables(c("Specification.Source.Data.Column.Name",
-                         "Specification.Source.Data.Column.Name.Variants",
-                         "Specification.Source.Data.Column.Type",
-                         "col_type","spec_namevariants","select_col","final_name",
-                         ".",
-                         'Specification.Source.Data.Column.Name',
-                         'Specification.Source.Data.Labels',
-                         'Specification.Source.Data.Column.Type',
-                         'Contents.Columns',
-                         'Columns_spec',
-                         'Labels',
-                         'contents.Labels'))
+utils::globalVariables(c(
+  "Specification.Source.Data.Column.Name",
+  "Specification.Source.Data.Column.Name.Variants",
+  "Specification.Source.Data.Column.Type",
+  "col_type", "spec_namevariants", "select_col", "final_name",
+  ".",
+  "Specification.Source.Data.Column.Name",
+  "Specification.Source.Data.Labels",
+  "Specification.Source.Data.Column.Type",
+  "Contents.Columns",
+  "Columns_spec",
+  "Labels",
+  "contents.Labels"
+))
