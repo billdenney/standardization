@@ -34,11 +34,11 @@ check_units<-function(data,col1,col2,exclude_var){
     rename(STUDY=cols) %>%
     rowwise() %>%
     unnest(cols = c({{col1}}, {{col2}})) %>%
-    mutate(compare=case_when(
+    mutate(test=case_when(
       {{col1}} == {{col2}}~ TRUE,
       TRUE ~ FALSE )) %>%
     filter(!PARAM %in% exclude_var) %>%
-    filter(!compare %in% TRUE)
+    filter(!test %in% TRUE)
 
   print(check_df)
 
@@ -46,6 +46,6 @@ check_units<-function(data,col1,col2,exclude_var){
 }
 
 utils::globalVariables(c("STUDYID","USUBJID","ECDOSEU","PARAM","EXDOSEU","AVALU","check_AVALU",
-                         "check_EXDOSEU","check_ECDOSEU","."))
+                         "check_EXDOSEU","check_ECDOSEU",".","test"))
 
 

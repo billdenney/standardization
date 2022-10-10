@@ -14,14 +14,13 @@ Suggests:
 Config/testthat/edition: 3
 Imports: 
     assertr,
-    bsd.report,
-    compare,
     dplyr,
     drake,
     Hmisc,
     lubridate,
     magrittr,
     purrr,
+    remotes,
     rio,
     rlang,
     stats,
@@ -29,5 +28,4 @@ Imports:
     tibble,
     tidyr,
     utils
-Remotes:
-Github: :bsd.report
+remotes::install_github("billdenney/bsd.report")

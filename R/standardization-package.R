@@ -3,8 +3,6 @@
 
 ## usethis namespace: start
 #' @importFrom assertr verify
-#' @importFrom bsd.report get_data_manage_standard_cols
-#' @importFrom compare compare
 #' @importFrom dplyr across
 #' @importFrom dplyr all_of
 #' @importFrom dplyr arrange
