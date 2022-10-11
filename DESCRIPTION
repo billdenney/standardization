@@ -19,6 +19,7 @@ Imports:
     Hmisc,
     lubridate,
     magrittr,
+    purrr(>= 0.3.3),
     rio,
     rlang,
     stringr,

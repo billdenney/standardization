@@ -2,7 +2,7 @@
 #'
 #' @param data is a data frame with derived variables
 #'
-#' @return
+#' @return data.frame
 #' @export
 #'
 #' @examples

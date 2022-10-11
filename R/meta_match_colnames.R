@@ -17,13 +17,13 @@ meta_match_colnames <- function(data, file, coltype) {
   d_specification <- import_list(file_in(file), guess_max = 1e6)
   source_cols <- d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%
-    dplyr::select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
-    dplyr::mutate(
+    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    mutate(
       spec_names = Specification.Source.Data.Column.Name,
       spec_namevariants = Specification.Source.Data.Column.Name.Variants,
       col_type = Specification.Source.Data.Column.Type
     ) %>%
-    dplyr::filter(col_type %in% coltype) %>%
+    filter(col_type %in% coltype) %>%
     select(Specification.Source.Data.Column.Name) %>%
     pull()
 
@@ -48,7 +48,6 @@ meta_match_colnames <- function(data, file, coltype) {
     unnest(cols = Labels) %>%
     ungroup()
 
-  # merging meta_file(labels,columns) with specifications file
   spec <- full_join(spec_df, meta_file, by = "Labels", type = "full")
 
 

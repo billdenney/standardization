@@ -3,3 +3,16 @@
 .Rdata
 .httr-oauth
 .DS_Store
+
+/*.Rhistory
+/R/*.Rhistory
+/tests/testthat/*.Rhistory
+/vignettes/*.Rhistory
+doc
+Meta
+docs
+/doc/
+/Meta/
+inst/doc
+Rprof.out
+.Rhistory

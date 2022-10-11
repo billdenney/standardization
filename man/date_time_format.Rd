@@ -2,7 +2,7 @@
 % Please edit documentation in R/date_time_format.R
 \name{date_time_format}
 \alias{date_time_format}
-\title{A standardization function}
+\title{Title}
 \usage{
 date_time_format(data, col)
 }

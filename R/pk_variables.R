@@ -13,7 +13,7 @@ pk_variables <- function(data, col) {
   values <- data %>%
     mutate(
       text = as.character({{ col }}),
-      number = as.numeric({{ col }}), #NA for BLQ values with special characters in the string
+      number = as.numeric({{ col }}),
       number=case_when(
         grepl("<[A-Za-z]|[A-Za-z]<|<+[[:space:]]+[A-Za-z]|[A-Za-z]+[[:space:]]+<|<|<+[[:space:]]+[[:space:]]+<",text) ~ 0,#converting NA's into 0
         TRUE ~ number

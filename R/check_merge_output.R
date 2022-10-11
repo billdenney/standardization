@@ -11,7 +11,7 @@
 #'
 #' @examples
 check_merge_output <- function(data, study, ...) {
-  group_var <- dplyr::enquos(...)
+  group_var <- enquos(...)
   for (i in 1:length(study)) {
     print(paste0("Checking study: ", study[i]))
     check_dupl <-

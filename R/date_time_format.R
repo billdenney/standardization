@@ -1,4 +1,5 @@
-#' A standardization function
+
+#' Title
 #'
 #' @name date_time_format
 #' @param data is a data frame with datetime variables
@@ -54,9 +55,9 @@ date_time_format <- function(data, col) {
   format_len <- c(0, 4, 7, 8, 9, 10, 16, 19, NA)
   match_format_len <- as.vector(setdiff(format_list, format_len))
 
-  if (!length(match_format_len)==0) {
+  if (!is_empty(match_format_len)) {
     print(paste("missing format type", match_format_len))
-  } else if (length(match_format_len)==0) {
+  } else if (is_empty(match_format_len)) {
     NULL
   }
 
@@ -114,5 +115,5 @@ date_time_format <- function(data, col) {
 }
 
 
-utils::globalVariables("length_format")
+utils::globalVariables(c("length_format","match_format_len"))
 
