@@ -15,7 +15,7 @@ pk_variables <- function(data, col) {
       text = as.character({{ col }}),
       number = as.numeric({{ col }}),
       number=case_when(
-        grepl("<[A-Za-z]|[A-Za-z]<|<+[[:space:]]+[A-Za-z]|[A-Za-z]+[[:space:]]+<|<|<+[[:space:]]+[[:space:]]+<",text) ~ 0,#converting NA's into 0
+        grepl("<[A-Za-z]|[A-Za-z]<|<+[[:space:]]+[A-Za-z]|[A-Za-z]+[[:space:]]+<|<|<+[[:space:]]+[[:space:]]+<",text) ~ 0,
         TRUE ~ number
       ),
       llq = case_when(
@@ -23,7 +23,7 @@ pk_variables <- function(data, col) {
         TRUE ~ ""
       ),
       ulq = case_when(
-        grepl("ulq|uql", {{ col }}, ignore.case = TRUE) ~ str_extract({{ col }}, "\\d+\\.*\\d*"),
+        grepl("ulq|uql|>", {{ col }}, ignore.case = TRUE) ~ str_extract({{ col }}, "\\d+\\.*\\d*"),
         TRUE ~ ""
       )
     )

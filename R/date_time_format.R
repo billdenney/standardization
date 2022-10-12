@@ -72,8 +72,8 @@ date_time_format <- function(data, col) {
     #replace missing date parts with UN
     mutate({{date_col}}:= case_when(
       length_format %in% 4  ~ format(as.Date(({{ col }}), format = "%Y"), format = "%Y-UN-UN"), # format type:"2012-UN-UN"
-      length_format %in% 7  ~ format(as.Date(paste0(({{ret_col}}), "-01")), format = "%Y-%m-UN"),# format type:"2015-04-UN"
-      length_format %in% 9  ~ format(as.Date(paste0(sub("---","-",{{ret_col}}), "-01")), format = "%Y-%m-UN"),# format type:"2015-04-UN"
+      length_format %in% 7  ~ format(as.Date(paste0(({{ret_col}}), "-01"), format = "%Y-%m-%d"), format = "%Y-%m-UN"),# format type:"2015-04-UN"
+      length_format %in% 9  ~ format(as.Date(paste0(sub("---","-",{{ret_col}}), "-01"), format = "%Y-%m-%d"), format = "%Y-%m-UN"),# format type:"2015-04-UN"
       length_format %in% 10 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10), # format type:"2014-01-22"
       length_format %in% 16 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10) , # format type:"2014-02-12T13:20"
       length_format %in% 19 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10),# format type: 2014-01-22T09:35:00
@@ -82,16 +82,16 @@ date_time_format <- function(data, col) {
     #replace missing time parts with UN
     mutate({{ time_col }} := case_when(
       length_format %in% 4 ~ format(as.POSIXct({{ date_col }}, format = "%Y"), format = "TUN:UN:UN"), # Output type:TUN:UN:UN
-      length_format %in% 7 ~   format(as.POSIXct(format(as.Date(paste0(({{ret_col}}), "-01")), format = "%Y-%m-%d"),
+      length_format %in% 7 ~   format(as.POSIXct(format(as.Date(paste0(({{ret_col}}), "-01"),format = "%Y-%m-%d"), format = "%Y-%m-%d"),
                                                  format = "%Y-%m-%d"), format = "TUN:UN:UN"), # Output type:TUN:UN:UN
-      length_format %in% 9 ~   format(as.POSIXct(format(as.Date(paste0(sub("---","-",{{ret_col}}), "-01")), format = "%Y-%m-%d"),
+      length_format %in% 9 ~   format(as.POSIXct(format(as.Date(paste0(sub("---","-",{{ret_col}}), "-01"),format = "%Y-%m-%d"), format = "%Y-%m-%d"),
                                                  format = "%Y-%m-%d"), format = "TUN:UN:UN"), # Output type:TUN:UN:UN
       length_format %in% 10 ~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d"), format = "TUN:UN:UN"), # Output type:TUN:UN:UN
       length_format %in% 16 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M"), format = "T%H:%M:UN"), # Output type:T09:35:UN
       length_format %in% 16 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d %H:%M"), format = "T%H:%M:UN"), # Output type:T09:35:UN
 
-      length_format %in% 19 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M:%S"), format = "T%H:%M:%S"), # Output type:"09:35:00"
-      length_format %in% 19 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d %H:%M:%S"), format = "T%H:%M:%S"), # Output type:"T09:35:00"
+      length_format %in% 19 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M:%S"), format = "T%H:%M:%S"), # Output type:"09:35:00"
+      length_format %in% 19 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d %H:%M:%S"), format = "T%H:%M:%S"), # Output type:"T09:35:00"
       TRUE~"")
     ) %>%
     #combine date and time parts

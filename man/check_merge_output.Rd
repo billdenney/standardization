@@ -14,7 +14,7 @@ check_merge_output(data, study, ...)
 \item{...}{are grouping variables}
 }
 \value{
-throws an error and prints duplicate rows
+prints duplicate rows and throws an error if duplicate rows are present
 }
 \description{
 checks for duplicate rows

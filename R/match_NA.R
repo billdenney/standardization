@@ -44,7 +44,7 @@ match_NA<-function(data1, data2){
 
   for (i in 1: length(output_colnames)){
     ifelse(!any(NA_check_df[,output_colnames[i]] %in% NA_check_df[,input_colnames[i]]),
-           print(paste0(output_colnames[i] ," & ",input_colnames[i]," does not match")),
+           warning(paste0(output_colnames[i] ," & ",input_colnames[i]," does not match")),
            list(NULL))
   }
 

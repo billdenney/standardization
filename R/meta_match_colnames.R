@@ -44,7 +44,7 @@ meta_match_colnames <- function(data, file, coltype) {
     filter(col_type %in% coltype) %>%
     select(Columns_spec, Labels, col_type) %>%
     group_by(Columns_spec, col_type, Labels) %>%
-    mutate(Labels = strsplit(Labels, ", |,| ,")) %>% # For cases where there are different labels for different files/domains eg: EX and PC PARAM labels are different
+    mutate(Labels = strsplit(Labels, ", |,| ,")) %>%
     unnest(cols = Labels) %>%
     ungroup()
 

@@ -6,7 +6,7 @@
 #' @param ... are grouping variables
 #' @description checks for duplicate rows
 #'
-#' @return throws an error and prints duplicate rows
+#' @return prints duplicate rows and throws an error if duplicate rows are present
 #' @export
 #'
 #' @examples

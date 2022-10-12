@@ -20,5 +20,5 @@ for each pair of corresponding source and output columns a check column with tru
 rowwise comparison of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
 }
 \examples{
-match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
+match_missing_values(source<-data.frame(col1=c(2,3,"NA")), output<-data.frame(col1=c(2,3,"NA")))
 }
