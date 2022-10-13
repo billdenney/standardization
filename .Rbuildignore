@@ -16,3 +16,4 @@
 .RDataTmp
 .Rhistory
 .Rapp.history
+^codecov\.yml$
