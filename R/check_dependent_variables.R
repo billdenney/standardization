@@ -1,7 +1,7 @@
 #' A standardization function
 #'
 #' @param data is a data frame containing variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD
-#'
+#' @description verifies variables for missing values
 #' @return returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, chk_NTSFM, chk_NTAD, chk_TAD
 #' @export
 #'
@@ -62,7 +62,7 @@ check_dependent_variables<-function(data){
     dplyr::mutate(chk_NTAD=case_when(
       !is.na(NTAD) ~1,
       is.na(NTSFM) & is.na(NTAD)~1,
-      min_no_na(NTSFM[EVID %in% 1]) %in% NA_integer_ & is.na(NTAD)~1,
+      suppressWarnings(min(NTSFM[EVID %in% 1]) %in% NA_integer_) & is.na(NTAD)~1,
       TRUE~0
     )) %>%
     dplyr::ungroup() %>%
@@ -74,7 +74,7 @@ check_dependent_variables<-function(data){
     dplyr::mutate(chk_TAD=case_when(
       !is.na(TAD) ~1,
       is.na(TSFM) & is.na(TAD)~1,
-      suppressWarnings( min_no_na(TSFM[EVID %in% 1]) %in% NA_integer_  & is.na(TAD)) ~1,
+      suppressWarnings(min(TSFM[EVID %in% 1]) %in% NA_integer_) & is.na(TAD) ~1,
       TRUE~0
     )) %>%
     dplyr::ungroup() %>%

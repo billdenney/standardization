@@ -5,7 +5,7 @@
 #' @param col2 is for study2
 #' @param exclude_var excluded specific parameter names where units do not apply eg. scores
 #'
-#' @return compares and checks for uniformity of units within a parameter name between two studies
+#' @return compares and checks for uniformity of units within a parameter name across two studies
 #' @export
 #'
 #' @examples
@@ -37,10 +37,11 @@ check_units<-function(data,col1,col2,exclude_var){
     mutate(test=case_when(
       {{col1}} == {{col2}}~ TRUE,
       TRUE ~ FALSE )) %>%
-    filter(!PARAM %in% exclude_var) %>%
-    filter(!test %in% TRUE)
+    verify(!duplicated(PARAM)) %>%
+    filter(!test %in% TRUE) %>%
+    verify(!test %in% FALSE)
 
-  print(check_df)
+  return(check_df)
 
 
 }

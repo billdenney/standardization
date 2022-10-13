@@ -13,5 +13,5 @@ check_dependent_variables(data)
 returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, chk_NTSFM, chk_NTAD, chk_TAD
 }
 \description{
-A standardization function
+verifies variables for missing values
 }

@@ -16,7 +16,7 @@ check_units(data, col1, col2, exclude_var)
 \item{exclude_var}{excluded specific parameter names where units do not apply eg. scores}
 }
 \value{
-compares and checks for uniformity of units within a parameter name between two studies
+compares and checks for uniformity of units within a parameter name across two studies
 }
 \description{
 A standardization function
