@@ -12,7 +12,7 @@
 #' @examples
 check_merge_output <- function(data, study, ...) {
   group_var <- enquos(...)
-  for (i in 1:length(study)) {
+  for (i in seq_along(study)) {
     print(paste0("Checking study: ", study[i]))
     check_dupl <-
       data %>%

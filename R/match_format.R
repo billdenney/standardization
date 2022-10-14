@@ -85,7 +85,7 @@ match_format <- function(data, file, coltype) {
 
 
 
-  for (i in 1:length(names_df)) {
+  for (i in seq_along(names_df)) {
     if (!(class(data[, names_df[i]]) %in% format_df[i])) {
       data[, names_df[i]] <- eval(call(paste0("as.", format_df[i]), data[, names_df[i]]))
     } else {

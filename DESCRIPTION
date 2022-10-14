@@ -9,8 +9,6 @@ License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0.9000
-Suggests: 
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
     assertr,
@@ -21,9 +19,15 @@ Imports:
     lubridate,
     magrittr,
     purrr (>= 0.3.3),
+    readxl,
     rio,
     rlang,
     stringr,
+    testthat (>= 3.0.0),
     tibble,
     tidyr,
-    utils
+    utils,
+    withr
+Depends: 
+    R (>= 2.10)
+LazyData: true
