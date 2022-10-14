@@ -56,7 +56,7 @@ date_time_format <- function(data, col) {
   match_format_len <- as.vector(setdiff(format_list, format_len))
 
   if (!is_empty(match_format_len)) {
-    print(paste("missing format type", match_format_len))
+    warning(paste("missing format type", match_format_len))
   } else if (is_empty(match_format_len)) {
     NULL
   }
