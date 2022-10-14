@@ -1,17 +1,15 @@
 Package: standardization
-Title: Simplify data management to create nlmixr2- and NONMEM-ready data
+Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description:
-  standardizations simplifies data management to create nlmixr2- and
-  NONMEM-ready data.  It enables checks to ensure that data are well-formed and
-  consistent so that they are ready for analysis.
+Description: What the package does (one paragraph).
 License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0.9000
+
 Config/testthat/edition: 3
 Imports: 
     assertr,
@@ -26,7 +24,7 @@ Imports:
     rio,
     rlang,
     stringr,
-    testthat,
+    testthat (>= 3.0.0),
     tibble,
     tidyr,
     utils,
