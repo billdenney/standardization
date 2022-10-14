@@ -26,7 +26,8 @@ Imports:
     testthat,
     tibble,
     tidyr,
-    utils
+    utils,
+    withr
 Depends: 
     R (>= 2.10)
 LazyData: true

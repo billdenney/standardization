@@ -1,7 +1,7 @@
 lb <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/lb.csv")
 specs <- "..../data-raw/specs.xlsx"
 
-options(error=NULL)
+
 
 test_that("check_units works", {
   lb_study1<-lb %>%

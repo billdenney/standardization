@@ -1,7 +1,7 @@
 test_that("match_NA works", {
 
 
-  source_1<-source<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06",
+  source_1<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06",
                                       "XYZ","2015-04-06T09:10",
                                       "Cycle 1","."," "))
   output_1<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06T",
@@ -10,10 +10,10 @@ test_that("match_NA works", {
   match_NA_1<-match_NA(source_1,output_1)
 
 
-  source_2<-data.frame(USUBJID=c(1:12),ETHNIC=c(2,3,"<3.5","2015-04-06",
+  source_2<-data.frame(USUBJID=1:12,ETHNIC=c(2,3,"<3.5","2015-04-06",
                                                 "XYZ","2015-04-06T09:10",
                                                 "Cycle 1"," "," "," ","NA",1))
-  output_2<-data.frame(USUBJID=c(1:12),ETHNIC=c(2,3,"<3.5","2015-04-06T",
+  output_2<-data.frame(USUBJID=1:12,ETHNIC=c(2,3,"<3.5","2015-04-06T",
                                                 "XYZ dosing","2015-04-06 09:10",
                                                 "Cycle 1","U","Unknown","UNKNOWN","NA","NA"))
   match_NA_2<-suppressWarnings(match_NA(source_2,output_2))
@@ -36,8 +36,8 @@ test_that("match_NA works", {
   expect_setequal(names(match_NA_1) %in% c("col1_Output" ,"col1_Input" ), TRUE)
   expect_setequal(names(match_NA_2) %in% c("USUBJID_Output" ,"USUBJID_Input",
                                            "ETHNIC_Output" ,"ETHNIC_Input" ), TRUE)
-  expect_setequal(check_values_1 %in% c(TRUE), TRUE)
-  expect_setequal(check_values_2 %in% c(FALSE), TRUE)
+  expect_setequal(check_values_1 %in% TRUE, TRUE)
+  expect_setequal(check_values_2 %in% FALSE, TRUE)
   expect_warning(match_NA(source_1,output_1),NA)
   expect_warning(match_NA(source_2,output_2),"ETHNIC_Output & ETHNIC_Input does not match")
 

@@ -1,15 +1,15 @@
-suppressWarnings(library(labelled))
+
 dm <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/dm.csv")
 specs <- "../data-raw/specs.xlsx"
 cols<-c("STUDYID","USUBJID","SEX","AGE","AGEU","RACE","ETHNIC")
 labels<-c("Study Identifier","Unique Subject Identifier","Sex","Age","Age Units","Race","Ethnicity")
 
 assign_var<-function(data,columns,label){
-  
-  for(i in 1:length(cols)){
-    var_label(dm[,cols[i]]) <- labels[i]
+
+  for(i in seq_along(cols)){
+    labelled::var_label(dm[,cols[i]]) <- labels[i]
   }
-  
+
   return(dm)
 }
 

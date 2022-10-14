@@ -2,7 +2,7 @@
 
 test_that("date_time_format works ", {
   dtc_df <- data.frame(ADTC = c(
-    "2004", "2015-04", "2015---04",
+      "2004", "2015-04", "2015---04",
     "2014-02-12", "2014-02-12T13:20", "2014-01-22T09:35:00",
     "", NA
   ))
@@ -38,7 +38,7 @@ test_that("date_time_format works ", {
     )
 
 
-  dtc_df_formats<-data.frame(ADTC=c("2014-01-22  09:35:00"))
+  dtc_df_formats<-data.frame(ADTC="2014-01-22  09:35:00")
 
 
   match_TRUE <- format_check %>%
