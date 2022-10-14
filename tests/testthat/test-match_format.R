@@ -5,13 +5,13 @@ specs <- "../data-raw/specs.xlsx"
 
 test_that("match_format works", {
 
-  format_df<-match_colnames(dm,specs,c("Demographics")) %>% match_format(specs,c("Demographics"))
+  format_df<-match_colnames(dm,specs,"Demographics") %>% match_format(specs,"Demographics")
 
   expect_setequal(names(format_df),c("AGE","AGEU","RACE","ETHNIC"))
   expect_setequal(class(format_df$AGE),"numeric")
   expect_setequal(class(format_df$AGEU),"character")
   expect_setequal(class(format_df$RACE),"character")
   expect_setequal(class(format_df$ETHNIC),"character")
-  expect_error(match_colnames(dm,specs,c("Demographics")) %>% match_format(specs,c("Demographics")),NA)
+  expect_error(match_colnames(dm,specs,"Demographics") %>% match_format(specs,"Demographics"),NA)
 
 })

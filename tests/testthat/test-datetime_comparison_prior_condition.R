@@ -18,13 +18,13 @@ AE <- ae %>%
 
 output_cond1 <- datetime_comparison_prior_condition(EX, AE, "EXSTDTC", "AESTDTC",
                                                     colwithconditions = "AEDECOD",
-                                                    filter_val = c("Agitation"),
+                                                    filter_val = "Agitation",
                                                     condition1 = "PRIOR_Agitation"
 )
 
 output_cond2 <- datetime_comparison_prior_condition(EX, AE, "EXSTDTC", "AESTDTC",
                                                     colwithconditions = "AEDECOD",
-                                                    filter_val = c("Anxiety"),
+                                                    filter_val = "Anxiety",
                                                     condition1 = "PRIOR_Anxiety"
 )
 
@@ -35,7 +35,7 @@ expect_setequal(is.na(output_cond1$EXSTDTC), FALSE)
 expect_setequal(is.na(output_cond1$AESTDTC), FALSE)
 expect_setequal(is.na(output_cond2$EXSTDTC), FALSE)
 expect_setequal(is.na(output_cond2$AESTDTC), FALSE)
-expect_setequal(unique(nchar(output_cond1$EXSTDTC)), c(19))
-expect_setequal(unique(nchar(output_cond1$AESTDTC)), c(19))
-expect_setequal(unique(nchar(output_cond2$EXSTDTC)), c(19))
-expect_setequal(unique(nchar(output_cond2$AESTDTC)), c(19))
+expect_setequal(unique(nchar(output_cond1$EXSTDTC)), 19)
+expect_setequal(unique(nchar(output_cond1$AESTDTC)), 19)
+expect_setequal(unique(nchar(output_cond2$EXSTDTC)), 19)
+expect_setequal(unique(nchar(output_cond2$AESTDTC)), 19)

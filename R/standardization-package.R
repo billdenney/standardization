@@ -43,9 +43,11 @@
 #' @importFrom stringr regex
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_extract
+#' @importFrom testthat test_check
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyr replace_na
 #' @importFrom tidyr unnest
 #' @importFrom utils View
+#' @importFrom withr with_options
 ## usethis namespace: end
 NULL

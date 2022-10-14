@@ -1,8 +1,8 @@
 
-options(error=NULL)
+
 test_that("dependent variables", {
-  
-  
+
+
   df_1<-data.frame(
     STUDYID=c(rep("S-CDSK-02",6)),
     USUBJID=c(rep("CDISC01.10001",6)),
@@ -21,7 +21,7 @@ test_that("dependent variables", {
     ADTC_IMPUTED=c("2019-07-22T09:41","2019-07-29T09:03","2019-07-22T08:55","2019-07-22T08:40",
                    "2019-07-29T08:57","2019-07-29")
     )
-  
+
   df_2<-data.frame(
     STUDYID=c(rep("S-CDSK-02",6)),
     USUBJID=c(rep("CDISC01.10002",6)),
@@ -40,7 +40,7 @@ test_that("dependent variables", {
     ADTC_IMPUTED=c("2019-07-22T09:41","2019-07-29T09:03","2019-07-22T08:55","2019-07-22T08:40",
                    "2019-07-29T08:57","2019-07-29")
   )
-  
+
   df_3<-data.frame(
     STUDYID=c(rep("S-CDSK-02",10)),
     USUBJID=c(rep("CDISC01.10002",10)),
@@ -61,19 +61,19 @@ test_that("dependent variables", {
       "2019-11-06T11:47","2019-11-06","2019-12-03","2019-11-06T11:28",
       "2019-12-09","2019-11-15")
   )
-  
+
   check_dependent_var_1<-check_dependent_variables(df_1)
   check_dependent_var_2<-check_dependent_variables(df_2)
   check_dependent_var_3<-check_dependent_variables(df_3)
   expect_error(check_dependent_variables(df_1),NA)
   expect_error(check_dependent_variables(df_2),NA)
   expect_error(check_dependent_variables(df_3),NA)
-  expect_setequal(check_dependent_var_1 %>% select(contains("chk")) %>% 
+  expect_setequal(check_dependent_var_1 %>% select(contains("chk")) %>%
                     distinct() %>% pull() %>% unique(),1)
-  expect_setequal(check_dependent_var_2 %>% select(contains("chk")) %>% 
+  expect_setequal(check_dependent_var_2 %>% select(contains("chk")) %>%
                     distinct() %>% pull() %>% unique(),1)
-  expect_setequal(check_dependent_var_3 %>% select(contains("chk")) %>% 
+  expect_setequal(check_dependent_var_3 %>% select(contains("chk")) %>%
                     distinct() %>% pull() %>% unique(),1)
-  
-  
+
+
 })
