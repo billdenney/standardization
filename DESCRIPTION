@@ -1,10 +1,13 @@
 Package: standardization
-Title: What the Package Does (One Line, Title Case)
+Title: Simplify data management to create nlmixr2- and NONMEM-ready data
 Version: 0.0.0.9000
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description:
+  standardizations simplifies data management to create nlmixr2- and
+  NONMEM-ready data.  It enables checks to ensure that data are well-formed and
+  consistent so that they are ready for analysis.
 License: AGPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
