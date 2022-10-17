@@ -16,7 +16,6 @@ returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, ch
 verifies variables for missing values
 }
 \examples{
-
 df_1<-data.frame(
  STUDYID=c(rep("S-CDSK-02",6)),
  USUBJID=c(rep("CDISC01.10001",6)),

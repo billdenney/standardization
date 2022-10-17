@@ -6,7 +6,6 @@
 #' @export
 #'
 #' @examples
-#'
 #'df_1<-data.frame(
 #'  STUDYID=c(rep("S-CDSK-02",6)),
 #'  USUBJID=c(rep("CDISC01.10001",6)),
