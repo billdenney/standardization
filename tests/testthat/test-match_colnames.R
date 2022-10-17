@@ -1,7 +1,7 @@
 ae <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/ae.csv")
 dm <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/dm.csv")
-specs <- "../data-raw/specs.xlsx"
-
+#specs <- "../data-raw/specs.xlsx"
+specs<-import_list("../data-raw/specs.xlsx")
 
 test_that("match_colnames works", {
 

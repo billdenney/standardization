@@ -1,17 +1,24 @@
 
-#' A standardization function
+#' Matches for standard column names and their variants, selects applicable variables present in source dataset, and creates empty columns for missing variables
 #'
 #' @name match_colnames
 #' @param data is a data frame
 #' @param file is path for specifications file that informs selection of variables
 #' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
-#' @description matches for standard column names present in specifications file path, selects applicable variables present in source dataset, and creates empty columns for missing variables
+#' @description matches for standard column names and their variants present in specifications file, selects applicable variables present in source dataset, and creates empty columns for missing variables
 #' @return a data frame with specified variables selected
 #' @export
-#'
 #' @examples
+#' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
+#' list1<-data.frame(`Column Name`="AGE",
+#' Labels="Age in years at baseline",
+#' `Column Type`="Demographics",
+#' Format="Numeric"')
+#' specification<-list(list1)
+#' names(specification)<-"Specification-Source Data"
+#' format_df<-match_colnames(df,file=specification,coltype="Demographics")
 match_colnames <- function(data, file, coltype) {
-  d_specification <- import_list(file_in(file), guess_max = 1e6)
+  d_specification <- file
   source_cols <-
     d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%

@@ -1,4 +1,4 @@
-#' A standardization function
+#' Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ
 #'
 #' @param data is a data frame containing AVALC variable for recoding
 #' @param col is the equivalent for AVALC variable

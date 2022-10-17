@@ -1,4 +1,4 @@
-#' A standardization function
+#' Replaces NA and blanks with replacement pattern
 #'
 #' @param data is a data frame
 #' @param columns to replace

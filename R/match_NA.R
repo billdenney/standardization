@@ -1,4 +1,4 @@
-#' A standardization function
+#' Matches missing values between datasets
 #'
 #' @param data1 first data frame
 #' @param data2 second data frame

@@ -1,4 +1,4 @@
-#' A standardization function
+#' Matches for variables based on metadata, selects applicable variables present in source dataset, and creates empty columns for missing variables
 #'
 #' @param data is a data frame
 #' @param file is path for specifications file that informs selection of variables
@@ -6,15 +6,22 @@
 #' @description matches for variables based on metadata, selects applicable variables present in source dataset, and creates empty columns for missing variables
 #' @return a data frame with specified variables selected
 #' @export
-#'
 #' @examples
+#' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
+#' list1<-data.frame(`Column Name`="AGE",
+#' Labels="Age in years at baseline",
+#' `Column Type`="Demographics",
+#' Format="Numeric"')
+#' specification<-list(list1)
+#' names(specification)<-"Specification-Source Data"
+#' format_df<-meta_match_colnames(df,file=specification,coltype="Demographics")
 meta_match_colnames <- function(data, file, coltype) {
   meta_df <- Hmisc::contents(data)
   meta_dat <- data.frame(meta_df[1])
   meta_file <- tibble::rownames_to_column(meta_dat, "Contents.Columns") %>% select(Contents.Columns, contents.Labels)
   colnames(meta_file) <- substring(colnames(meta_file), 10, 17)
 
-  d_specification <- import_list(file_in(file), guess_max = 1e6)
+  d_specification <- file
   source_cols <- d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%
     select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%

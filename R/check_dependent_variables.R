@@ -1,4 +1,4 @@
-#' A standardization function
+#' checks time variables
 #'
 #' @param data is a data frame containing variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD
 #' @description verifies variables for missing values
@@ -7,6 +7,25 @@
 #'
 #' @examples
 #'
+#'df_1<-data.frame(
+#'  STUDYID=c(rep("S-CDSK-02",6)),
+#'  USUBJID=c(rep("CDISC01.10001",6)),
+#'  NTSFD=c(0,168,0,0,168,168),
+#'  NTSFM=c(0,168,0,0,168,168),
+#'  EVID=c(1,1,0,0,0,0),
+#'  TSFD=c(0,167.3667,-0.7667,-1.0167,167.2667,167.2667),
+#'  TSFM=c(1320.3667,1487.7333,1319.6,1319.35,1487.6333,1487.6333),
+#'  NTAD=c(0,0,0,0,0,0),
+#'  TAD=c(0,0,-0.7667,-1.0167,167.2667,167.2667),
+#'  VISITDY=c(1,8,1,1,8,8),
+#'  ATPTN=c(0,0,"","","",""),
+#'  ADTC=c(
+#'    "2019-07-22T09:41:UN","2019-07-29T09:03:UN","2019-07-22T08:55:UN","2019-07-22T08:40:UN",
+#'    "2019-07-29T08:57:UN","2019-07-29TUN:UN:UN"),
+#'  ADTC_IMPUTED=c("2019-07-22T09:41","2019-07-29T09:03","2019-07-22T08:55","2019-07-22T08:40",
+#'                 "2019-07-29T08:57","2019-07-29")
+#')
+#' check_dependent_variables(df_1)
 check_dependent_variables<-function(data){
 
   print("checking NTSFD")

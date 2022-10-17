@@ -1,14 +1,23 @@
-#' A standardization function
+#' Compares and checks for uniformity of units within a parameter name across two studies
 #'
 #' @param data is a data frame
 #' @param col1 is for study1
 #' @param col2 is for study2
 #' @param exclude_var excluded specific parameter names where units do not apply eg. scores
 #'
-#' @return compares and checks for uniformity of units within a parameter name across two studies
+#' @return data.frame with non-matching units or empty data.frame
 #' @export
 #'
 #' @examples
+#' df<-data.frame(
+#' STUDYID=c("CDISK-01","CDISK-01","CDISK-02","CDISK-02","CDISK-02"),
+#' USUBJID=paste0("CDISC01.10000",c(1:5)),
+#' PARAM=c("CDISK dosing","Hemoglobin","Glucose","Hemoglobin","Glucose"),
+#' ECDOSEU=c("mg","","","",""),
+#' EXDOSEU=c("","","","",""),
+#' AVALU=c("","g/dl","mmol/L","g/dl","mmol/L")
+#' )
+#'check_units(df)
 check_units<-function(data,col1,col2,exclude_var){
 
   check<-data %>%
@@ -41,7 +50,7 @@ check_units<-function(data,col1,col2,exclude_var){
     filter(!test %in% TRUE) %>%
     verify(!test %in% FALSE)
 
-  return(check_df)
+  check_df
 
 
 }

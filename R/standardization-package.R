@@ -47,6 +47,7 @@
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyr replace_na
 #' @importFrom tidyr unnest
+#' @importFrom utils read.csv
 #' @importFrom utils View
 #' @importFrom withr with_options
 ## usethis namespace: end

@@ -2,7 +2,7 @@
 % Please edit documentation in R/recode_VISIT.R
 \name{recode_VISIT}
 \alias{recode_VISIT}
-\title{A standardization function}
+\title{Numeric recoding of VISIT variable}
 \usage{
 recode_VISIT(data, cycle_length)
 }
@@ -15,7 +15,7 @@ recode_VISIT(data, cycle_length)
 VISITDY when VISIT column is present in data frame
 }
 \description{
-A standardization function
+Numeric recoding of VISIT variable
 }
 \examples{
 recode_VISIT(data.frame(VISIT=c("Cycle 1 Day 1","cycle 2 day 2","week 10")),cycle_length = 21)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_missing_values.R
 \name{match_missing_values}
 \alias{match_missing_values}
-\title{A standardization function}
+\title{Rowwise comparison of missing values between two data.frames}
 \usage{
 match_missing_values(data1, data2, ...)
 }
@@ -17,7 +17,7 @@ match_missing_values(data1, data2, ...)
 for each pair of corresponding source and output columns a check column with true/false values returned within a data.frame
 }
 \description{
-rowwise comparison of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
+rowwise comparison of missing values between data.frames to identify accidentally occurring missing values
 }
 \examples{
 match_missing_values(source<-data.frame(col1=c(2,3,"NA")), output<-data.frame(col1=c(2,3,"NA")))

@@ -1,5 +1,5 @@
 
-#' A standardization function
+#' Numeric recoding of VISIT variable
 #'
 #' @param data is a data frame containing VISIT variable for recoding
 #' @param cycle_length is a numeric vector

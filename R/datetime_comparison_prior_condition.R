@@ -1,5 +1,5 @@
 
-#' A standardization function
+#' Compares datetime with earliest dosing datetime to extract prior condition
 #'
 #' @name datetime_comparison_prior_condition
 #' @param file_name1 is first data frame with dosing dtc variable
@@ -15,6 +15,29 @@
 #' @export
 #'
 #' @examples
+#' ex<-data.frame(
+#' STUDYID=rep("S-CDSK-01",4),
+#' DOMAIN=rep("EX",4),
+#' USUBJID=c("CDISC01.001","CDISC01.002","CDISC01.003","CDISC01.008"),
+#' EXTRT=rep("THEOPHYLLINE",4),
+#' EXROUTE=rep("ORAL",4),
+#' EXDOSE=c(4.02,4.4,4.53,4.53),
+#' EXDOSU=rep("mg/kg",4),
+#' EXSTDTC=rep("29-04-2003",4)
+#' )
+#' ae<-data.frame(
+#' STUDYID=rep("S-CDSK-01",3),
+#' DOMAIN=rep("AE",3),
+#' USUBJID=c("CDISC01.008","CDISC01.008","CDISC01.001"),
+#' AEDECOD=c("Agitation","Anxiety","Anxiety"),
+#' AESTDTC=c("29-04-2002","29-04-2001","16-10-2003")
+#' )
+#'datetime_comparison_prior_condition(ex, ae, "EXSTDTC", "AESTDTC",
+#'colwithconditions = "AEDECOD",
+#'filter_val = "Agitation",
+#'condition1 = "PRIOR_Agitation"
+#')
+
 datetime_comparison_prior_condition <-
   function(file_name1, file_name2, datetimecol1, datetimecol2, datetimecol3,
            colwithconditions, filter_val, condition1) {

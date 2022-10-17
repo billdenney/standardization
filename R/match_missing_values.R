@@ -1,10 +1,10 @@
-#' A standardization function
+#' Rowwise comparison of missing values between two data.frames
 #'
 #' @name match_missing_values
 #' @param data1 first data.frame
 #' @param data2 second data.frame
 #' @param ... are grouping variables used to arrange the data
-#' @description  rowwise comparison of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
+#' @description  rowwise comparison of missing values between data.frames to identify accidentally occurring missing values
 #' @return for each pair of corresponding source and output columns a check column with true/false values returned within a data.frame
 #' @export
 #'

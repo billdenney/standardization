@@ -2,7 +2,7 @@
 % Please edit documentation in R/pk_variables.R
 \name{pk_variables}
 \alias{pk_variables}
-\title{A standardization function}
+\title{Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ}
 \usage{
 pk_variables(data, col)
 }
@@ -15,7 +15,7 @@ pk_variables(data, col)
 AVALN, ALLOQ and AULOQ
 }
 \description{
-A standardization function
+Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ
 }
 \examples{
 pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")

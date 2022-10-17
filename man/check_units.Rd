@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_units.R
 \name{check_units}
 \alias{check_units}
-\title{A standardization function}
+\title{Compares and checks for uniformity of units within a parameter name across two studies}
 \usage{
 check_units(data, col1, col2, exclude_var)
 }
@@ -16,8 +16,19 @@ check_units(data, col1, col2, exclude_var)
 \item{exclude_var}{excluded specific parameter names where units do not apply eg. scores}
 }
 \value{
-compares and checks for uniformity of units within a parameter name across two studies
+data.frame with non-matching units or empty data.frame
 }
 \description{
-A standardization function
+Compares and checks for uniformity of units within a parameter name across two studies
+}
+\examples{
+df<-data.frame(
+STUDYID=c("CDISK-01","CDISK-01","CDISK-02","CDISK-02","CDISK-02"),
+USUBJID=paste0("CDISC01.10000",c(1:5)),
+PARAM=c("CDISK dosing","Hemoglobin","Glucose","Hemoglobin","Glucose"),
+ECDOSEU=c("mg","","","",""),
+EXDOSEU=c("","","","",""),
+AVALU=c("","g/dl","mmol/L","g/dl","mmol/L")
+)
+check_units(df)
 }

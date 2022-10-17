@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_colnames.R
 \name{match_colnames}
 \alias{match_colnames}
-\title{A standardization function}
+\title{Matches for standard column names and their variants, selects applicable variables present in source dataset, and creates empty columns for missing variables}
 \usage{
 match_colnames(data, file, coltype)
 }
@@ -17,5 +17,5 @@ match_colnames(data, file, coltype)
 a data frame with specified variables selected
 }
 \description{
-matches for standard column names present in specifications file path, selects applicable variables present in source dataset, and creates empty columns for missing variables
+matches for standard column names and their variants present in specifications file, selects applicable variables present in source dataset, and creates empty columns for missing variables
 }

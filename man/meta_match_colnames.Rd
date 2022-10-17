@@ -2,7 +2,7 @@
 % Please edit documentation in R/meta_match_colnames.R
 \name{meta_match_colnames}
 \alias{meta_match_colnames}
-\title{A standardization function}
+\title{Matches for variables based on metadata, selects applicable variables present in source dataset, and creates empty columns for missing variables}
 \usage{
 meta_match_colnames(data, file, coltype)
 }

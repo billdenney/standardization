@@ -1,4 +1,4 @@
-#' A standardization function
+#' Matches and changes format of variables as per specifications
 #'
 #' @param data is a data frame
 #' @param file is path for specifications file that informs selection of variables
@@ -8,8 +8,23 @@
 #' @export
 #'
 #' @examples
+#' df<-data.frame(STUDYID=rep("S-CDSK-01",3),
+#' DOMAIN=rep("YEARS",3),
+#' USUBJID=paste0("CDISC01.10000",c(1:3)),
+#' Age=c(72,66,78)
+#' )
+#' list1<-data.frame(
+#'   `Column Name`=c("AGE","AGEU","RACE","ETHNIC"),
+#'   `Column Name Variants`=c("Age","","",""),
+#'   Labels=c("Age in years at baseline","Units for AGE","Race","Ethnic group"),
+#'   `Column Type`=rep("Demographics",4),
+#'   Format=c("Numeric","Character","Character","Character")
+#')
+#'specification<-list(list1)
+#'names(specification)<-"Specification-Source Data"
+#'format_df<-match_format(df,file=specification,coltype="Demographics")
 match_format <- function(data, file, coltype) {
-  d_specification <- import_list(file_in(file), guess_max = 1e6)
+  d_specification <- file
   source_cols <- d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%
     select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%

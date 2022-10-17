@@ -1,5 +1,5 @@
 
-#' Title
+#' converts datetime variable to ISO 8601
 #'
 #' @name date_time_format
 #' @param data is a data frame with datetime variables

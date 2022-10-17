@@ -1,5 +1,6 @@
 ^standardization\.Rproj$
 ^\.Rproj\.user$
+^codecov\.yml$
 ^\.github$
 ^LICENSE\.md$
 ^desktop.ini$
@@ -16,4 +17,6 @@
 .RDataTmp
 .Rhistory
 .Rapp.history
-^codecov\.yml$
+
+^data-raw$
+^examples$

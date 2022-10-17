@@ -1,4 +1,4 @@
-#' A standardization function
+#' Numeric recoding of ATPT variable
 #'
 #' @param data containing ATPT variable for recoding
 #' @return`data` with the column ATPTN
