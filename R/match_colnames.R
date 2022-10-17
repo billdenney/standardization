@@ -94,7 +94,7 @@ match_colnames <- function(data, file, coltype) {
   data_ret[, addmissingcols] <- NA
 
 
-  return(data_ret)
+  data_ret
 }
 
 

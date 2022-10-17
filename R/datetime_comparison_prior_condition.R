@@ -78,7 +78,7 @@ datetime_comparison_prior_condition <-
       mutate({{ condition1 }} := {{ colwithconditions }}) %>%
       select(STUDYID, USUBJID, {{ condition1 }}, datetimecol1, datetimecol2)
 
-      return(data_ret)
+      data_ret
 
   }
 

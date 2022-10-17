@@ -51,7 +51,7 @@ recode_VISIT <- function(data, cycle_length) {
     mutate(
       VISIT = na_if(VISIT, ""))
 
-  return(recode_ret)
+  recode_ret
 
 }
 

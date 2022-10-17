@@ -1,6 +1,6 @@
 
 
-test_that("dependent variables", {
+test_that("check_time variables works", {
 
 
   df_1<-data.frame(
@@ -62,17 +62,17 @@ test_that("dependent variables", {
       "2019-12-09","2019-11-15")
   )
 
-  check_dependent_var_1<-check_dependent_variables(df_1)
-  check_dependent_var_2<-check_dependent_variables(df_2)
-  check_dependent_var_3<-check_dependent_variables(df_3)
-  expect_error(check_dependent_variables(df_1),NA)
-  expect_error(check_dependent_variables(df_2),NA)
-  expect_error(check_dependent_variables(df_3),NA)
-  expect_setequal(check_dependent_var_1 %>% select(contains("chk")) %>%
+  check_time_var_1<-check_time_variables(df_1)
+  check_time_var_2<-check_time_variables(df_2)
+  check_time_var_3<-check_time_variables(df_3)
+  expect_error(check_time_variables(df_1),NA)
+  expect_error(check_time_variables(df_2),NA)
+  expect_error(check_time_variables(df_3),NA)
+  expect_setequal(check_time_var_1 %>% select(contains("chk")) %>%
                     distinct() %>% pull() %>% unique(),1)
-  expect_setequal(check_dependent_var_2 %>% select(contains("chk")) %>%
+  expect_setequal(check_time_var_2 %>% select(contains("chk")) %>%
                     distinct() %>% pull() %>% unique(),1)
-  expect_setequal(check_dependent_var_3 %>% select(contains("chk")) %>%
+  expect_setequal(check_time_var_3 %>% select(contains("chk")) %>%
                     distinct() %>% pull() %>% unique(),1)
 
 

@@ -111,6 +111,7 @@ date_time_format <- function(data, col) {
     select(-{{ mod_col }}) %>%
     select(-{{ NA_col }},-{{ date_col }},-{{ time_col }},-{{ ret_col }},-{{ ret_col }}, -length_format)
 
+ modified_dat
 
 }
 
