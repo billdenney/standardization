@@ -2,22 +2,22 @@
 % Please edit documentation in R/replace_na_blank.R
 \name{replace_na_blank}
 \alias{replace_na_blank}
-\title{A standardization function}
+\title{Replaces NA and blanks with replacement pattern}
 \usage{
 replace_na_blank(data, columns, replacement)
 }
 \arguments{
-\item{data}{is a data frame}
+\item{data}{is a data.frame}
 
 \item{columns}{to replace}
 
 \item{replacement}{pattern to replace NA and blanks in columns}
 }
 \value{
-data frame with missing rows ("", NA) replaced with specified replacement pattern
+data.frame with missing rows("", NA) replaced with specified replacement pattern
 }
 \description{
-A standardization function
+Replaces NA and blanks with replacement pattern
 }
 \examples{
 replace_na_blank(data.frame(col1=c(1,"",NA_character_)),c("col1"),"U")

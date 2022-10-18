@@ -1,6 +1,7 @@
 
 dm <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/dm.csv")
-specs <- "../data-raw/specs.xlsx"
+
+specs<-import_list("../data-raw/specs.xlsx")
 cols<-c("STUDYID","USUBJID","SEX","AGE","AGEU","RACE","ETHNIC")
 labels<-c("Study Identifier","Unique Subject Identifier","Sex","Age","Age Units","Race","Ethnicity")
 

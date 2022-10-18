@@ -1,4 +1,4 @@
-test_that("PARAMN and STUDYIDN", {
+test_that("check_derived_variables works", {
   
   df<-data.frame(
     PARAM=c("Hemoglobin","Glucose"),

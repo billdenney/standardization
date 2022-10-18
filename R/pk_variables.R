@@ -1,12 +1,11 @@
-#' A standardization function
+#' Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ
 #'
-#' @param data is a data frame containing AVALC variable for recoding
-#' @param col is the equivalent for AVALC variable
-#'
-#' @return AVALN, ALLOQ and AULOQ
+#' @param data a data.frame with AVALC variable for recoding
+#' @param col is the equivalent for AVALC variable in source dataset
+#' @return data.frame with variables AVALN, ALLOQ and AULOQ
 #' @export
-#'
-#' @examples pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")
+#' @examples 
+#' pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")
 pk_variables <- function(data, col) {
   col <- as.name(col)
 
@@ -36,6 +35,8 @@ pk_variables <- function(data, col) {
       ALLOQ = values$llq,
       AULOQ = values$ulq
     )
+  
+  ret
 }
 
 

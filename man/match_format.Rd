@@ -2,20 +2,37 @@
 % Please edit documentation in R/match_format.R
 \name{match_format}
 \alias{match_format}
-\title{A standardization function}
+\title{Matches and changes format of variables as per specifications}
 \usage{
 match_format(data, file, coltype)
 }
 \arguments{
-\item{data}{is a data frame}
+\item{data}{data.frame that serves as a source dataset}
 
-\item{file}{is path for specifications file that informs selection of variables}
+\item{file}{is a specifications file(list or .xlsx) that informs selection of variables}
 
 \item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
 }
 \value{
-a data frame with specified variables converted to required format
+a data.frame with specified variables converted to required format
 }
 \description{
-matches for specified format(numeric or character) of the variable and converts variables to required format
+checks if variables are in specified format(numeric or character) and converts as required
+}
+\examples{
+df<-data.frame(STUDYID=rep("S-CDSK-01",3),
+DOMAIN=rep("YEARS",3),
+USUBJID=paste0("CDISC01.10000",c(1:3)),
+Age=c(72,66,78)
+)
+list1<-data.frame(
+  `Column Name`=c("AGE","AGEU","RACE","ETHNIC"),
+  `Column Name Variants`=c("Age","","",""),
+  Labels=c("Age in years at baseline","Units for AGE","Race","Ethnic group"),
+  `Column Type`=rep("Demographics",4),
+  Format=c("Numeric","Character","Character","Character")
+)
+specification<-list(list1)
+names(specification)<-"Specification-Source Data"
+format_df<-match_format(df,file=specification,coltype="Demographics")
 }

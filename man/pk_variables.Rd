@@ -2,20 +2,20 @@
 % Please edit documentation in R/pk_variables.R
 \name{pk_variables}
 \alias{pk_variables}
-\title{A standardization function}
+\title{Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ}
 \usage{
 pk_variables(data, col)
 }
 \arguments{
-\item{data}{is a data frame containing AVALC variable for recoding}
+\item{data}{a data.frame with AVALC variable for recoding}
 
-\item{col}{is the equivalent for AVALC variable}
+\item{col}{is the equivalent for AVALC variable in source dataset}
 }
 \value{
-AVALN, ALLOQ and AULOQ
+data.frame with variables AVALN, ALLOQ and AULOQ
 }
 \description{
-A standardization function
+Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ
 }
 \examples{
 pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")

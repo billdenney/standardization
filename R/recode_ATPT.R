@@ -1,9 +1,8 @@
-#' A standardization function
+#' Numeric recoding of ATPT variable
 #'
-#' @param data containing ATPT variable for recoding
-#' @return`data` with the column ATPTN
+#' @param data a data.frame with ATPT variable for recoding
+#' @return data.frame with ATPTN variable
 #' @export
-#'
 #' @examples recode_ATPT(data.frame(ATPT=c("Pre-dose","2 hrs postdose","drug A (2 hours before)","34")))
 recode_ATPT <- function(data) {
 

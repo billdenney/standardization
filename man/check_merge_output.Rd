@@ -2,20 +2,41 @@
 % Please edit documentation in R/check_merge_output.R
 \name{check_merge_output}
 \alias{check_merge_output}
-\title{A standardization function}
+\title{Checks for duplicate rows}
 \usage{
 check_merge_output(data, study, ...)
 }
 \arguments{
 \item{data}{is a data frame}
 
-\item{study}{is a character STUDYID pattern to check data frame for duplicate rows for each study}
+\item{study}{specifies a STUDYID to check the data.frame for duplicate rows within each study}
 
-\item{...}{are grouping variables}
+\item{...}{specifies grouping variables}
 }
 \value{
-prints duplicate rows and throws an error if duplicate rows are present
+if duplicate rows are present the function throws an error and prints duplicate rows
 }
 \description{
 checks for duplicate rows
+}
+\examples{
+ex<-data.frame(
+STUDYID=rep("S-CDSK-01",4),
+DOMAIN=rep("EX",4),
+USUBJID=c("CDISC01.001","CDISC01.002","CDISC01.003","CDISC01.008"),
+EXTRT=rep("THEOPHYLLINE",4),
+EXROUTE=rep("ORAL",4),
+EXDOSE=c(4.02,4.4,4.53,4.53),
+EXDOSU=rep("mg/kg",4),
+EXSTDTC=rep("29-04-2003",4)
+)
+ae<-data.frame(
+STUDYID=rep("S-CDSK-01",3),
+DOMAIN=rep("AE",3),
+USUBJID=c("CDISC01.008","CDISC01.008","CDISC01.001"),
+AEDECOD=c("Agitation","Anxiety","Anxiety"),
+AESTDTC=c("29-04-2002","29-04-2001","16-10-2003")
+)
+merge_df<-dplyr::full_join(ae,ex)
+check_merge_output(merge_df,study ="S-CDSK-01",USUBJID,AEDECOD,AESTDTC)
 }

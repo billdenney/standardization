@@ -2,22 +2,33 @@
 % Please edit documentation in R/check_units.R
 \name{check_units}
 \alias{check_units}
-\title{A standardization function}
+\title{Compares and checks for uniformity of units within a parameter name across two studies}
 \usage{
 check_units(data, col1, col2, exclude_var)
 }
 \arguments{
-\item{data}{is a data frame}
+\item{data}{is a data.frame with STUDYID,USUBJID,PARAM,ECDOSEU,EXDOSEU,AVALU variables}
 
-\item{col1}{is for study1}
+\item{col1}{specifies column name for study1}
 
-\item{col2}{is for study2}
+\item{col2}{specifies column name for for study2}
 
-\item{exclude_var}{excluded specific parameter names where units do not apply eg. scores}
+\item{exclude_var}{excludes specific parameter names where units do not apply}
 }
 \value{
-compares and checks for uniformity of units within a parameter name across two studies
+data.frame with non-matching units or empty data.frame
 }
 \description{
-A standardization function
+Compares and checks for uniformity of units within a parameter name across two studies
+}
+\examples{
+df <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-02", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-01"),
+  USUBJID = paste0("CDISC01.10000", c(1:6)),
+  PARAM = c("CDISK dosing", "CDISK dosing", "Hemoglobin", "Glucose", "Hemoglobin", "Glucose"),
+  ECDOSEU = c("mg", "mg", "", "", "", ""),
+  EXDOSEU = c("mg", "mg", "", "", "", ""),
+  AVALU = c("", "", "g/dl", "mmol/L", "g/dl", "mmol/L")
+)
+check_units(df,STUDY1,STUDY2,exclude_var = "")
 }

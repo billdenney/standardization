@@ -1,6 +1,9 @@
 ae <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/ae.csv")
 ex <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/ex.csv")
 
+
+
+  
 EX <- ex %>%
   mutate(EXSTDTC = format(as.Date(EXSTDTC, format = "%d-%m-%Y"), format = "%Y-%m-%d")) %>%
   date_time_format("EXSTDTC") %>%
@@ -15,6 +18,7 @@ AE <- ae %>%
     )
   )
 
+test_that("datetime_comparison_prior_condition works", {
 
 output_cond1 <- datetime_comparison_prior_condition(EX, AE, "EXSTDTC", "AESTDTC",
                                                     colwithconditions = "AEDECOD",
@@ -39,3 +43,5 @@ expect_setequal(unique(nchar(output_cond1$EXSTDTC)), 19)
 expect_setequal(unique(nchar(output_cond1$AESTDTC)), 19)
 expect_setequal(unique(nchar(output_cond2$EXSTDTC)), 19)
 expect_setequal(unique(nchar(output_cond2$AESTDTC)), 19)
+
+})

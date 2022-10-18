@@ -2,18 +2,18 @@
 % Please edit documentation in R/recode_ATPT.R
 \name{recode_ATPT}
 \alias{recode_ATPT}
-\title{A standardization function}
+\title{Numeric recoding of ATPT variable}
 \usage{
 recode_ATPT(data)
 }
 \arguments{
-\item{data}{containing ATPT variable for recoding}
+\item{data}{a data.frame with ATPT variable for recoding}
 }
 \value{
-\code{data} with the column ATPTN
+data.frame with ATPTN variable
 }
 \description{
-A standardization function
+Numeric recoding of ATPT variable
 }
 \examples{
 recode_ATPT(data.frame(ATPT=c("Pre-dose","2 hrs postdose","drug A (2 hours before)","34")))

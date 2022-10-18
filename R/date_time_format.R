@@ -1,14 +1,19 @@
 
-#' Title
+#' converts datetime variable to ISO 8601
 #'
 #' @name date_time_format
-#' @param data is a data frame with datetime variables
-#' @param col is datetime variable
+#' @param data a data.frame with datetime variables
+#' @param col is datetime variable to be converted
 #' @description converts datetime variable to ISO 8601
 #' @return datetime variable in ISO 8601 format with UN for missing date and time parts
 #' @export
-#'
-#' @examples date_time_format(data.frame(ADTC=c("2012-04-05T09:10")),"ADTC")
+#' @examples 
+#' dtc_df <- data.frame(ADTC = c(
+#' "2004", "2015-04", "2015---04",
+#' "2014-02-12", "2014-02-12T13:20", "2014-01-22T09:35:00",
+#' "", NA
+#' ))
+#' format_dtc <- date_time_format(dtc_df, "ADTC")
 date_time_format <- function(data, col) {
 
   col <- as.name(col)
@@ -111,6 +116,7 @@ date_time_format <- function(data, col) {
     select(-{{ mod_col }}) %>%
     select(-{{ NA_col }},-{{ date_col }},-{{ time_col }},-{{ ret_col }},-{{ ret_col }}, -length_format)
 
+ modified_dat
 
 }
 

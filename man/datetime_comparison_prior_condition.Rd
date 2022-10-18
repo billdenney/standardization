@@ -2,7 +2,7 @@
 % Please edit documentation in R/datetime_comparison_prior_condition.R
 \name{datetime_comparison_prior_condition}
 \alias{datetime_comparison_prior_condition}
-\title{A standardization function}
+\title{Compares datetime with earliest dosing datetime to extract prior condition}
 \usage{
 datetime_comparison_prior_condition(
   file_name1,
@@ -16,25 +16,49 @@ datetime_comparison_prior_condition(
 )
 }
 \arguments{
-\item{file_name1}{is first data frame with dosing dtc variable}
+\item{file_name1}{data.frame with dosing datetime variable}
 
-\item{file_name2}{is second data frame with dtc variable}
+\item{file_name2}{second data.frame (another domain eg. AE) with datetime variable}
 
-\item{datetimecol1}{is datetime variable (ADTC) in first data frame}
+\item{datetimecol1}{is datetime variable (ADTC) in first data.frame}
 
-\item{datetimecol2}{is datetime variable (ADTC) in second data frame}
+\item{datetimecol2}{is datetime variable (ADTC) in second data.frame}
 
-\item{datetimecol3}{is second datetime variable (AENDTC) in second data frame}
+\item{datetimecol3}{is second datetime variable (AENDTC) in second data.frame}
 
-\item{colwithconditions}{is variable with multiple disease or conditions}
+\item{colwithconditions}{is variable with multiple disease or conditions (eg. AEDECOD)}
 
-\item{filter_val}{character vector to filter specific diseases or conditions}
+\item{filter_val}{character vector to filter colwithconditions}
 
-\item{condition1}{creates variable for subjects with prior disease or condition eg. prior_diabetes}
+\item{condition1}{new variable name for subjects with prior disease or condition (eg. prior_diabetes)}
 }
 \value{
-data frame with prior disease/condition variable
+data.frame with prior disease/condition variable
 }
 \description{
 compares datetime with earliest dosing datetime to extract prior condition
+}
+\examples{
+ex<-data.frame(
+STUDYID=rep("S-CDSK-01",4),
+DOMAIN=rep("EX",4),
+USUBJID=c("CDISC01.001","CDISC01.002","CDISC01.003","CDISC01.008"),
+EXTRT=rep("THEOPHYLLINE",4),
+EXROUTE=rep("ORAL",4),
+EXDOSE=c(4.02,4.4,4.53,4.53),
+EXDOSU=rep("mg/kg",4),
+EXSTDTC=rep("29-04-2003",4)
+)
+ae<-data.frame(
+STUDYID=rep("S-CDSK-01",3),
+DOMAIN=rep("AE",3),
+USUBJID=c("CDISC01.008","CDISC01.008","CDISC01.001"),
+AEDECOD=c("Agitation","Anxiety","Anxiety"),
+AESTDTC=c("29-04-2002","29-04-2001","16-10-2003")
+)
+datetime_comparison_prior_condition(ex, ae, "EXSTDTC", "AESTDTC",
+colwithconditions = "AEDECOD",
+filter_val = "Agitation",
+condition1 = "PRIOR_Agitation"
+)
 }

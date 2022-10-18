@@ -2,20 +2,31 @@
 % Please edit documentation in R/match_colnames.R
 \name{match_colnames}
 \alias{match_colnames}
-\title{A standardization function}
+\title{Matches for standard variable names and their variants, and selects applicable variables present in source dataset}
 \usage{
 match_colnames(data, file, coltype)
 }
 \arguments{
-\item{data}{is a data frame}
+\item{data}{data.frame that serves as a source dataset}
 
-\item{file}{is path for specifications file that informs selection of variables}
+\item{file}{specifications file(list or .xlsx) that informs selection of variables}
 
 \item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
 }
 \value{
-a data frame with specified variables selected
+a data.frame with specified variables selected
 }
 \description{
-matches for standard column names present in specifications file path, selects applicable variables present in source dataset, and creates empty columns for missing variables
+matches for standard column names and their variants present in specifications file, selects applicable variables present in source dataset, and creates empty columns for missing variables
+}
+\examples{
+df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
+list1<-data.frame(`Column Name`="AGE",
+`Column Name Variants`="Age",
+Labels="Age in years at baseline",
+`Column Type`="Demographics",
+Format="Numeric")
+specification<-list(list1)
+names(specification)<-"Specification-Source Data"
+format_df<-match_colnames(df,file=specification,coltype="Demographics")
 }
