@@ -4,7 +4,7 @@
 #' @param col1 specifies column name for study1
 #' @param col2 specifies column name for for study2
 #' @param exclude_var excludes specific parameter names where units do not apply
-#' @return data.frame with non-matching units or empty data.frame
+#' @return data.frame with matching units
 #' @export
 #' @examples
 #' df <- data.frame(
@@ -41,9 +41,9 @@ check_units <- function(data, col1, col2, exclude_var) {
     rename(STUDY = cols) %>%
     rowwise() %>%
     unnest(cols = c({{ col1 }}, {{ col2 }})) %>%
+    filter(!PARAM %in% exclude_var) %>% 
     mutate(test = case_when(
       {{ col1 }} == {{ col2 }} ~ "TRUE",
-      is.na( {{ col1 }} )==is.na({{ col2 }})~"TRUE",
       TRUE ~ "FALSE"
     )) %>%
     verify(!duplicated(PARAM)) %>%

@@ -18,13 +18,13 @@ test_that("check_units works", {
       TRUE ~ AVALU
     ))
 
-  units_trial2<-check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = "")
+  units_trial2<-check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = c("hematocrit","occult blood","ph"))
 
 
   expect_setequal(names(units_trial2),c("PARAM","STUDY1","STUDY2","test"))
   expect_error(check_units(lb_dat_trial1,STUDY1,STUDY2,exclude_var = ""),
                "assertr stopped execution")
-  expect_error(check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = ""),
+  expect_error(check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = c("hematocrit","occult blood","ph")),
                NA)
 
 })
