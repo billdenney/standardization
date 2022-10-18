@@ -2,20 +2,20 @@
 % Please edit documentation in R/match_NA.R
 \name{match_NA}
 \alias{match_NA}
-\title{Matches missing values between datasets}
+\title{Matches sum of missing values between datasets}
 \usage{
 match_NA(data1, data2)
 }
 \arguments{
-\item{data1}{first data frame}
+\item{data1}{first data.frame}
 
-\item{data2}{second data frame}
+\item{data2}{second data.frame}
 }
 \value{
-comparison of sum of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
+comparison of sum of missing values between two data.frames to identify accidentally occurring missing values
 }
 \description{
-Matches missing values between datasets
+Matches sum of missing values between datasets
 }
 \examples{
 match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))

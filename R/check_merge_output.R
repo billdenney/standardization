@@ -2,11 +2,10 @@
 #'
 #' @name check_merge_output
 #' @param data is a data frame
-#' @param study is a character STUDYID pattern to check data frame for duplicate rows for each study
-#' @param ... are grouping variables
+#' @param study specifies a STUDYID to check the data.frame for duplicate rows within each study
+#' @param ... specifies grouping variables
 #' @description checks for duplicate rows
-#'
-#' @return prints duplicate rows and throws an error if duplicate rows are present
+#' @return if duplicate rows are present the function throws an error and prints duplicate rows 
 #' @export
 #' @examples
 #' ex<-data.frame(

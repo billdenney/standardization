@@ -7,12 +7,12 @@
 pk_variables(data, col)
 }
 \arguments{
-\item{data}{is a data frame containing AVALC variable for recoding}
+\item{data}{a data.frame with AVALC variable for recoding}
 
-\item{col}{is the equivalent for AVALC variable}
+\item{col}{is the equivalent for AVALC variable in source dataset}
 }
 \value{
-AVALN, ALLOQ and AULOQ
+data.frame with variables AVALN, ALLOQ and AULOQ
 }
 \description{
 Numeric recoding of AVALC to generate AVALN, ALLOQ, AULOQ

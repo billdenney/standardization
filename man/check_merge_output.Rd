@@ -9,12 +9,12 @@ check_merge_output(data, study, ...)
 \arguments{
 \item{data}{is a data frame}
 
-\item{study}{is a character STUDYID pattern to check data frame for duplicate rows for each study}
+\item{study}{specifies a STUDYID to check the data.frame for duplicate rows within each study}
 
-\item{...}{are grouping variables}
+\item{...}{specifies grouping variables}
 }
 \value{
-prints duplicate rows and throws an error if duplicate rows are present
+if duplicate rows are present the function throws an error and prints duplicate rows
 }
 \description{
 checks for duplicate rows

@@ -1,19 +1,20 @@
 
-#' Matches for standard column names and their variants, selects applicable variables present in source dataset, and creates empty columns for missing variables
+#' Matches for standard variable names and their variants, and selects applicable variables present in source dataset
 #'
 #' @name match_colnames
-#' @param data is a data frame
-#' @param file is path for specifications file that informs selection of variables
+#' @param data data.frame that serves as a source dataset
+#' @param file specifications file(list or .xlsx) that informs selection of variables
 #' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
 #' @description matches for standard column names and their variants present in specifications file, selects applicable variables present in source dataset, and creates empty columns for missing variables
-#' @return a data frame with specified variables selected
+#' @return a data.frame with specified variables selected
 #' @export
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
 #' list1<-data.frame(`Column Name`="AGE",
+#' `Column Name Variants`="Age",
 #' Labels="Age in years at baseline",
 #' `Column Type`="Demographics",
-#' Format="Numeric"')
+#' Format="Numeric")
 #' specification<-list(list1)
 #' names(specification)<-"Specification-Source Data"
 #' format_df<-match_colnames(df,file=specification,coltype="Demographics")

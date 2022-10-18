@@ -7,13 +7,13 @@
 check_time_variables(data)
 }
 \arguments{
-\item{data}{is a data frame containing variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD}
+\item{data}{is a data.frame with variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD}
 }
 \value{
 returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, chk_NTSFM, chk_NTAD, chk_TAD
 }
 \description{
-verifies variables for missing values
+verifies variables for unwarranted missing values
 }
 \examples{
 df_1<-data.frame(

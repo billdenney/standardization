@@ -1,10 +1,9 @@
-#' Matches missing values between datasets
+#' Matches sum of missing values between datasets
 #'
-#' @param data1 first data frame
-#' @param data2 second data frame
-#' @return comparison of sum of missing values between source and output data frames to identify accidentally occurring missing values in output data frame
+#' @param data1 first data.frame
+#' @param data2 second data.frame
+#' @return comparison of sum of missing values between two data.frames to identify accidentally occurring missing values 
 #' @export
-#'
 #' @examples match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
 match_NA<-function(data1, data2){
 

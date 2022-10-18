@@ -1,10 +1,9 @@
 #' checks time variables
 #'
-#' @param data is a data frame containing variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD
-#' @description verifies variables for missing values
+#' @param data is a data.frame with variables NTSFD,TSFD,NTSFM,TSFM,NTAD,TAD
+#' @description verifies variables for unwarranted missing values
 #' @return returns data.frame with verification variables:chk_NTSFD, chk_TSFD, chk_TSFM, chk_NTSFM, chk_NTAD, chk_TAD
 #' @export
-#'
 #' @examples
 #'df_1<-data.frame(
 #'  STUDYID=c(rep("S-CDSK-02",6)),

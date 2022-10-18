@@ -1,12 +1,11 @@
 #' Matches and changes format of variables as per specifications
 #'
-#' @param data is a data frame
-#' @param file is path for specifications file that informs selection of variables
+#' @param data data.frame that serves as a source dataset
+#' @param file is a specifications file(list or .xlsx) that informs selection of variables
 #' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
-#' @description matches for specified format(numeric or character) of the variable and converts variables to required format
-#' @return a data frame with specified variables converted to required format
+#' @description checks if variables are in specified format(numeric or character) and converts as required
+#' @return a data.frame with specified variables converted to required format
 #' @export
-#'
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),
 #' DOMAIN=rep("YEARS",3),

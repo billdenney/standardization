@@ -7,17 +7,17 @@
 match_format(data, file, coltype)
 }
 \arguments{
-\item{data}{is a data frame}
+\item{data}{data.frame that serves as a source dataset}
 
-\item{file}{is path for specifications file that informs selection of variables}
+\item{file}{is a specifications file(list or .xlsx) that informs selection of variables}
 
 \item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
 }
 \value{
-a data frame with specified variables converted to required format
+a data.frame with specified variables converted to required format
 }
 \description{
-matches for specified format(numeric or character) of the variable and converts variables to required format
+checks if variables are in specified format(numeric or character) and converts as required
 }
 \examples{
 df<-data.frame(STUDYID=rep("S-CDSK-01",3),

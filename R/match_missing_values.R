@@ -1,14 +1,19 @@
-#' Rowwise comparison of missing values between two data.frames
+#' Rowwise comparison of columns between two data.frames (an extension of match_NA function)
 #'
 #' @name match_missing_values
 #' @param data1 first data.frame
 #' @param data2 second data.frame
-#' @param ... are grouping variables used to arrange the data
-#' @description  rowwise comparison of missing values between data.frames to identify accidentally occurring missing values
-#' @return for each pair of corresponding source and output columns a check column with true/false values returned within a data.frame
+#' @param ... specifies grouping variables used to arrange the data
+#' @description  rowwise comparison of missing values between data.frames to identify accidentally occurring missing values or to match two datasets for similarity
+#' @return for each pair of corresponding source and output columns a check column with true/false values is returned within a data.frame
 #' @export
-#'
-#' @examples match_missing_values(source<-data.frame(col1=c(2,3,"NA")), output<-data.frame(col1=c(2,3,"NA")))
+#' @examples 
+#'  match_values_1<-match_missing_values(input<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06",
+#'  "XYZ","2015-04-06T09:10",
+#'  "Cycle 1")),
+#'  output<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06T",
+#'  "XYZ dosing","2015-04-06 09:10",
+#'  "Cycle 1")))
 match_missing_values<-function(data1,data2,...){
 
   common_names <- intersect(names(data2),names(data1))

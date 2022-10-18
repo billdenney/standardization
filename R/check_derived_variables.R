@@ -1,10 +1,8 @@
 #' Checks derived variables
 #'
 #' @param data is a data.frame with derived variables
-#'
 #' @return data.frame
 #' @export
-#'
 #' @examples
 #' df<-data.frame(
 #' STUDYID=c("CDISK-01","CDISK-01","CDISK-02","CDISK-02"),

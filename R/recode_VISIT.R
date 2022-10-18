@@ -5,7 +5,6 @@
 #' @param cycle_length is a numeric vector
 #' @return VISITDY when VISIT column is present in data frame
 #' @export
-#'
 #' @examples recode_VISIT(data.frame(VISIT=c("Cycle 1 Day 1","cycle 2 day 2","week 10")),cycle_length = 21)
 recode_VISIT <- function(data, cycle_length) {
 

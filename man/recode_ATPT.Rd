@@ -7,10 +7,10 @@
 recode_ATPT(data)
 }
 \arguments{
-\item{data}{containing ATPT variable for recoding}
+\item{data}{a data.frame with ATPT variable for recoding}
 }
 \value{
-\code{data} with the column ATPTN
+data.frame with ATPTN variable
 }
 \description{
 Numeric recoding of ATPT variable

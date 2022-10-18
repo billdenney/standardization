@@ -24,7 +24,7 @@ test_that("check_units works", {
   expect_setequal(names(units_trial2),c("PARAM","STUDY1","STUDY2","test"))
   expect_error(check_units(lb_dat_trial1,STUDY1,STUDY2,exclude_var = ""),
                "assertr stopped execution")
-  expect_warning(check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = ""),
-               "The result of evaluating '!test %in% FALSE' has length zero")
+  expect_error(check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = ""),
+               NA)
 
 })
