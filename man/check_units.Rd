@@ -16,7 +16,7 @@ check_units(data, col1, col2, exclude_var)
 \item{exclude_var}{excludes specific parameter names where units do not apply}
 }
 \value{
-data.frame with non-matching units or empty data.frame
+data.frame with matching units
 }
 \description{
 Compares and checks for uniformity of units within a parameter name across two studies
