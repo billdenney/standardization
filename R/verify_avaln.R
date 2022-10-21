@@ -5,7 +5,7 @@
 #' @param AVALC_col AVALC variable
 #' @param AVALN_col AVALN variable
 #' @param param_col PARAM variable
-#' @param expected_missing character vector of exclusions from AVALC that are expected to have missing values in AVALN
+#' @param expected_missing character vector of AVALC exclusions that are expected to have missing values in AVALN
 #' @description Verifies missing AVALC matches missing AVALN values unless AVALC is in a vector that is pre-specified
 #' @return error with missing AVALN rows and otherwise NULL
 #' @export
