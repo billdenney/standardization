@@ -30,7 +30,7 @@ match_missing_values<-function(data1,data2,...){
   output_colnames<-paste0(common_names,"_Output")
   colnames(output_dat)<-output_colnames
 
-  data_ret<- output_dat %>% cbind(input_dat) %>% mutate_all(list(~tolower(.)))
+  data_ret<- output_dat %>% cbind(input_dat) %>% mutate_all(~tolower(.)) 
 
   outputnames_common<-common_names
 

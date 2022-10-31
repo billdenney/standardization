@@ -80,6 +80,7 @@ check_time_variables<-function(data){
       !is.na(NTAD) ~1,
       is.na(NTSFM) & is.na(NTAD)~1,
       suppressWarnings(min(NTSFM[EVID %in% 1]) %in% NA_integer_) & is.na(NTAD)~1,
+      suppressWarnings(min(NTSFM[EVID %in% 1]) %in% c("Inf")& is.na(NTAD))~1,
       TRUE~0
     )) %>%
     dplyr::ungroup() %>%
@@ -92,6 +93,7 @@ check_time_variables<-function(data){
       !is.na(TAD) ~1,
       is.na(TSFM) & is.na(TAD)~1,
       suppressWarnings(min(TSFM[EVID %in% 1]) %in% NA_integer_) & is.na(TAD) ~1,
+      suppressWarnings(min(TSFM[EVID %in% 1]) %in% c("Inf")& is.na(TAD))~1,
       TRUE~0
     )) %>%
     dplyr::ungroup() %>%

@@ -24,7 +24,7 @@ verify_avaln(
 
 \item{param_col}{PARAM variable}
 
-\item{expected_missing}{character vector of exclusions from AVALC that are expected to have missing values in AVALN}
+\item{expected_missing}{character vector of AVALC exclusions that are expected to have missing values in AVALN}
 }
 \value{
 error with missing AVALN rows and otherwise NULL

@@ -24,13 +24,13 @@ verify_alloq(
 
 \item{param_col}{PARAM variable}
 
-\item{expected_missing}{character vector of exclusions from AVALC that are expected to have missing values in AVALN}
+\item{expected_missing}{character vector of AVALC exclusions that are expected to have missing values in ALLOQ}
 }
 \value{
-error with missing AVALN rows and otherwise NULL
+error with missing ALLOQ rows and otherwise NULL
 }
 \description{
-Verifies missing AVALC matches missing AVALN values unless AVALC is in a vector that is pre-specified
+Verifies recoded ALLOQ values for all AVALC values in BQL variants unless AVALC is in a vector that is pre-specified
 }
 \examples{
 df1<-data.frame(
