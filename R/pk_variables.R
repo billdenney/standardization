@@ -14,6 +14,7 @@ pk_variables <- function(data, col) {
       text = as.character({{ col }}),
       number = as.numeric({{ col }}),
       number=case_when(
+        grepl("^BLOQ|BLLOQ|BLQ|BQL$",text,ignore.case = TRUE)~0,
         grepl("<[A-Za-z]|[A-Za-z]<|<+[[:space:]]+[A-Za-z]|[A-Za-z]+[[:space:]]+<|<|<+[[:space:]]+[[:space:]]+<",text) ~ 0,
         TRUE ~ number
       ),
