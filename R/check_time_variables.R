@@ -26,6 +26,10 @@
 #' check_time_variables(df_1)
 check_time_variables<-function(data){
 
+  min_no_warning <- function(x) {
+    if (length(x)>0) min(x) else Inf
+  }
+  
   print("checking NTSFD")
   check_var<-data %>%
     mutate(chk_NTSFD=case_when(
@@ -37,7 +41,7 @@ check_time_variables<-function(data){
       TRUE ~ 0
     )) %>%
     assertr::verify(!chk_NTSFD %in% "0")
-
+  
   print("checking NTSFM")
   check_var<-check_var %>%
     mutate(chk_NTSFM=case_when(
@@ -49,8 +53,8 @@ check_time_variables<-function(data){
       VISITDY < 0 & is.na(NTSFM) ~1,
       TRUE ~ 0
     )) %>%
-     assertr::verify(!chk_NTSFM %in% "0")
-
+    assertr::verify(!chk_NTSFM %in% "0")
+  
   print("checking TSFM")
   check_var<-check_var %>%
     mutate(chk_TSFM=case_when(
@@ -59,53 +63,53 @@ check_time_variables<-function(data){
       !is.na(ADTC) & is.na(TSFM) & is.na(ADTC_IMPUTED) ~1,
       TRUE ~0
     )) %>%
-     assertr::verify(!chk_TSFM %in% "0")
-
+    assertr::verify(!chk_TSFM %in% "0")
+  
   print("checking TSFD")
   check_var<-check_var %>%
     dplyr::group_by(STUDYID, USUBJID) %>%
     dplyr::mutate(chk_TSFD=case_when(
       !is.na(TSFD) ~1,
       is.na(TSFM) & is.na(TSFD)~1,
-      length(TSFM[EVID %in% 1] %in% NA_integer_) %in% 0 & is.na(TSFD)  ~1,
-      suppressWarnings(!length(TSFM[EVID %in% 1] %in% NA_integer_) %in% 0 & min(TSFM[EVID %in% 1]) %in% NA_integer_ & is.na(TSFD)) ~1,
+      is.na(min_no_warning(TSFM[EVID %in% 1]))& is.na(TSFD) ~1,
+      min_no_warning(TSFM[EVID %in% 1]) %in% Inf & is.na(TSFD)~1,
       TRUE~0)) %>%
     dplyr::ungroup() %>%
-     assertr::verify(!chk_TSFD %in% "0")
-
+    assertr::verify(!chk_TSFD %in% "0")
+  
   print("checking NTAD")
   check_var<-check_var %>%
     dplyr::group_by(STUDYID,USUBJID) %>%
     dplyr::mutate(chk_NTAD=case_when(
       !is.na(NTAD) ~1,
       is.na(NTSFM) & is.na(NTAD)~1,
-      suppressWarnings(min(NTSFM[EVID %in% 1]) %in% NA_integer_ & is.na(NTAD))~1,
-      suppressWarnings(min(NTSFM[EVID %in% 1]) %in% "Inf" & is.na(NTAD))~1,
+      is.na(min_no_warning(NTSFM[EVID %in% 1])) & is.na(NTAD)~1,
+      min_no_warning(NTSFM[EVID %in% 1]) %in% Inf & is.na(NTAD)~1,
       TRUE~0
     )) %>%
     dplyr::ungroup() %>%
-     assertr::verify(!chk_NTAD %in% "0")
-
+    assertr::verify(!chk_NTAD %in% "0")
+  
   print("checking TAD")
   check_var<-check_var %>%
     dplyr::group_by(STUDYID,USUBJID) %>%
     dplyr::mutate(chk_TAD=case_when(
       !is.na(TAD) ~1,
       is.na(TSFM) & is.na(TAD)~1,
-      suppressWarnings(min(TSFM[EVID %in% 1]) %in% NA_integer_ & is.na(TAD)) ~1,
-      suppressWarnings(min(TSFM[EVID %in% 1]) %in% "Inf" & is.na(TAD))~1,
+      is.na(min_no_warning(TSFM[EVID %in% 1])) & is.na(TAD) ~1,
+      min_no_warning(TSFM[EVID %in% 1]) %in% Inf & is.na(TAD)~1,
       TRUE~0
     )) %>%
     dplyr::ungroup() %>%
-     assertr::verify(!chk_TAD %in% "0") %>%
-    dplyr::select(ADTC,VISITDY, ATPTN, TSFM,NTSFM,TSFD,NTSFD,TAD,NTAD,
-           chk_NTSFD,chk_NTSFM,chk_TSFM,chk_TSFD,chk_NTAD,chk_TAD)
-
+    assertr::verify(!chk_TAD %in% "0") %>%
+    dplyr::select(STUDYID,USUBJID,EVID,ADTC,VISITDY,ATPTN,TSFM,NTSFM,TSFD,NTSFD,TAD,NTAD,
+                  chk_NTSFD,chk_NTSFM,chk_TSFM,chk_TSFD,chk_NTAD,chk_TAD)
+  
  check_var
 
 
 }
 
-utils::globalVariables(c("chk_NTSFD","chk_TSFD","chk_NTSFM","chk_TSFM","chk_NTAD","chk_TAD",
+utils::globalVariables(c("EVID","chk_NTSFD","chk_TSFD","chk_NTSFM","chk_TSFM","chk_NTAD","chk_TAD",
                          "NTSFD","TSFD","NTSFM","TSFM","NTAD","TAD","STUDYID","USUBJID",
                          "ADTC","VISITDY","ATPTN"))
