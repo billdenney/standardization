@@ -29,7 +29,8 @@
 #' check_merge_output(merge_df, study = "S-CDSK-01", USUBJID, AEDECOD, AESTDTC)
 check_merge_output <- function(data, study, ...) {
   group_var <- enquos(...)
-  
+
+
   for (i in seq_along(study)) {
     print(paste0("Checking study: ", study[i]))
     check_dupl <-
@@ -40,6 +41,7 @@ check_merge_output <- function(data, study, ...) {
       mutate(row = row_number()) %>%
       filter(row > 1)
   }
+
   
   if (nrow(check_dupl) > 0) {
     print(check_dupl)
@@ -50,4 +52,7 @@ check_merge_output <- function(data, study, ...) {
 }
 
 utils::globalVariables(c("STUDYID", "row_number"))
+
+
+
 
