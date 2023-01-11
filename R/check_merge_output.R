@@ -45,7 +45,7 @@ check_merge_output <- function(data, study, ...) {
   
   if (nrow(check_dupl) > 0) {
     print(check_dupl)
-    print("Duplicate rows present for grouping variables")
+    
   } else {
     NULL
   }
