@@ -14,29 +14,29 @@ check_merge_output(data, study, ...)
 \item{...}{specifies grouping variables}
 }
 \value{
-if duplicate rows are present the function throws an error and prints duplicate rows
+prints duplicate rows
 }
 \description{
 checks for duplicate rows
 }
 \examples{
-ex<-data.frame(
-STUDYID=rep("S-CDSK-01",4),
-DOMAIN=rep("EX",4),
-USUBJID=c("CDISC01.001","CDISC01.002","CDISC01.003","CDISC01.008"),
-EXTRT=rep("THEOPHYLLINE",4),
-EXROUTE=rep("ORAL",4),
-EXDOSE=c(4.02,4.4,4.53,4.53),
-EXDOSU=rep("mg/kg",4),
-EXSTDTC=rep("29-04-2003",4)
+ex <- data.frame(
+  STUDYID = rep("S-CDSK-01", 4),
+  DOMAIN = rep("EX", 4),
+  USUBJID = c("CDISC01.001", "CDISC01.002", "CDISC01.003", "CDISC01.008"),
+  EXTRT = rep("THEOPHYLLINE", 4),
+  EXROUTE = rep("ORAL", 4),
+  EXDOSE = c(4.02, 4.4, 4.53, 4.53),
+  EXDOSU = rep("mg/kg", 4),
+  EXSTDTC = rep("29-04-2003", 4)
 )
-ae<-data.frame(
-STUDYID=rep("S-CDSK-01",3),
-DOMAIN=rep("AE",3),
-USUBJID=c("CDISC01.008","CDISC01.008","CDISC01.001"),
-AEDECOD=c("Agitation","Anxiety","Anxiety"),
-AESTDTC=c("29-04-2002","29-04-2001","16-10-2003")
+ae <- data.frame(
+  STUDYID = rep("S-CDSK-01", 3),
+  DOMAIN = rep("AE", 3),
+  USUBJID = c("CDISC01.008", "CDISC01.008", "CDISC01.001"),
+  AEDECOD = c("Agitation", "Anxiety", "Anxiety"),
+  AESTDTC = c("29-04-2002", "29-04-2001", "16-10-2003")
 )
-merge_df<-dplyr::full_join(ae,ex)
-check_merge_output(merge_df,study ="S-CDSK-01",USUBJID,AEDECOD,AESTDTC)
+merge_df <- dplyr::full_join(ae, ex)
+check_merge_output(merge_df, study = "S-CDSK-01", USUBJID, AEDECOD, AESTDTC)
 }
