@@ -36,22 +36,21 @@ check_merge_output <- function(data, study, ...) {
     check_dupl <-
       data %>%
       ungroup() %>%
-      filter(STUDYID %in% study[i]) %>%
+      filter(.data$STUDYID %in% study[i]) %>%
       group_by(!!!group_var) %>%
-      mutate(row = row_number()) %>%
+      mutate(row = dplyr::row_number()) %>%
       filter(row > 1)
   }
 
   
   if (nrow(check_dupl) > 0) {
     print(check_dupl)
-    
+    warning("Duplicate rows present for grouping variables")
   } else {
     NULL
   }
 }
 
-utils::globalVariables(c("STUDYID", "row_number"))
 
 
 

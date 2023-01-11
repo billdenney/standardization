@@ -36,6 +36,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom purrr is_empty
 #' @importFrom rio import_list
+#' @importFrom rlang .data
 #' @importFrom rlang :=
 #' @importFrom rlang enquo
 #' @importFrom rlang enquos
