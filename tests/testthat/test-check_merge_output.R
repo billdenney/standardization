@@ -5,11 +5,7 @@ ae_dm<-full_join(ae,dm)
 specs <- "../data-raw/specs.xlsx"
 
 
-test_that("check_merge output works", {
-  expect_error(check_merge_output(data = ae_dm,
-                                  study = "S-CDSK-01",
-                                  STUDYID, USUBJID, DOMAIN),
-               NA)})
+
 
 test_that("check_merge output works", {
   expect_error(
