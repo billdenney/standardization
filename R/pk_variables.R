@@ -8,7 +8,7 @@
 #' pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")
 pk_variables <- function(data, col) {
   col <- as.name(col)
-
+  
   values <- data %>%
     mutate(
       text = as.character({{ col }}),
