@@ -8,7 +8,7 @@
 #' pk_variables(data.frame(AVALC=c("<2.30","3.45","BLQ","BQL<2.1")),"AVALC")
 pk_variables <- function(data, col) {
   col <- as.name(col)
-
+  
   values <- data %>%
     mutate(
       text = as.character({{ col }}),
@@ -16,6 +16,7 @@ pk_variables <- function(data, col) {
       number=case_when(
         grepl("^BLOQ|BLLOQ|BLQ|BQL$",text,ignore.case = TRUE)~0,
         grepl("<[A-Za-z]|[A-Za-z]<|<+[[:space:]]+[A-Za-z]|[A-Za-z]+[[:space:]]+<|<|<+[[:space:]]+[[:space:]]+<",text) ~ 0,
+        grepl(">[A-Za-z]|[A-Za-z]>|>+[[:space:]]+[A-Za-z]|[A-Za-z]+[[:space:]]+>|>|>+[[:space:]]+[[:space:]]+>",text) ~ 0,
         TRUE ~ number
       ),
       llq = case_when(

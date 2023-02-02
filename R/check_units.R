@@ -24,14 +24,14 @@ check_units <- function(data, col1, col2, exclude_var) {
     replace_na_blank(columns = c("check_AVALU", "check_EXDOSEU", "check_ECDOSEU"), replacement = NA_character_) %>%
     mutate(units = coalesce(check_AVALU, check_EXDOSEU, check_ECDOSEU)) %>%
     ungroup() %>%
-    mutate_all(~tolower(.)) %>% 
+    mutate_all(~tolower(.)) %>%
     select(-check_AVALU, -check_EXDOSEU, -check_ECDOSEU) %>%
     group_by() %>%
     distinct() %>%
     ungroup() %>%
     pivot_wider(names_from = "STUDYID", values_from = "units", values_fn = list) %>%
-    suppressWarnings(unnest()) %>%
-    suppressWarnings(mutate_each(funs(replace(., is.na(.), ""))))
+    unnest(cols=names(.)) %>%
+    mutate_each(~(replace(., is.na(.), "")))
 
 
   cols <- names(check)[!names(check) %in% "PARAM"]
@@ -41,7 +41,7 @@ check_units <- function(data, col1, col2, exclude_var) {
     rename(STUDY = cols) %>%
     rowwise() %>%
     unnest(cols = c({{ col1 }}, {{ col2 }})) %>%
-    filter(!PARAM %in% exclude_var) %>% 
+    filter(!PARAM %in% exclude_var) %>%
     mutate(test = case_when(
       {{ col1 }} == {{ col2 }} ~ "TRUE",
       TRUE ~ "FALSE"

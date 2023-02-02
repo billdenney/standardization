@@ -57,7 +57,7 @@ meta_match_colnames <- function(data, file, coltype) {
     unnest(cols = Labels) %>%
     ungroup()
 
-  spec <- full_join(spec_df, meta_file, by = "Labels", type = "full")
+  spec <- full_join(spec_df, meta_file, by = "Labels")
 
 
   spec_cols_df <-
