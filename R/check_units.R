@@ -30,8 +30,8 @@ check_units <- function(data, col1, col2, exclude_var) {
     distinct() %>%
     ungroup() %>%
     pivot_wider(names_from = "STUDYID", values_from = "units", values_fn = list) %>%
-    suppressWarnings(unnest()) %>%
-    suppressWarnings(mutate_each(funs(replace(., is.na(.), ""))))
+    unnest(cols=c(2,3)) %>%
+    mutate_each(~(replace(., is.na(.), "")))
 
 
   cols <- names(check)[!names(check) %in% "PARAM"]
