@@ -37,7 +37,7 @@ verify_avaln<-function(data,id_col="STUDYID",AVALC_col="AVALC",AVALN_col="AVALN"
       is.na(.data[[AVALC_col]])%in% is.na(.data[[AVALN_col]])~ "TRUE",
       TRUE~"FALSE"
     )) %>% 
-    ungroup() %>% 
+    ungroup()%>% 
     filter(check %in% FALSE) %>% 
     filter(!.data[[AVALC_col]] %in% expected_missing)
   
