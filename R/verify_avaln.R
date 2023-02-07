@@ -30,6 +30,7 @@ verify_avaln<-function(data,id_col="STUDYID",AVALC_col="AVALC",AVALN_col="AVALN"
   check_AVALN <-
     data %>%
     select(.data[[id_col]],.data[[param_col]],.data[[AVALC_col]],.data[[AVALN_col]]) %>% 
+    filter(is.na(.data[[AVALN_col]])|.data[[AVALN_col]]=="") %>%
     group_by(.data[[id_col]],.data[[param_col]],.data[[AVALC_col]],.data[[AVALN_col]]) %>%
     distinct() %>%
     mutate(check=case_when(
@@ -37,7 +38,7 @@ verify_avaln<-function(data,id_col="STUDYID",AVALC_col="AVALC",AVALN_col="AVALN"
       is.na(.data[[AVALC_col]])%in% is.na(.data[[AVALN_col]])~ "TRUE",
       TRUE~"FALSE"
     )) %>% 
-    ungroup() %>% 
+    ungroup()%>% 
     filter(check %in% FALSE) %>% 
     filter(!.data[[AVALC_col]] %in% expected_missing)
   
