@@ -9,13 +9,13 @@ date_time_format(data, col)
 \arguments{
 \item{data}{a data.frame with datetime variables}
 
-\item{col}{is datetime variable to be converted}
+\item{col}{is datetime variable}
 }
 \value{
-datetime variable in ISO 8601 format with UN for missing date and time parts
+a data.frame with datetime variable in ISO 8601 format with 'UN' applied for missing date and time parts
 }
 \description{
-converts datetime variable to ISO 8601
+converts datetime variable to ISO 8601 format and replaces missing date and time parts with 'UN'
 }
 \examples{
 dtc_df <- data.frame(ADTC = c(

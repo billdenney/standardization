@@ -8,9 +8,9 @@ test_that("verify_alloq works", {
   ) 
   
   
-  verify_alloq(df1,expected_missing = "BLQ")
+  verify_alloq(df1,expected_missing = c("BLQ","<"))
   
-  expect_error(verify_alloq(df1,expected_missing = "BLQ"),NA)
+  expect_error(verify_alloq(df1,expected_missing = c("BLQ","<")),NA)
   expect_error(verify_alloq(df1,expected_missing = ""),"The above ALLOQ rows are not expected to be missing, please check them")
  
 })

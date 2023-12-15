@@ -1,11 +1,11 @@
 #' Checks for duplicate rows
 #'
 #' @name check_merge_output
-#' @param data is a data frame
-#' @param study specifies a STUDYID to check the data.frame for duplicate rows within each study
-#' @param ... specifies grouping variables
-#' @description checks for duplicate rows
-#' @return prints duplicate rows
+#' @param data Data.frame
+#' @param study Specifies a study ID to check the data.frame for duplicate rows within the specified study
+#' @param ... Specifies grouping variables
+#' @description Checks for presence of duplicate data rows
+#' @return Returns a message if duplicate rows are present in the data and prints duplicate rows
 #' @export
 #' @examples
 #' ex <- data.frame(
@@ -32,7 +32,7 @@ check_merge_output <- function(data, study, ...) {
 
 
   for (i in seq_along(study)) {
-    print(paste0("Checking study: ", study[i]))
+    print(paste0("Checking duplicates for study: ", study[i]))
     check_dupl <-
       data %>%
       ungroup() %>%
@@ -42,13 +42,14 @@ check_merge_output <- function(data, study, ...) {
       filter(row > 1)
   }
 
-  
+
   if (nrow(check_dupl) > 0) {
-    print(check_dupl)
     warning("Duplicate rows present for grouping variables")
   } else {
-    NULL
-  }
+    print("No duplicate rows present")
+            }
+
+  print(check_dupl)
 }
 
 

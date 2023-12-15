@@ -2,7 +2,7 @@
 % Please edit documentation in R/verify_alloq.R
 \name{verify_alloq}
 \alias{verify_alloq}
-\title{verifies for unexpected missing values in ALLOQ}
+\title{Verifies if ALLOQ values are available when AVALC data is present}
 \usage{
 verify_alloq(
   data,
@@ -14,7 +14,7 @@ verify_alloq(
 )
 }
 \arguments{
-\item{data}{data.frame to be checked}
+\item{data}{Data.frame to be checked}
 
 \item{id_col}{STUDYID variable}
 
@@ -24,13 +24,13 @@ verify_alloq(
 
 \item{param_col}{PARAM variable}
 
-\item{expected_missing}{character vector of AVALC exclusions that are expected to have missing values in ALLOQ}
+\item{expected_missing}{Character vector of AVALC data that are expected to have missing values in ALLOQ}
 }
 \value{
-error with missing ALLOQ rows and otherwise NULL
+Error message for ALLOQ rows with missing values
 }
 \description{
-Verifies recoded ALLOQ values for all AVALC values in BQL variants unless AVALC is in a vector that is pre-specified
+Checks if ALLOQ values are available when AVALC data is present
 }
 \examples{
 df1<-data.frame(
@@ -38,7 +38,7 @@ STUDYID=paste("CDISK_00",1:3),
 PARAM=c(rep("Hb",3)),
 AVALC=c("BLQ","BLOQ","BLQ"),
 ALLOQ=c(20.3,21.2,NA_integer_)
-) 
+)
 
 verify_alloq(df1,expected_missing = "BLQ")
 }

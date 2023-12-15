@@ -2,7 +2,7 @@
 % Please edit documentation in R/verify_avaln.R
 \name{verify_avaln}
 \alias{verify_avaln}
-\title{verifies missing AVALC matches missing AVALN values}
+\title{checks if missing values in AVALN column correspond to missing values in AVALC column}
 \usage{
 verify_avaln(
   data,
@@ -14,7 +14,7 @@ verify_avaln(
 )
 }
 \arguments{
-\item{data}{data.frame to be checked}
+\item{data}{Data.frame to be checked}
 
 \item{id_col}{STUDYID variable}
 
@@ -24,13 +24,13 @@ verify_avaln(
 
 \item{param_col}{PARAM variable}
 
-\item{expected_missing}{character vector of AVALC exclusions that are expected to have missing values in AVALN}
+\item{expected_missing}{Character vector of AVALC data that are expected to have missing values in AVALN}
 }
 \value{
-error with missing AVALN rows and otherwise NULL
+Error message for AVALN rows with missing values
 }
 \description{
-Verifies missing AVALC matches missing AVALN values unless AVALC is in a vector that is pre-specified
+Verifies there are no missing values in AVALN when AVALC data is present unless specified in expected_missing
 }
 \examples{
 df2<-data.frame(
@@ -40,5 +40,5 @@ AVALC=c(20.3,21.2,22.5,60.5,55.7,"BLQ","Sample collected"),
 AVALN=c(20.3,21.2,22.5,60.5,55.7,NA_integer_,NA_integer_)
 )
 
-verify_avaln(df2,expected_missing = c("BLQ","Sample collected"))  
+verify_avaln(df2,expected_missing = c("BLQ","Sample collected"))
 }
