@@ -9,7 +9,7 @@ verify_ntsfd(data, expected_missing)
 \arguments{
 \item{data}{Data.frame with STUDYID, USUBJID, VISIT, VISITDY, ATPTN, NTSFD variables}
 
-\item{expected_missing}{Specifies VISIT data for which missing values are expected in NTSFD (e.g. "Unscheduled"). All "unscheduled" measurements are expected to have missing values in NTSFD.}
+\item{expected_missing}{Specify VISIT data for which missing values are expected in NTSFD (e.g. "Unscheduled").}
 }
 \value{
 Data.frame with data rows where NTSFD is missing.
