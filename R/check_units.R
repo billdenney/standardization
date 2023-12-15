@@ -9,7 +9,7 @@
 #' df <- data.frame(
 #'   STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01",
 #'               "CDISK-02", "CDISK-02","CDISK-02", "CDISK-02"),
-#'   USUBJID = paste0("CDISC01.10000", c(1:8)),
+#'   USUBJID = paste0("CDISC01.10000",1:8),
 #'   PARAM = c("CDISK dosing", "CDISK dosing", "Glucose", "Glucose",
 #'             "CDISK dosing", "CDISK dosing", "Glucose", "Glucose"),
 #'   EXDOSEU = c("mg", "mg", NA, NA,
@@ -65,7 +65,7 @@ check_units <- function(data, nstudies) {
         TRUE~AVALU
       )) %>%
       reframe(check_AVALU = AVALU) %>%
-      replace_na_blank(columns = c("check_AVALU"), replacement = NA_character_) %>%
+      replace_na_blank(columns = "check_AVALU", replacement = NA_character_) %>%
       mutate(units = coalesce(check_AVALU)) %>%
       ungroup() %>%
       select(-AVALN, -AVALU)

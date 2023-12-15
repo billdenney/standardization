@@ -1,8 +1,8 @@
-#' Matches and changes format of variables as per specifications
+#' Checks if variables are in specified numeric or character format and converts as required.
 #'
 #' @param data data.frame that serves as a source dataset
 #' @param file is a specifications file(list or .xlsx) that informs selection of variables
-#' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
+#' @param coltype is column type specification for 'baseline', 'demog', 'measurement', or 'dosing' variables
 #' @description checks if variables are in specified format(numeric or character) and converts as required
 #' @return a data.frame with specified variables converted to required format
 #' @export
@@ -37,7 +37,7 @@ match_format <- function(data, file, coltype) {
     pull()
 
   spec_names <- source_cols
-  source_data_names <- c(colnames(data))
+  source_data_names <- c(colnames(as.data.frame(data)))
 
 
   d_spec <- d_specification["Specification-Source Data"]
@@ -73,7 +73,7 @@ match_format <- function(data, file, coltype) {
       )
     ) %>%
     select(
-      spec_names, spec_namevariants, col_type, select_col, final_name, source_data_format # ,column_format
+      spec_names, spec_namevariants, col_type, select_col, final_name, source_data_format #column_format
     ) %>%
     mutate(source_data_format = case_when(
       grepl("ADTC|AENDTC", final_name) ~ "Character",
@@ -94,12 +94,15 @@ match_format <- function(data, file, coltype) {
     select(select_col, source_data_format) %>%
     distinct() %>%
     select(source_data_format) %>%
-    mutate_all(funs(tolower)) %>%
+    mutate(across(everything(),~tolower(.))) %>%
+    #mutate_all(funs(tolower)) %>%
     pull(source_data_format)
 
 
+  data<-as.data.frame(data)
 
   for (i in seq_along(names_df)) {
+
     if (!(class(data[, names_df[i]]) %in% format_df[i])) {
       data[, names_df[i]] <- eval(call(paste0("as.", format_df[i]), data[, names_df[i]]))
     } else {
