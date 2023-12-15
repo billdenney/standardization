@@ -1,30 +1,97 @@
-lb <- read.csv("../data-raw/SDTM_example_files/Harvard-directory/lb.csv")
-specs <- "..../data-raw/specs.xlsx"
+
 
 
 
 test_that("check_units works", {
-  lb_study1<-lb %>%
-    mutate(PARAM=LBTEST,AVALU=LBSTRESU,ECDOSEU=NA_character_,EXDOSEU=NA_character_) %>%
-    select(STUDYID,USUBJID,PARAM,AVALU,EXDOSEU,ECDOSEU)
-  lb_study2<-lb %>% mutate(STUDYID="S-CDSK-02") %>%
-    mutate(PARAM=LBTEST,AVALU=LBSTRESU,ECDOSEU=NA_character_,EXDOSEU=NA_character_) %>%
-    select(STUDYID,USUBJID,PARAM,AVALU,EXDOSEU,ECDOSEU)
+  
 
-  lb_dat_trial1<-lb_study1 %>% dplyr::bind_rows(lb_study2)
-  lb_dat_trial2<-lb_study1 %>% dplyr::bind_rows(lb_study2) %>%
-    mutate(AVALU=case_when(
-      PARAM %in% "Glucose" ~"mmol/L",
-      TRUE ~ AVALU
-    ))
+  #dosing and analysis data
+  df4 <- data.frame(
+    STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01",
+                "CDISK-02", "CDISK-02","CDISK-02", "CDISK-02"),
+    USUBJID = paste0("CDISC01.10000", c(1:8)),
+    PARAM = c("CDISK dosing", "CDISK dosing", "Glucose", "Glucose", "CDISK dosing", "CDISK dosing", "Glucose", "Glucose"),
+    ECDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
+    EXDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
+    EXDOSE= c(28, 28, NA, NA, 50, 50, NA, NA),
+    AVALN=  c(NA, NA, "3.9 ", "4", NA, NA, "5", "75.6"),
+    AVALU=  c(NA, NA, "mmol/L", "mmol/L", NA, NA, "mmol/L", "mg/dL")
+  )
 
-  units_trial2<-check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = c("hematocrit","occult blood","ph"))
+
+   expect_output(check_units(df4, nstudies=2),
+                "Checking units: Units are not uniform within a parameter name")
 
 
-  expect_setequal(names(units_trial2),c("PARAM","STUDY1","STUDY2","test"))
-  expect_error(check_units(lb_dat_trial1,STUDY1,STUDY2,exclude_var = ""),
-               "assertr stopped execution")
-  expect_error(check_units(lb_dat_trial2,STUDY1,STUDY2,exclude_var = c("hematocrit","occult blood","ph")),
-               NA)
+
+   #dosing
+   df5 <- data.frame(
+     STUDYID = c("CDISK-01", "CDISK-01","CDISK-02", "CDISK-02"),
+     USUBJID = paste0("CDISC01.10000", c(1:4)),
+     PARAM = c("CDISK dosing", "CDISK dosing", "CDISK dosing", "CDISK dosing"),
+     ECDOSEU = c("mg", "mg",  "mg", "mg"),
+     EXDOSEU = c("mg", "mg","mg", "mg"),
+     EXDOSE= c(28, 28, 50, 50)
+
+   )
+
+
+   expect_output(check_units(df5, nstudies=2),
+                 "Checking units: All units are uniform within a parameter name")
+
+
+   #analysis data
+   df6 <- data.frame(
+     STUDYID = c("CDISK-01", "CDISK-01","CDISK-02", "CDISK-02"),
+     USUBJID = paste0("CDISC01.10000", c(1:4)),
+     PARAM = c("Glucose", "Glucose",  "Glucose", "Glucose"),
+     AVALN=  c(3.9 , 4,  5, 75.6),
+     AVALU=  c( "mmol/L", "mmol/L", "mmol/L", "mg/dL")
+   )
+
+
+   
+   expect_output(check_units(df6, nstudies=2),
+                  "Checking units: Units are not uniform within a parameter name")
+
+
+   
+   df7 <- data.frame(
+     STUDYID = c("CDISK-01", "CDISK-01","CDISK-02", "CDISK-02"),
+     USUBJID = paste0("CDISC01.10000", c(1:4)),
+     PARAM = c("Glucose", "Glucose",  "Glucose", "Glucose"),
+     AVALN=  c(3.9 , 4,  5, 75.6),
+     AVALU=  c( "mmol/L", NA, "mmol/L", NA)
+   )
+
+
+   
+   expect_output(check_units(df7, nstudies=2),
+                 "Checking units: Units are not uniform within a parameter name")
+
+
+
+
+   #parameter exclusions
+   df9 <- data.frame(
+     STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-02", "CDISK-02"),
+     USUBJID = paste0("CDISC01.10000", c(1:8)),
+     PARAM = c(
+       "CDISK dosing", "CDISK dosing", "NAFLD Activity Score", "NAFLD Activity Score",
+       "CDISK dosing", "CDISK dosing", "NAFLD Activity Score", "NAFLD Activity Score"
+     ),
+     ECDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
+     EXDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
+     EXDOSE = c(28, 28, NA, NA, 50, 50, NA, NA),
+     AVALN = c(NA, NA, 3.9, 4, NA, NA, 5, NA),
+     AVALU = c(NA, NA, 'score', 'score', NA, NA, 'score', NA)
+   )
+
+
+
+expect_output(check_units(df9, nstudies = 2),
+              "Checking units: All units are uniform within a parameter name")
+
+
 
 })

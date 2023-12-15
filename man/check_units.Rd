@@ -2,33 +2,37 @@
 % Please edit documentation in R/check_units.R
 \name{check_units}
 \alias{check_units}
-\title{Compares and checks for uniformity of units within a parameter name across two studies}
+\title{Checks for uniformity of units within a parameter name across multiple studies}
 \usage{
-check_units(data, col1, col2, exclude_var)
+check_units(data, nstudies)
 }
 \arguments{
-\item{data}{is a data.frame with STUDYID,USUBJID,PARAM,ECDOSEU,EXDOSEU,AVALU variables}
+\item{data}{Data.frame with STUDYID,USUBJID,PARAM,EXDOSEU,AVALU variables}
 
-\item{col1}{specifies column name for study1}
-
-\item{col2}{specifies column name for for study2}
-
-\item{exclude_var}{excludes specific parameter names where units do not apply}
+\item{nstudies}{Specifies number of studies}
 }
 \value{
-data.frame with matching units
+Data.frame with summarized parameters and their respective units. Also returns a message for parameter names with multiple units.
 }
 \description{
-Compares and checks for uniformity of units within a parameter name across two studies
+Checks for uniformity of units within a parameter name across multiple studies
 }
 \examples{
+vignette(package="standardization",all=TRUE)
 df <- data.frame(
-  STUDYID = c("CDISK-01", "CDISK-02", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-01"),
-  USUBJID = paste0("CDISC01.10000", c(1:6)),
-  PARAM = c("CDISK dosing", "CDISK dosing", "Hemoglobin", "Glucose", "Hemoglobin", "Glucose"),
-  ECDOSEU = c("mg", "mg", "", "", "", ""),
-  EXDOSEU = c("mg", "mg", "", "", "", ""),
-  AVALU = c("", "", "g/dl", "mmol/L", "g/dl", "mmol/L")
+  STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01",
+              "CDISK-02", "CDISK-02","CDISK-02", "CDISK-02"),
+  USUBJID = paste0("CDISC01.10000", c(1:8)),
+  PARAM = c("CDISK dosing", "CDISK dosing", "Glucose", "Glucose",
+            "CDISK dosing", "CDISK dosing", "Glucose", "Glucose"),
+  EXDOSEU = c("mg", "mg", NA, NA,
+              "mg", "mg", NA, NA),
+  EXDOSE=c(28, 28, NA, NA,
+           50, 50, NA, NA),
+  AVALN=c(NA, NA, 3.9 , 4,
+          NA, NA, 5, NA),
+  AVALU = c(NA, NA, "mmol/L", "mmol/L",
+            NA, NA, "mmol/L", NA)
 )
-check_units(df,STUDY1,STUDY2,exclude_var = "")
+check_units(df, nstudies=2)
 }
