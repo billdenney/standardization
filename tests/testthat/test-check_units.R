@@ -9,7 +9,7 @@ test_that("check_units works", {
   df4 <- data.frame(
     STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01",
                 "CDISK-02", "CDISK-02","CDISK-02", "CDISK-02"),
-    USUBJID = paste0("CDISC01.10000", c(1:8)),
+    USUBJID = paste0("CDISC01.10000", 1:8),
     PARAM = c("CDISK dosing", "CDISK dosing", "Glucose", "Glucose", "CDISK dosing", "CDISK dosing", "Glucose", "Glucose"),
     ECDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
     EXDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
@@ -27,7 +27,7 @@ test_that("check_units works", {
    #dosing
    df5 <- data.frame(
      STUDYID = c("CDISK-01", "CDISK-01","CDISK-02", "CDISK-02"),
-     USUBJID = paste0("CDISC01.10000", c(1:4)),
+     USUBJID = paste0("CDISC01.10000", 1:4),
      PARAM = c("CDISK dosing", "CDISK dosing", "CDISK dosing", "CDISK dosing"),
      ECDOSEU = c("mg", "mg",  "mg", "mg"),
      EXDOSEU = c("mg", "mg","mg", "mg"),
@@ -43,7 +43,7 @@ test_that("check_units works", {
    #analysis data
    df6 <- data.frame(
      STUDYID = c("CDISK-01", "CDISK-01","CDISK-02", "CDISK-02"),
-     USUBJID = paste0("CDISC01.10000", c(1:4)),
+     USUBJID = paste0("CDISC01.10000", 1:4),
      PARAM = c("Glucose", "Glucose",  "Glucose", "Glucose"),
      AVALN=  c(3.9 , 4,  5, 75.6),
      AVALU=  c( "mmol/L", "mmol/L", "mmol/L", "mg/dL")
@@ -58,7 +58,7 @@ test_that("check_units works", {
    
    df7 <- data.frame(
      STUDYID = c("CDISK-01", "CDISK-01","CDISK-02", "CDISK-02"),
-     USUBJID = paste0("CDISC01.10000", c(1:4)),
+     USUBJID = paste0("CDISC01.10000", 1:4),
      PARAM = c("Glucose", "Glucose",  "Glucose", "Glucose"),
      AVALN=  c(3.9 , 4,  5, 75.6),
      AVALU=  c( "mmol/L", NA, "mmol/L", NA)
@@ -75,7 +75,7 @@ test_that("check_units works", {
    #parameter exclusions
    df9 <- data.frame(
      STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-02", "CDISK-02"),
-     USUBJID = paste0("CDISC01.10000", c(1:8)),
+     USUBJID = paste0("CDISC01.10000", 1:8),
      PARAM = c(
        "CDISK dosing", "CDISK dosing", "NAFLD Activity Score", "NAFLD Activity Score",
        "CDISK dosing", "CDISK dosing", "NAFLD Activity Score", "NAFLD Activity Score"
