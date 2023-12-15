@@ -2,12 +2,12 @@
 % Please edit documentation in R/match_NA.R
 \name{match_NA}
 \alias{match_NA}
-\title{Compares sum of missing values between corresponding output and source dataset columns.}
+\title{Compares sum of missing values between corresponding output and input dataset columns.}
 \usage{
-match_NA(source, output)
+match_NA(input, output)
 }
 \arguments{
-\item{source}{Source dataset}
+\item{input}{input dataset}
 
 \item{output}{Output dataset}
 }
@@ -15,8 +15,8 @@ match_NA(source, output)
 Draws a comparison of total number of missing values between two datasets and returns an error message for unequal matches.
 }
 \description{
-Compares sum of missing values between corresponding output and source dataset columns.
+Compares sum of missing values between corresponding output and input dataset columns.
 }
 \examples{
-match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
+match_NA(input<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
 }

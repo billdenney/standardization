@@ -15,7 +15,7 @@
 #' ))
 #' format_dtc <- date_time_format(dtc_df, "ADTC")
 date_time_format <- function(data, col) {
-  
+
   col <- as.name(col)
   mod_col <- paste0("mod_", col)
   mod_col <- as.name(mod_col)
@@ -27,8 +27,8 @@ date_time_format <- function(data, col) {
   NA_col <- as.name(NA_col)
   ret_col <- paste0("ret_", col)
   ret_col <- as.name(ret_col)
-  
-  
+
+
   pre_dat <- data
   if (is.character(pre_dat$col) %in% "FALSE") {
     ret_dat <- data %>%
@@ -37,15 +37,15 @@ date_time_format <- function(data, col) {
   } else {
     NULL
   }
-  
-  
+
+
   common_dat <-
     ret_dat %>%
     mutate(
       {{col}}:=gsub("T[[:space:]]+|[[:space:]]+T"," ",{{col}}),
       {{col}}:=gsub("[[:space:]]+"," ",{{col}})
-    ) 
-  
+    )
+
   #checking for missing values
   NA_ret_dat<-common_dat %>%
     select({{ col }}) %>%
@@ -53,30 +53,24 @@ date_time_format <- function(data, col) {
   NA_dat <- data %>%
     select({{ col }}) %>%
     summarise_all(~ sum(is.na(.)))
-  
+
   if (NA_ret_dat %in% NA_dat) {
     NULL
-  } 
-  
-  
+  }
+
+
   #checking formats
-  format_list <- common_dat %>% 
+  format_list <- common_dat %>%
     mutate(format = nchar({{ col }})) %>%
     select(format) %>%
     distinct() %>%
     pull()
   format_len <- c(0, 4, 7, 8, 9, 10, 16, 18, 19, NA)
   match_format_len <- as.vector(setdiff(format_list, format_len))
-  
-  if (!is_empty(match_format_len)) {
-    warning(paste("missing format type"))
-  } else if (is_empty(match_format_len)) {
-    NULL
-  }
-  
-  
+
+
   #data.frame with datetime col
-  modified_dat<-common_dat %>% 
+  modified_dat<-common_dat %>%
     mutate(
       "length_format" = nchar({{ col }}),
       {{ ret_col }} :=({{ col }}),
@@ -84,27 +78,27 @@ date_time_format <- function(data, col) {
                                  TRUE ~ ({{ret_col}}))) %>%
     #replace missing date parts with UN
     mutate({{date_col}}:= case_when(
-      length_format %in% 4  ~ format(as.Date(({{ col }}), format = "%Y"), format = "%Y-UN-UN"), 
+      length_format %in% 4  ~ format(as.Date(({{ col }}), format = "%Y"), format = "%Y-UN-UN"),
       length_format %in% 7  ~ format(as.Date(paste0(({{ret_col}}), "-01"), format = "%Y-%m-%d"), format = "%Y-%m-UN"),
       length_format %in% 9  ~ format(as.Date(paste0(sub("---","-",{{ret_col}}), "-01"), format = "%Y-%m-%d"), format = "%Y-%m-UN"),
-      length_format %in% 10 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10), 
-      length_format %in% 16 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10) , 
-      length_format %in% 18 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10) , 
+      length_format %in% 10 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10),
+      length_format %in% 16 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10) ,
+      length_format %in% 18 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10) ,
       length_format %in% 19 ~ substring(format_ISO8601(as.POSIXct(({{ col }}), format = "%Y-%m-%d")),1,10),
       TRUE ~"")
     )  %>%
     #replace missing time parts with UN
     mutate({{ time_col }} := case_when(
-      length_format %in% 4 ~ format(as.POSIXct({{ date_col }}, format = "%Y"), format = "TUN:UN:UN"), 
+      length_format %in% 4 ~ format(as.POSIXct({{ date_col }}, format = "%Y"), format = "TUN:UN:UN"),
       length_format %in% 7 ~   format(as.POSIXct(format(as.Date(paste0(({{ret_col}}), "-01"),format = "%Y-%m-%d"), format = "%Y-%m-%d"),
-                                                 format = "%Y-%m-%d"), format = "TUN:UN:UN"), 
+                                                 format = "%Y-%m-%d"), format = "TUN:UN:UN"),
       length_format %in% 9 ~   format(as.POSIXct(format(as.Date(paste0(sub("---","-",{{ret_col}}), "-01"),format = "%Y-%m-%d"), format = "%Y-%m-%d"),
-                                                 format = "%Y-%m-%d"), format = "TUN:UN:UN"), 
-      length_format %in% 10 ~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d"), format = "TUN:UN:UN"), 
-      length_format %in% 16 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M"), format = "T%H:%M:UN"), 
-      length_format %in% 16 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d %H:%M"), format = "T%H:%M:UN"), 
-      length_format %in% 18 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d%H:%M:%S"), format = "T%H:%M:%S"), 
-      length_format %in% 19 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M:%S"), format = "T%H:%M:%S"), 
+                                                 format = "%Y-%m-%d"), format = "TUN:UN:UN"),
+      length_format %in% 10 ~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d"), format = "TUN:UN:UN"),
+      length_format %in% 16 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M"), format = "T%H:%M:UN"),
+      length_format %in% 16 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d %H:%M"), format = "T%H:%M:UN"),
+      length_format %in% 18 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d%H:%M:%S"), format = "T%H:%M:%S"),
+      length_format %in% 19 & grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%dT%H:%M:%S"), format = "T%H:%M:%S"),
       length_format %in% 19 & !grepl("T|t", ({{ col }}))~ format(as.POSIXct({{ col }}, format = "%Y-%m-%d %H:%M:%S"), format = "T%H:%M:%S"),
       TRUE~"")
     ) %>%
@@ -120,14 +114,14 @@ date_time_format <- function(data, col) {
              length_format %in% 19 & is.na({{date_col}})|is.na({{time_col}}) & !is.na({{col}})~ "check_19",
              TRUE ~""
            )) %>%
-    
+
     verify(!({{NA_col}}) %in% c("check_4","check_7","check_9","check_10","check_16","check_18","check_19") ) %>%
     mutate({{col}}:=({{ mod_col }})) %>%
     select(-{{ mod_col }}) %>%
     select(-{{ NA_col }},-{{ date_col }},-{{ time_col }},-{{ ret_col }},-{{ ret_col }}, -length_format)
-  
+
   modified_dat
-  
+
 }
 
 

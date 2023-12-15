@@ -1,15 +1,15 @@
-#' Compares sum of missing values between corresponding output and source dataset columns.
+#' Compares sum of missing values between corresponding output and input dataset columns.
 #'
-#' @param source Source dataset
+#' @param input input dataset
 #' @param output Output dataset
 #' @return Draws a comparison of total number of missing values between two datasets and returns an error message for unequal matches.
 #' @export
-#' @examples match_NA(source<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
-match_NA<-function(source, output){
+#' @examples match_NA(input<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))
+match_NA<-function(input, output){
 
-  common_names <- intersect(names(output),names(source))
+  common_names <- intersect(names(output),names(input))
 
-  input_dat<-source %>% select(all_of(common_names)) %>% group_by() %>% distinct() %>% arrange_all() %>% ungroup()
+  input_dat<-input %>% select(all_of(common_names)) %>% group_by() %>% distinct() %>% arrange_all() %>% ungroup()
 
   input_colnames<-paste0(common_names,"_Input")
   colnames(input_dat)<-input_colnames
