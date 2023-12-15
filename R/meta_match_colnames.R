@@ -123,5 +123,5 @@ utils::globalVariables(c(
   "Contents.Columns",
   "Columns_spec",
   "Labels",
-  "contents.Labels" #"spec_namevariants",
+  "contents.Labels" 
 ))
