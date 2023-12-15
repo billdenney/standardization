@@ -74,5 +74,4 @@ test_that("date_time_format works ", {
   expect_setequal(format_mod_lengths, c(0 , 4 , 7 , 9, 10 ,16, 17, 18, 19, 20, 21, NA))
   expect_setequal(names(format_check), c("ADTC","mod_ADTC","check_ADTC_length","check_mod_length",
                                          "match"))
-  
 })
