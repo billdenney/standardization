@@ -22,7 +22,7 @@ vignette(package="standardization",all=TRUE)
 df <- data.frame(
   STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01",
               "CDISK-02", "CDISK-02","CDISK-02", "CDISK-02"),
-  USUBJID = paste0("CDISC01.10000", c(1:8)),
+  USUBJID = paste0("CDISC01.10000",1:8),
   PARAM = c("CDISK dosing", "CDISK dosing", "Glucose", "Glucose",
             "CDISK dosing", "CDISK dosing", "Glucose", "Glucose"),
   EXDOSEU = c("mg", "mg", NA, NA,

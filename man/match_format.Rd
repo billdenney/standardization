@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_format.R
 \name{match_format}
 \alias{match_format}
-\title{Matches and changes format of variables as per specifications}
+\title{Checks if variables are in specified numeric or character format and converts as required.}
 \usage{
 match_format(data, file, coltype)
 }
@@ -11,7 +11,7 @@ match_format(data, file, coltype)
 
 \item{file}{is a specifications file(list or .xlsx) that informs selection of variables}
 
-\item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
+\item{coltype}{is column type specification for 'baseline', 'demog', 'measurement', or 'dosing' variables}
 }
 \value{
 a data.frame with specified variables converted to required format
