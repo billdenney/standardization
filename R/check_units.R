@@ -80,7 +80,7 @@ check_units <- function(data, nstudies) {
         TRUE~EXDOSEU
       )) %>%
       reframe(check_EXDOSEU = EXDOSEU) %>%
-      replace_na_blank(columns = c("check_EXDOSEU"), replacement = NA_character_) %>%
+      replace_na_blank(columns = "check_EXDOSEU", replacement = NA_character_) %>%
       mutate(units = coalesce(check_EXDOSEU)) %>%
       ungroup() %>%
       select(-EXDOSE, -EXDOSEU)
