@@ -1,8 +1,8 @@
 #' Compares output and source dataset columns and identifies data mismatches.
 #'
 #' @name match_missing_values
-#' @param input Source dataset
-#' @param output Output dataset
+#' @param input Source dataset.
+#' @param output Output dataset.
 #' @param ... Specifies grouping variables used to arrange and align the two datasets.
 #' @description  Identifies mismatches between corresponding source and output dataset columns.
 #' @return Data.frame with TRUE or FALSE values to indicate matches and mismatches, respectively.

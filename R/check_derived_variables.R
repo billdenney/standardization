@@ -1,9 +1,9 @@
-#' Checks if derived variable PARAMN and PARAM in output have equal number of elements in comparison to specifications to prevent duplicate parameter names
+#' Ensures no duplicate parameter names exist. Compares output dataset with specifications file for number of elements in columns PARAMN and PARAM.
 #'
-#' @param data Data.frame with derived variable PARAMN
-#' @param specs specifications file with 'Recode PARAM' sheet required
-#' @return Data.frame with summary of number of unique elements in PARAM and PARAMN
-#' @description Compares number of unique elements in PARAM and PARAMN in specification file with those in output data.frame
+#' @param data Data.frame with PARAM and PARAMN columns.
+#' @param specs specifications file with 'Recode PARAM' sheet required.
+#' @return Data.frame with number of unique elements in PARAM and PARAMN.
+#' @description Compares output dataset with specifications file for number of elements in columns PARAMN and PARAM.
 #' @export
 #' @examples
 #' df<-data.frame(
@@ -39,7 +39,7 @@ check_derived_variables<-function(data,specs){
     verify(PARAMN_check_df == PARAMN_check_specs)
 
   check_data_specs
-  
+
   }
 
 utils::globalVariables(c("PARAM","PARAMN","PARAMN_check",'PARAMN_check_specs','PARAMN_check_df'))

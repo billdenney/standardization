@@ -1,8 +1,8 @@
 #' Ensures there are no missing values in NTSFD column
 #'
-#' @param data Data.frame with STUDYID, USUBJID, VISIT, VISITDY, ATPTN, NTSFD variables
-#' @param expected_missing Specifies VISIT data for which missing values are expected in NTSFD (e.g. "Unscheduled"). All "unscheduled" measurements are expected to have missing values in NTSFD.
-#' @description Verifies there are no missing values in NTSFD column
+#' @param data Data.frame with STUDYID, USUBJID, VISIT, VISITDY, ATPTN, NTSFD variables.
+#' @param expected_missing Specifies VISIT data for which missing values are expected in NTSFD (e.g. "Unscheduled").
+#' @description Verifies there are no missing values in NTSFD column.
 #' @return Data.frame with data rows where NTSFD is missing.
 #' @export
 #'

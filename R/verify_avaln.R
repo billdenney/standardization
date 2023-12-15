@@ -1,13 +1,13 @@
-#' checks if missing values in AVALN column correspond to missing values in AVALC column
+#' checks if missing values in AVALN column correspond to missing values in AVALC column.
 #'
-#' @param data Data.frame to be checked
-#' @param id_col STUDYID variable
-#' @param AVALC_col AVALC variable
-#' @param AVALN_col AVALN variable
-#' @param param_col PARAM variable
-#' @param expected_missing Character vector of AVALC data that are expected to have missing values in AVALN
-#' @description Verifies there are no missing values in AVALN when AVALC data is present unless specified in expected_missing
-#' @return Error message for AVALN rows with missing values
+#' @param data Data.frame to be checked.
+#' @param id_col STUDYID variable.
+#' @param AVALC_col AVALC variable.
+#' @param AVALN_col AVALN variable.
+#' @param param_col PARAM variable.
+#' @param expected_missing Character vector of AVALC data that are expected to have missing values in AVALN.
+#' @description Verifies there are no missing values in AVALN when AVALC data is present unless specified in expected_missing.
+#' @return Error message for AVALN rows with missing values.
 #' @export
 #'
 #' @examples

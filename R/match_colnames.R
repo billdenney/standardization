@@ -1,12 +1,12 @@
 
-#' Selects SDTM column names or their name variants and renames them to preferred column name in the output
+#' Selects SDTM column names or their name variants and renames them to preferred column name in the output.
 #'
 #' @name match_colnames
-#' @param data A data.frame that serves as a source dataset
-#' @param file Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables
-#' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' variables
+#' @param data A data.frame that serves as a source dataset.
+#' @param file Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables.
+#' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.
 #' @description Selects SDTM column names or their name variants and renames them to preferred column name in the output.
-#' @return A data.frame with specified variables selected and renamed to preferred name
+#' @return A data.frame with specified variables selected and renamed to preferred name.
 #' @export
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))

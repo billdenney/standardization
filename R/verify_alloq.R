@@ -1,10 +1,10 @@
 #' Verifies if ALLOQ values are missing when AVALC data is present
 #'
-#' @param data Data.frame to be checked
-#' @param id_col STUDYID variable
-#' @param AVALC_col AVALC variable
-#' @param ALLOQ_col ALLOQ variable
-#' @param param_col PARAM variable
+#' @param data Data.frame to be checked.
+#' @param id_col STUDYID variable.
+#' @param AVALC_col AVALC variable.
+#' @param ALLOQ_col ALLOQ variable.
+#' @param param_col PARAM variable.
 #' @param expected_missing Character vector of AVALC data that are expected to have missing values in ALLOQ.
 #' @description Checks if ALLOQ values are missing when AVALC data is present.
 #' @return Error message for data rows with missing values in ALLOQ.

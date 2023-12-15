@@ -1,7 +1,7 @@
 #' Compares sum of missing values between corresponding output and input dataset columns.
 #'
-#' @param input input dataset
-#' @param output Output dataset
+#' @param input Source dataset.
+#' @param output Output dataset.
 #' @return Draws a comparison of total number of missing values between two datasets and returns an error message for unequal matches.
 #' @export
 #' @examples match_NA(input<-data.frame(col1=c(2,3,"NA","")), output<-data.frame(col1=c(2,3,"NA","")))

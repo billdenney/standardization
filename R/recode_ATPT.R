@@ -1,8 +1,8 @@
-#' Numeric re-coding of ATPT variable
+#' Numeric re-coding of ATPT variable.
 #'
 #' @param data A data.frame with ATPT variable.
-#' @return Data.frame with the addition of ATPTN variable
-#' @description Converts planned time point data in ATPT column to numeric format
+#' @return Data.frame with the addition of ATPTN variable.
+#' @description Converts time point data in ATPT column to numeric format.
 #' @export
 #' @examples recode_ATPT(data.frame(ATPT = c("Pre-dose", "2 hrs postdose", "drug A (2 hours before)", "34")))
 recode_ATPT <- function(data) {
@@ -39,12 +39,12 @@ recode_ATPT <- function(data) {
       grepl("prior|before|pre-dose|predose", ATPT, ignore.case = TRUE) & grepl("hr|hour|hrs", ATPT, ignore.case = TRUE) ~-1,
       grepl("post|after", ATPT, ignore.case = TRUE) & grepl("hr|hour|hrs", ATPT, ignore.case = TRUE) ~1,
 
-      
+
       grepl("post|after", ATPT, ignore.case = TRUE) & grepl("minutes|MINS|MIN", ATPT, ignore.case = TRUE) ~1/60,#4 mins post
 
       grepl("prior|before|pre-dose|predose", ATPT, ignore.case = TRUE) & grepl("minutes|MINS|MIN", ATPT, ignore.case = TRUE) ~-1/60,
-      
-      
+
+
       !grepl("post|after", ATPT, ignore.case = TRUE) & grepl("minutes|MINS|MIN", ATPT, ignore.case = TRUE) ~1/60,#4mins
 
       !grepl("prior|before|pre-dose|predose", ATPT, ignore.case = TRUE) & grepl("day", ATPT, ignore.case = TRUE) ~24,

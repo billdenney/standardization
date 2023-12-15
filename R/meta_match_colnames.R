@@ -1,10 +1,10 @@
-#' Selects variables based on metadata labels and renames them to preferred column name in the output
+#' Selects variables based on metadata labels and renames them to preferred column name in the output.
 #'
-#' @param data A data.frame that serves as source dataset
-#' @param file Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables
-#' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' variables
+#' @param data A data.frame that serves as source dataset.
+#' @param file Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables.
+#' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.
 #' @description Selects SDTM column names based on their metadata labels and renames them to preferred column name in the output.
-#' @return A data frame with specified variables selected
+#' @return A data frame with specified variables selected and renamed to preferred name.
 #' @export
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
@@ -26,7 +26,7 @@ meta_match_colnames <- function(data, file, coltype) {
   d_specification <- file
   source_cols <- d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%
-    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Type) %>% 
+    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Type) %>%
     mutate(
       spec_names = Specification.Source.Data.Column.Name,
       col_type = Specification.Source.Data.Column.Type
@@ -92,7 +92,7 @@ meta_match_colnames <- function(data, file, coltype) {
     distinct() %>%
     pull(final_name)
 
-  
+
   if (any(!duplicated(rename_df) %in% TRUE) ) {
     print(rename_df[duplicated(rename_df) | duplicated(rename_df, fromLast = TRUE)])
   } else{
@@ -123,5 +123,5 @@ utils::globalVariables(c(
   "Contents.Columns",
   "Columns_spec",
   "Labels",
-  "contents.Labels" 
+  "contents.Labels"
 ))

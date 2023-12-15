@@ -1,10 +1,10 @@
 #' Checks if variables are in specified numeric or character format and converts as required.
 #'
-#' @param data data.frame that serves as a source dataset
+#' @param data data.frame that serves as a source dataset.
 #' @param file is a specifications file(list or .xlsx) that informs selection of variables
-#' @param coltype is column type specification for 'baseline', 'demog', 'measurement', or 'dosing' variables
-#' @description checks if variables are in specified format(numeric or character) and converts as required
-#' @return a data.frame with specified variables converted to required format
+#' @param coltype is column type specification for 'baseline', 'demog', 'measurement', or 'dosing' variables.
+#' @description checks if variables are in specified format(numeric or character) and converts as required.
+#' @return a data.frame with specified variables converted to required format.
 #' @export
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),

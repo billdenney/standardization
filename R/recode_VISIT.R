@@ -1,10 +1,10 @@
 
-#' Numeric re-coding of VISIT variable
+#' Numeric re-coding of VISIT variable.
 #'
 #' @param data A data.frame containing VISIT variable.
-#' @param cycle_length A numeric vector specifying length of cycle for conversion of cycle data to days
-#' @description Converts VISIT data to numeric format
-#' @return Data.frame with the addition of VISITDY variable
+#' @param cycle_length A numeric vector specifying length of cycle for conversion of cycle data to days.
+#' @description Converts VISIT data to numeric format.
+#' @return Data.frame with the addition of VISITDY variable.
 #' @export
 #' @examples recode_VISIT(data.frame(VISIT=c("Cycle 1 Day 1","cycle 2 day 2","week 10")),cycle_length = 21)
 recode_VISIT <- function(data, cycle_length) {

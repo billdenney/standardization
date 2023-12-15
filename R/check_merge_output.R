@@ -1,11 +1,11 @@
 #' Checks for duplicate rows
 #'
 #' @name check_merge_output
-#' @param data Data.frame
-#' @param study Specifies a study ID to check the data.frame for duplicate rows within the specified study
-#' @param ... Specifies grouping variables
-#' @description Checks for presence of duplicate data rows
-#' @return Returns a message if duplicate rows are present in the data and prints duplicate rows
+#' @param data Data.frame.
+#' @param study Specifies a study ID to check the data.frame for duplicate rows within the specified study.
+#' @param ... Specifies grouping variables.
+#' @description Checks for presence of duplicate data rows.
+#' @return Returns a message if duplicate rows are present in the data and prints duplicate rows.
 #' @export
 #' @examples
 #' ex <- data.frame(
