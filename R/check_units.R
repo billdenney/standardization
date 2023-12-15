@@ -1,7 +1,7 @@
-#' Checks for uniformity of units within a parameter name across multiple studies
+#' Checks for uniformity of units within a parameter name across multiple studies.
 #'
-#' @param data Data.frame with STUDYID,USUBJID,PARAM,EXDOSEU,AVALU variables
-#' @param nstudies Specifies number of studies
+#' @param data Data.frame with STUDYID,USUBJID,PARAM,EXDOSEU,AVALU variables.
+#' @param nstudies Specifies number of studies.
 #' @return Data.frame with summarized parameters and their respective units. Also returns a message for parameter names with multiple or missing units.
 #' @export
 #' @examples

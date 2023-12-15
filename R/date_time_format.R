@@ -2,10 +2,10 @@
 #' converts datetime variable to ISO 8601
 #'
 #' @name date_time_format
-#' @param data a data.frame with datetime variable
-#' @param col is datetime variable
-#' @description converts datetime variable to ISO 8601 format and replaces missing date and time parts with 'UN'
-#' @return data.frame with datetime variable in ISO 8601 format with 'UN' applied for missing date and time parts
+#' @param data a data.frame with datetime variable.
+#' @param col is datetime variable.
+#' @description converts datetime variable to ISO 8601 format and replaces missing date and time parts with 'UN'.
+#' @return data.frame with datetime variable in ISO 8601 format with 'UN' applied for missing date and time parts.
 #' @export
 #' @examples
 #' dtc_df <- data.frame(ADTC = c(

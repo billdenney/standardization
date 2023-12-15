@@ -1,7 +1,7 @@
 #' Selects variables based on metadata labels and renames them to preferred column name in the output.
 #'
 #' @param data A data.frame that serves as source dataset.
-#' @param file Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables.
+#' @param file 'Specifications' can be provided as list object in R or .xlsx file path, which informs selection of variables.
 #' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.
 #' @description Selects SDTM column names based on their metadata labels and renames them to preferred column name in the output.
 #' @return A data frame with specified variables selected and renamed to preferred name.
