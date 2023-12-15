@@ -35,6 +35,7 @@ check_units <- function(data, col1, col2, exclude_var) {
 
 
   cols <- names(check)[!names(check) %in% "PARAM"]
+  
 
 
   check_df <- check %>%
