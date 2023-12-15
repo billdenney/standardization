@@ -1,6 +1,6 @@
 #' Verify that no unexpected duplicates are in the data
 #' 
-#' @param data The data to check
+#' @param data analysis-ready output dataset
 #' @param id_col,time_col,param_col Character scalars for the ID, TIME, and parameter name
 #' @param expected A list of expected duplicated values
 #' @return The \code{data} if there is unexpected duplication, raising an error, otherwise returns data

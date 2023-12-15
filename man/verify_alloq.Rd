@@ -2,7 +2,7 @@
 % Please edit documentation in R/verify_alloq.R
 \name{verify_alloq}
 \alias{verify_alloq}
-\title{Verifies if ALLOQ values are available when AVALC data is present}
+\title{Verifies if ALLOQ values are missing when AVALC data is present}
 \usage{
 verify_alloq(
   data,
@@ -24,13 +24,13 @@ verify_alloq(
 
 \item{param_col}{PARAM variable}
 
-\item{expected_missing}{Character vector of AVALC data that are expected to have missing values in ALLOQ}
+\item{expected_missing}{Character vector of AVALC data that are expected to have missing values in ALLOQ.}
 }
 \value{
-Error message for ALLOQ rows with missing values
+Error message for data rows with missing values in ALLOQ.
 }
 \description{
-Checks if ALLOQ values are available when AVALC data is present
+Checks if ALLOQ values are missing when AVALC data is present.
 }
 \examples{
 df1<-data.frame(

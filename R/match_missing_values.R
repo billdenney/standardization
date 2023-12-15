@@ -1,36 +1,36 @@
-#' Rowwise comparison of columns between two data.frames (an extension of match_NA function)
+#' Compares output and source dataset columns and identifies data mismatches.
 #'
 #' @name match_missing_values
-#' @param data1 first data.frame
-#' @param data2 second data.frame
-#' @param ... specifies grouping variables used to arrange the data
-#' @description  rowwise comparison of missing values between data.frames to identify accidentally occurring missing values or to match two datasets for similarity
-#' @return for each pair of corresponding source and output columns a check column with true/false values is returned within a data.frame
+#' @param input Source dataset
+#' @param output Output dataset
+#' @param ... Specifies grouping variables used to arrange and align the two datasets.
+#' @description  Identifies mismatches between corresponding source and output dataset columns.
+#' @return Data.frame with TRUE or FALSE values to indicate matches and mismatches, respectively.
 #' @export
-#' @examples 
+#' @examples
 #'  match_values_1<-match_missing_values(input<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06",
-#'  "XYZ","2015-04-06T09:10",
+#'  "CDISK","2015-04-06T09:10",
 #'  "Cycle 1")),
 #'  output<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06T",
-#'  "XYZ dosing","2015-04-06 09:10",
+#'  "CDISK dosing","2015-04-06 09:10",
 #'  "Cycle 1")))
-match_missing_values<-function(data1,data2,...){
+match_missing_values<-function(input,output,...){
 
-  common_names <- intersect(names(data2),names(data1))
+  common_names <- intersect(names(output),names(input))
 
-  input_dat<-data1 %>% select(all_of(common_names)) %>%
+  input_dat<-input %>% select(all_of(common_names)) %>%
     group_by() %>% distinct() %>% arrange(...) %>% ungroup()
 
   input_colnames<-paste0(common_names,"_Input")
   colnames(input_dat)<-input_colnames
 
-  output_dat<- data2 %>% select(all_of(common_names)) %>%
+  output_dat<- output %>% select(all_of(common_names)) %>%
     group_by() %>% distinct() %>% arrange(...) %>% ungroup()
 
   output_colnames<-paste0(common_names,"_Output")
   colnames(output_dat)<-output_colnames
 
-  data_ret<- output_dat %>% cbind(input_dat) %>% mutate_all(~tolower(.)) 
+  data_ret<- output_dat %>% cbind(input_dat) %>% mutate_all(~tolower(.))
 
   outputnames_common<-common_names
 
@@ -62,8 +62,10 @@ match_missing_values<-function(data1,data2,...){
 
 
     check_ret<-data_ret %>% select_if(grepl("check",names(.))) %>% colnames()
-    ifelse(grepl("FALSE",data_ret[,check_ret]),warning(paste(check_ret,"has FALSE")),
-           list(NULL))
+
+    if(grepl("FALSE",data_ret[,check_ret])){
+      warning(paste(check_ret,"has FALSE"))}else{
+           list(NULL)}
 
   }
 

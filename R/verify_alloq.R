@@ -1,13 +1,13 @@
-#' Verifies if ALLOQ values are available when AVALC data is present
+#' Verifies if ALLOQ values are missing when AVALC data is present
 #'
 #' @param data Data.frame to be checked
 #' @param id_col STUDYID variable
 #' @param AVALC_col AVALC variable
 #' @param ALLOQ_col ALLOQ variable
 #' @param param_col PARAM variable
-#' @param expected_missing Character vector of AVALC data that are expected to have missing values in ALLOQ
-#' @description Checks if ALLOQ values are available when AVALC data is present
-#' @return Error message for ALLOQ rows with missing values
+#' @param expected_missing Character vector of AVALC data that are expected to have missing values in ALLOQ.
+#' @description Checks if ALLOQ values are missing when AVALC data is present.
+#' @return Error message for data rows with missing values in ALLOQ.
 #' @export
 #'
 #' @examples
@@ -33,9 +33,6 @@ verify_alloq<-function(data,id_col="STUDYID",AVALC_col="AVALC",ALLOQ_col="ALLOQ"
     select(all_of(cols)) %>%
     group_by(STUDYID,PARAM,AVALC,ALLOQ) %>%
     distinct() %>%
-    #ungroup() %>%
-    #filter(grepl("<[0-9]|< [0-9]|BLOQ|BLLOQ|BLQ|BQL",AVALC)) %>%
-    #rowwise() %>%
     mutate(check=case_when(
       .data[[AVALC_col]] ==.data[[ALLOQ_col]] ~"TRUE",
       is.na(.data[[AVALC_col]]) == is.na(.data[[ALLOQ_col]])~ "TRUE",

@@ -1,16 +1,22 @@
+
+specs<-import_list("../data-raw/specs.xlsx")
 test_that("check_derived_variables works", {
-  
+
   df<-data.frame(
     PARAM=c("Hemoglobin","Glucose"),
-    PARAMN=c(1,2),
-    STUDYID=c("S-CDSK-01","S-CDSK-02"),
-    STUDYIDN=c(1,2)
+    PARAMN=c(1,2)
   )
-  
-  check_derived_var<-check_derived_variables(df)
-  
-  expect_setequal(check_derived_var$PARAMN,2)
-  expect_setequal(check_derived_var$STUDYIDN,2)
-  expect_error(check_derived_variables(df),NA)
-  
+
+  expect_error(check_derived_variables(df,specs),NA)
+
+
+  df1<-data.frame(
+    STUDYID=c("CDISK-01","CDISK-01","CDISK-02","CDISK-02","CDISK-02"),
+    PARAM=c("Hemoglobin","Glucose","Hemoglobin","Glucose","glucose"),
+    PARAMN=c(1,2,1,2,3),
+    STUDYIDN=c(1,2,1,2,2)
+  )
+
+  expect_error(check_derived_variables(df1,specs),"assertr stopped execution")
+
 })

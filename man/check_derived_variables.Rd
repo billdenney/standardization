@@ -2,25 +2,31 @@
 % Please edit documentation in R/check_derived_variables.R
 \name{check_derived_variables}
 \alias{check_derived_variables}
-\title{Checks derived variables}
+\title{Checks if derived variable PARAMN and PARAM in output have equal number of elements in comparison to specifications to prevent duplicate parameter names}
 \usage{
-check_derived_variables(data)
+check_derived_variables(data, specs)
 }
 \arguments{
-\item{data}{is a data.frame with derived variables}
+\item{data}{Data.frame with derived variable PARAMN}
+
+\item{specs}{specifications file with 'Recode PARAM' sheet required}
 }
 \value{
-data.frame
+Data.frame with summary of number of unique elements in PARAM and PARAMN
 }
 \description{
-Checks derived variables
+Compares number of unique elements in PARAM and PARAMN in specification file with those in output data.frame
 }
 \examples{
 df<-data.frame(
-STUDYID=c("CDISK-01","CDISK-01","CDISK-02","CDISK-02"),
 PARAM=c("Hemoglobin","Glucose","Hemoglobin","Glucose"),
-PARAMN=c(1,2,1,2),
-STUDYIDN=c(1,2,1,2)
+PARAMN=c(1,2,1,2)
 )
-check_derived_variables(df)
+list1<-data.frame(
+PARAM=c("Hemoglobin","Glucose"),
+PARAMN=c(1,2)
+)
+specification<-list(list1)
+names(specification)<-"Recode PARAM"
+check_derived_variables(df,specification)
 }

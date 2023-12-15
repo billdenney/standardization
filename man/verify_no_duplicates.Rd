@@ -13,7 +13,7 @@ verify_no_duplicates(
 )
 }
 \arguments{
-\item{data}{The data to check}
+\item{data}{analysis-ready output dataset}
 
 \item{id_col, time_col, param_col}{Character scalars for the ID, TIME, and parameter name}
 
