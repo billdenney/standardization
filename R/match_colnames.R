@@ -1,12 +1,12 @@
 
-#' Matches for standard variable names and their variants, and selects applicable variables present in source dataset
+#' Selects SDTM column names or their name variants and renames them to preferred column name in the output.
 #'
 #' @name match_colnames
-#' @param data data.frame that serves as a source dataset
-#' @param file specifications file(list or .xlsx) that informs selection of variables
-#' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
-#' @description matches for standard column names and their variants present in specifications file, selects applicable variables present in source dataset, and creates empty columns for missing variables
-#' @return a data.frame with specified variables selected
+#' @param data A data.frame that serves as a source dataset.
+#' @param file Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables.
+#' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.
+#' @description Selects SDTM column names or their name variants and renames them to preferred column name in the output.
+#' @return A data.frame with specified variables selected and renamed to preferred name.
 #' @export
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
@@ -19,11 +19,15 @@
 #' names(specification)<-"Specification-Source Data"
 #' format_df<-match_colnames(df,file=specification,coltype="Demographics")
 match_colnames <- function(data, file, coltype) {
+
+  cols<-c("Specification.Source.Data.Column.Name", "Specification.Source.Data.Column.Name.Variants",
+          "Specification.Source.Data.Column.Type")
+
   d_specification <- file
   source_cols <-
     d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%
-   select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    select(all_of(cols)) %>%
     mutate(
       spec_names = Specification.Source.Data.Column.Name,
       spec_namevariants = Specification.Source.Data.Column.Name.Variants,
@@ -34,7 +38,7 @@ match_colnames <- function(data, file, coltype) {
     dplyr::pull()
 
   spec_names <- source_cols
-  source_data_names <- c(colnames(data))
+  source_data_names <- c(colnames(as.data.frame(data)))
 
   d_spec <- d_specification["Specification-Source Data"]
   spec_df <- as.data.frame(d_spec) %>%
@@ -84,7 +88,7 @@ match_colnames <- function(data, file, coltype) {
     NULL
   )
 
-  data_ret <- data %>% select(all_of(names_df))
+  data_ret <- as.data.frame(data) %>% select(all_of(names_df))
   colnames(data_ret) <- rename_df
   print(paste0(colnames(data_ret), " :present"))
 

@@ -2,28 +2,28 @@
 % Please edit documentation in R/match_missing_values.R
 \name{match_missing_values}
 \alias{match_missing_values}
-\title{Rowwise comparison of columns between two data.frames (an extension of match_NA function)}
+\title{Compares output and source dataset columns and identifies data mismatches.}
 \usage{
-match_missing_values(data1, data2, ...)
+match_missing_values(input, output, ...)
 }
 \arguments{
-\item{data1}{first data.frame}
+\item{input}{Source dataset}
 
-\item{data2}{second data.frame}
+\item{output}{Output dataset}
 
-\item{...}{specifies grouping variables used to arrange the data}
+\item{...}{Specifies grouping variables used to arrange and align the two datasets.}
 }
 \value{
-for each pair of corresponding source and output columns a check column with true/false values is returned within a data.frame
+Data.frame with TRUE or FALSE values to indicate matches and mismatches, respectively.
 }
 \description{
-rowwise comparison of missing values between data.frames to identify accidentally occurring missing values or to match two datasets for similarity
+Identifies mismatches between corresponding source and output dataset columns.
 }
 \examples{
  match_values_1<-match_missing_values(input<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06",
- "XYZ","2015-04-06T09:10",
+ "CDISK","2015-04-06T09:10",
  "Cycle 1")),
  output<-data.frame(col1=c(2,3,"NA","","<3.5","2015-04-06T",
- "XYZ dosing","2015-04-06 09:10",
+ "CDISK dosing","2015-04-06 09:10",
  "Cycle 1")))
 }

@@ -2,19 +2,19 @@
 % Please edit documentation in R/recode_ATPT.R
 \name{recode_ATPT}
 \alias{recode_ATPT}
-\title{Numeric recoding of ATPT variable}
+\title{Numeric re-coding of ATPT variable}
 \usage{
 recode_ATPT(data)
 }
 \arguments{
-\item{data}{a data.frame with ATPT variable for recoding}
+\item{data}{A data.frame with ATPT variable.}
 }
 \value{
-data.frame with ATPTN variable
+Data.frame with the addition of ATPTN variable
 }
 \description{
-Numeric recoding of ATPT variable
+Converts planned time point data in ATPT column to numeric format
 }
 \examples{
-recode_ATPT(data.frame(ATPT=c("Pre-dose","2 hrs postdose","drug A (2 hours before)","34")))
+recode_ATPT(data.frame(ATPT = c("Pre-dose", "2 hrs postdose", "drug A (2 hours before)", "34")))
 }

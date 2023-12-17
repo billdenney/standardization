@@ -2,22 +2,22 @@
 % Please edit documentation in R/match_colnames.R
 \name{match_colnames}
 \alias{match_colnames}
-\title{Matches for standard variable names and their variants, and selects applicable variables present in source dataset}
+\title{Selects SDTM column names or their name variants and renames them to preferred column name in the output}
 \usage{
 match_colnames(data, file, coltype)
 }
 \arguments{
-\item{data}{data.frame that serves as a source dataset}
+\item{data}{A data.frame that serves as a source dataset}
 
-\item{file}{specifications file(list or .xlsx) that informs selection of variables}
+\item{file}{Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables}
 
-\item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
+\item{coltype}{Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' variables}
 }
 \value{
-a data.frame with specified variables selected
+A data.frame with specified variables selected and renamed to preferred name
 }
 \description{
-matches for standard column names and their variants present in specifications file, selects applicable variables present in source dataset, and creates empty columns for missing variables
+Selects SDTM column names or their name variants and renames them to preferred column name in the output.
 }
 \examples{
 df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))

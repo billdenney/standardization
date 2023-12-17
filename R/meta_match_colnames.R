@@ -1,10 +1,10 @@
-#' Matches for variables based on metadata labels, and selects applicable variables present in source dataset
+#' Selects variables based on metadata labels and renames them to preferred column name in the output.
 #'
-#' @param data a data.frame that serves as source dataset
-#' @param file specifications file(list or .xlsx) that informs selection of variables
-#' @param coltype is column type specification for baseline, demog, measurement, or dosing variables
-#' @description matches for variables based on metadata labels, selects applicable variables present in source dataset, and creates empty columns for missing variables
-#' @return a data frame with specified variables selected
+#' @param data A data.frame that serves as source dataset.
+#' @param file 'Specifications' can be provided as list object in R or .xlsx file path, which informs selection of variables.
+#' @param coltype Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.
+#' @description Selects SDTM column names based on their metadata labels and renames them to preferred column name in the output.
+#' @return A data frame with specified variables selected and renamed to preferred name.
 #' @export
 #' @examples
 #' df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
@@ -26,10 +26,9 @@ meta_match_colnames <- function(data, file, coltype) {
   d_specification <- file
   source_cols <- d_specification["Specification-Source Data"] %>%
     as.data.frame() %>%
-    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Name.Variants, Specification.Source.Data.Column.Type) %>%
+    select(Specification.Source.Data.Column.Name, Specification.Source.Data.Column.Type) %>%
     mutate(
       spec_names = Specification.Source.Data.Column.Name,
-      spec_namevariants = Specification.Source.Data.Column.Name.Variants,
       col_type = Specification.Source.Data.Column.Type
     ) %>%
     filter(col_type %in% coltype) %>%
@@ -93,9 +92,12 @@ meta_match_colnames <- function(data, file, coltype) {
     distinct() %>%
     pull(final_name)
 
-  ifelse(!duplicated(rename_df) %in% TRUE, print(rename_df[duplicated(rename_df) | duplicated(rename_df, fromLast = TRUE)]),
+
+  if (any(!duplicated(rename_df) %in% TRUE) ) {
+    print(rename_df[duplicated(rename_df) | duplicated(rename_df, fromLast = TRUE)])
+  } else{
     NULL
-  )
+  }
 
   data_ret <- data %>% select(all_of(names_df))
   colnames(data_ret) <- rename_df
@@ -112,9 +114,8 @@ meta_match_colnames <- function(data, file, coltype) {
 
 utils::globalVariables(c(
   "Specification.Source.Data.Column.Name",
-  "Specification.Source.Data.Column.Name.Variants",
   "Specification.Source.Data.Column.Type",
-  "col_type", "spec_namevariants", "select_col", "final_name",
+  "col_type", "select_col", "final_name",
   ".",
   "Specification.Source.Data.Column.Name",
   "Specification.Source.Data.Labels",

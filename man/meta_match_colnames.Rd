@@ -2,22 +2,22 @@
 % Please edit documentation in R/meta_match_colnames.R
 \name{meta_match_colnames}
 \alias{meta_match_colnames}
-\title{Matches for variables based on metadata labels, and selects applicable variables present in source dataset}
+\title{Selects variables based on metadata labels and renames them to preferred column name in the output}
 \usage{
 meta_match_colnames(data, file, coltype)
 }
 \arguments{
-\item{data}{a data.frame that serves as source dataset}
+\item{data}{A data.frame that serves as source dataset}
 
-\item{file}{specifications file(list or .xlsx) that informs selection of variables}
+\item{file}{Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables}
 
-\item{coltype}{is column type specification for baseline, demog, measurement, or dosing variables}
+\item{coltype}{Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' variables}
 }
 \value{
-a data frame with specified variables selected
+A data frame with specified variables selected
 }
 \description{
-matches for variables based on metadata labels, selects applicable variables present in source dataset, and creates empty columns for missing variables
+Selects SDTM column names based on their metadata labels and renames them to preferred column name in the output.
 }
 \examples{
 df<-data.frame(STUDYID=rep("S-CDSK-01",3),DOMAIN=rep("YEARS",3),Age=c(72,66,78))
