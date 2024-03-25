@@ -1,5 +1,6 @@
 ---
 title: "Overview of Standardization functions"
+date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: yes
