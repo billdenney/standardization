@@ -50,7 +50,7 @@ The functions support domain-specific selection and renaming of variables, and t
 
 `match_colnames()` selects all variables that are specific to an SDTM domain. A 'specifications' list is used to inform the selection of existing variables from source datasets, which can be a list object or .xlsx file. 
 
-The function accepts the 'specifications' list with the required columns: 'Column Name,' 'Column Name Variants,' 'Column Type'. 'Column Name Variants' are user-specified alternative variable names.
+The function accepts the 'specifications' list with the required columns: 'Column Name,' 'Column Name Variants,' 'Column Type'. 'Column Name Variants' are user-specified alternative column names.
 
 
 The function performs the following actions:
