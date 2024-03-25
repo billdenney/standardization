@@ -2,20 +2,20 @@
 % Please edit documentation in R/check_derived_variables.R
 \name{check_derived_variables}
 \alias{check_derived_variables}
-\title{Checks if derived variable PARAMN and PARAM in output have equal number of elements in comparison to specifications to prevent duplicate parameter names}
+\title{Ensures no duplicate parameter names exist. Compares output dataset with specifications file for number of elements in columns PARAMN and PARAM.}
 \usage{
 check_derived_variables(data, specs)
 }
 \arguments{
-\item{data}{Data.frame with derived variable PARAMN}
+\item{data}{Data.frame with PARAM and PARAMN columns.}
 
-\item{specs}{specifications file with 'Recode PARAM' sheet required}
+\item{specs}{specifications file with 'Recode PARAM' sheet required.}
 }
 \value{
-Data.frame with summary of number of unique elements in PARAM and PARAMN
+Data.frame with number of unique elements in PARAM and PARAMN.
 }
 \description{
-Compares number of unique elements in PARAM and PARAMN in specification file with those in output data.frame
+Compares output dataset with specifications file for number of elements in columns PARAMN and PARAM.
 }
 \examples{
 df<-data.frame(

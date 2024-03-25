@@ -20,3 +20,5 @@
 
 ^data-raw$
 ^examples$
+^doc$
+^Meta$

@@ -2,20 +2,20 @@
 % Please edit documentation in R/check_units.R
 \name{check_units}
 \alias{check_units}
-\title{Checks for uniformity of units within a parameter name across multiple studies}
+\title{Checks for uniformity of units within a parameter name across multiple studies.}
 \usage{
 check_units(data, nstudies)
 }
 \arguments{
-\item{data}{Data.frame with STUDYID,USUBJID,PARAM,EXDOSEU,AVALU variables}
+\item{data}{Data.frame with STUDYID,USUBJID,PARAM,EXDOSEU,AVALU variables.}
 
-\item{nstudies}{Specifies number of studies}
+\item{nstudies}{Specifies number of studies.}
 }
 \value{
-Data.frame with summarized parameters and their respective units. Also returns a message for parameter names with multiple units.
+Data.frame with summarized parameters and their respective units. Also returns a message for parameter names with multiple or missing units.
 }
 \description{
-Checks for uniformity of units within a parameter name across multiple studies
+Checks for uniformity of units within a parameter name across multiple studies.
 }
 \examples{
 vignette(package="standardization",all=TRUE)

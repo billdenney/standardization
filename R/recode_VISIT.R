@@ -47,6 +47,7 @@ recode_VISIT <- function(data, cycle_length) {
         grepl("^[[:digit:]]+$", VISIT_ret)~VISIT_ret,
         str_detect(VISIT_ret, regex("^Week ([A-Z0-9]+)$|^Week[[:space:]]+([A-Z0-9]+)$|Week([A-Z0-9]+)$|^W[[:space:]]+([A-Z0-9]+)$|^W([A-Z0-9]+)$",ignore_case = T)) ~ str_extract(VISIT_ret, "(-?[0-9]+)$"),
         str_detect(VISIT_ret, regex("^Week ([A-Z0-9]+)|^Week[[:space:]]+([A-Z0-9]+)|^Week([A-Z0-9]+)|^W[[:space:]]+([A-Z0-9]+)|^W([A-Z0-9]+)",ignore_case = T)) ~ str_extract(VISIT_ret, "(-?[0-9]+)"),
+        str_detect(VISIT_ret, "-[0-9]+|[0-9]+") ~ as.character(VISIT_ret),
         TRUE ~ ""
       ),
       PERIODN_ret=PERIODN,
@@ -59,13 +60,9 @@ recode_VISIT <- function(data, cycle_length) {
         grepl("week|W",VISIT_ret,ignore.case = TRUE)~ VISITDY*7+1,
         TRUE ~ VISITDY
       ),
-      PERIODN=as.numeric(PERIODN)#,
-      #PERIOD=ifelse(grepl("Cycle 77",VISIT, ignore.case = TRUE),NA_character_,PERIOD),
-      #PERIODN=ifelse(grepl("Cycle 77",VISIT, ignore.case = TRUE),NA_integer_,PERIODN)
+      PERIODN=as.numeric(PERIODN)
     ) %>%
-    select(-PERIODN_ret,-VISIT_ret) #%>%
-     # mutate(
-     #   VISIT = na_if(VISIT, ""))
+    select(-PERIODN_ret,-VISIT_ret)
 
   recode_ret
 
