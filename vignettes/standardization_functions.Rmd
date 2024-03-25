@@ -1,0 +1,968 @@
+---
+title: "Overview of Standardization functions"
+output: 
+  rmarkdown::html_vignette:
+    toc: yes
+    toc_depth: 3
+
+vignette: >
+  %\VignetteIndexEntry{Overview of Standardization functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  
+  
+  <style type="text/css">
+  .table {width: 25%;}
+  </style>
+---
+  
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r setup}
+library(standardization)
+```
+
+
+# Introduction
+
+The standardization package aims to minimize repetitive operations and expedite data transformation steps involved in creation of NONMEM input datasets from ADaM/SDTM or raw source datasets. Based on their use at different stages of the data management process, they have been broadly categorized into source and derived data management, and verification functions. This index describes the usage of each function with examples.
+
+Note: Most functions in this package require CDISC SDTM and/or ADaM format as input. 
+
+
+
+# Source data management functions
+
+The functions support domain-specific selection and renaming of variables, and their conversion to the required class. Data at this stage are extracted with the intent of preserving the source data in its original form.
+
+
+### Select and rename variables
+
+
+#### Using column name variants
+
+`match_colnames()` selects all variables that are specific to an SDTM domain. A 'specifications' list is used to inform the selection of existing variables from source datasets, which can be a list object or .xlsx file. 
+
+The function accepts the 'specifications' list with the required columns: 'Column Name,' 'Column Name Variants,' 'Column Type'. 'Column Name Variants' are user-specified alternative variable names.
+
+
+The function performs the following actions:
+
++ Selects all domain-specific variables
+ 
+    + Specify `coltype` in `match_colnames()` to select domain-specific variables. 
+
++ Selects variables that are present either in 'Column Name' or 'Column Name Variants'
+
+    + Selects 'Column Name' if it is present and otherwise, it selects the next matching option from 'Column Name Variants'. For e.g., the function selects 'HEIGHT' if  present and otherwise, selects 'HEIGHT_BL' or 'Height_BL' in the specified order. 
+
++ Renames the selected 'Column Name Variants' with the preferred 'Column Name' in the output. 
+
+    + In the example below, 'HEIGHT_BL' has been replaced with 'HEIGHT' in the output.
+
++ Assigns the required 'Column Name' data to 'NA' in the output if absent in the source dataset.
+
+    + The notification ':Assigned to NA' indicates all variables are present in source data and none of the required variables have been set to NA. 
+
+    + In the example below, since 'WEIGHT' is not present in 'df', data is assigned to NA as indicated by the message 'WEIGHT:Assigned to NA'. 
+
+
+```{r}
+# Example
+df <- data.frame(STUDYID = rep("S-CDSK-01", 3), HEIGHT_BL = c(72, 66, 78))
+
+# specifications list
+list1 <- data.frame(
+  `Column Name` = c("WEIGHT", "HEIGHT"),
+  `Column Name Variants` = c("", "HEIGHT_BL,Height_BL"),
+  `Column Type` = "Baseline"
+)
+
+specification <- list(list1)
+# The function accepts "Specification-Source Data" as list element or file path.
+# If using a list then name the list element and if using .xlsx file then name the excel
+# sheet as "Specification-Source Data".
+names(specification) <- "Specification-Source Data"
+
+# Select columns
+# Add specifications as a list
+select_df <- match_colnames(df, file = specification, coltype = "Baseline")
+
+pander::pandoc.table(select_df)
+```
+
+$$\\[0.01in]$$
+Add 'specifications' as a file path.
+
+```{r}
+library(rio)
+specs <- import_list("../tests/data-raw/specs.xlsx") # Add specifications as a file path.
+
+select_df <- match_colnames(df, file = specs, coltype = "Baseline")
+```
+
+$$\\[0.01in]$$
+
+Example to illustrate the use of 'Column Name Variants' when required variable names differ across domains.
+
+```{r}
+df <- data.frame(STUDYID = rep("S-CDSK-01", 2), ATPT = c("Predose", "1 hr post dose"), DOMAIN = "PC")
+
+# specifications list
+list1 <- data.frame(
+  `Column Name` = c("ATPT"),
+  `Column Name Variants` = c("PCTPT,EXTPT"),
+  `Column Type` = "Dosing"
+)
+specification <- list(list1)
+names(specification) <- "Specification-Source Data"
+
+select_df <- match_colnames(df, file = specification, coltype = "Dosing") # Add specifications as a list
+
+pander::pandoc.table(select_df)
+```
+
+$$\\[0.01in]$$
+The function accepts list and tibble objects and returns a data.frame. 
+
+```{r, warning=FALSE, message=FALSE}
+library(dplyr)
+
+# Example data.frame
+df_list <- list(STUDYID = rep("S-CDSK-01", 3), DOMAIN = rep("YEARS", 3), `Column Name Variants` = c(72, 66, 78))
+df_tibble <- tibble(STUDYID = rep("S-CDSK-01", 3), DOMAIN = rep("YEARS", 3), `Column Name Variants` = c(72, 66, 78))
+
+# specifications list
+list1 <- data.frame(
+  `Column Name` = c("WEIGHT", "HEIGHT"),
+  `Column Name Variants` = c("WEIGHT_BL, Height_BL"),
+  `Column Type` = "Baseline"
+)
+
+specification <- list(list1)
+# Set the name of list element to "Specification-Source Data"
+# The function accepts "Specification-Source Data" as list element or an excel sheet.
+names(specification) <- "Specification-Source Data"
+
+select_list <- match_colnames(data = df_list, file = specification, coltype = "Baseline")
+class(select_list)
+
+select_tibble <- match_colnames(data = df_tibble, file = specification, coltype = "Baseline")
+class(select_tibble)
+```
+
+$$\\[0.01in]$$
+
+####  Using metadata labels
+
+Similar to `match_colnames`, `meta_match_colnames()` selects all variables that are specific to an SDTM domain and renames them with the preferred name in the output data.frame. Variables are selected based on metadata labels in source data that match with user-specified text entered in 'Labels' column.
+
+The function requires the 'specifications' list with the following columns: 'Column Name,' 'Labels', and 'Column Type'.  
+
+
+```{r}
+df <- data.frame(
+  STUDYID = rep("S-CDSK-01", 3),
+  USUBJID = paste0("CDSK-SUBJ-00", 1:3),
+  DOMAIN = rep("YEARS", 3),
+  Age = c(72, 66, 78)
+)
+
+list1 <- data.frame(
+  `Column Name` = c("STUDYID", "USUBJID", "AGE"),
+  Labels = c("Study Identifier", "Unique Subject Identifier", "Age"),
+  `Column Type` = "Demographics",
+  Format = c("Character", "Character", "Numeric")
+)
+
+# Assigning metadata labels to df
+labelled::var_label(df[, "STUDYID"]) <- "Study Identifier"
+labelled::var_label(df[, "USUBJID"]) <- "Unique Subject Identifier"
+labelled::var_label(df[, "Age"]) <- "Age"
+
+specification <- list(list1)
+names(specification) <- "Specification-Source Data"
+
+meta_df <- meta_match_colnames(df, file = specification, coltype = "Demographics")
+pander::pandoc.table(meta_df)
+```
+
+$$\\[0.01in]$$
+
+
+Add 'specifications' as a file path.
+
+```{r}
+library(rio)
+
+# Add specifications as a file path.
+specs <- import_list("../tests/data-raw/specs.xlsx")
+
+df <- data.frame(STUDYID = rep("S-CDSK-01", 3), USUBJID = paste0("CDSK-SUBJ-00", 1:3), Age = c(72, 66, 78))
+
+# Assigning metadata labels to source dataset df
+labelled::var_label(df[, "STUDYID"]) <- "Study Identifier"
+labelled::var_label(df[, "USUBJID"]) <- "Unique Subject Identifier"
+labelled::var_label(df[, "Age"]) <- "Age"
+
+meta_df <- meta_match_colnames(df, file = specs, coltype = c("Common", "Demographics"))
+pander::pandoc.table(meta_df)
+```
+$$\\[0.01in]$$
+
+## Convert to required format
+
+In sequence with `match_colnames()`, `match_format()` checks if variables are in specified numeric or character class and converts to the required class using the `Specifications` list. 
+
+
+The function requires the following columns: 'Column Name', 'Column Name Variants', 'Column Type' and 'Format'. Similar to `match_colnames()`, the function accepts list and tibble objects and returns a data.frame.
+
+
+```{r}
+df <- data.frame(
+  STUDYID = rep("S-CDSK-01", 3),
+  DOMAIN = rep("YEARS", 3),
+  USUBJID = paste0("CDISC01.10000", c(1:3)),
+  AGE = c("72", "66", "78"),
+  HEIGHT = c(72, 66, 78) # change height values
+) %>%
+  mutate(HEIGHT = as.integer(HEIGHT))
+
+# specifications list.
+list1 <- data.frame(
+  `Column Name` = c("AGE", "HEIGHT", "AGEU", "RACE", "ETHNIC"),
+  `Column Name Variants` = c("Age", "", "", "", ""),
+  `Column Type` = rep("Demographics", 5),
+  Format = c("Numeric", "Numeric", "Character", "Character", "Character")
+)
+
+specification <- list(list1)
+names(specification) <- "Specification-Source Data"
+
+# Converting format
+# Add specifications as a list.
+format_df <- match_format(df, file = specification, coltype = "Demographics")
+```
+
+$$\\[0.01in]$$
+```{r}
+# Add specifications as a file path.
+library(rio)
+specs <- import_list("../tests/data-raw/specs.xlsx")
+
+format_df <- match_format(df, file = specs, coltype = "Demographics")
+```
+
+$$\\[0.01in]$$
+Comparing input and output data.frames. 
+```{r}
+str(df)
+```
+
+```{r}
+str(format_df)
+```
+
+$$\\[0.01in]$$
+The example below illustrates the use of match_colnames(), followed by match_format() in sequence.
+
+```{r}
+# specifications list.
+list1 <- data.frame(
+  `Column Name` = c("WEIGHT", "HEIGHT", "BMI"),
+  `Column Name Variants` = c("WEIGHT_BL", "HT", ""),
+  `Column Type` = rep("Baseline", 3),
+  Format = c("Numeric", "Numeric", "Numeric")
+)
+
+specification <- list(list1)
+names(specification) <- "Specification-Source Data"
+
+df <- list(
+  STUDYID = rep("S-CDSK-01", 3),
+  DOMAIN = rep("YEARS", 3),
+  USUBJID = paste0("CDISC01.10000", c(1:3)),
+  WEIGHT_BL = c("70", "68", "78"),
+  HT = c("172", "166", "178")
+) %>%
+  dplyr::as_tibble() %>%
+  match_colnames(., file = specification, coltype = "Baseline") %>%
+  match_format(., file = specification, coltype = "Baseline")
+```
+
+$$\\[0.01in]$$
+
+## Detect duplicates
+
+Identify the presence of duplicate rows for specified grouping variables using `check_merge_output()`. 
+
+```{r}
+# Example without duplicate rows
+ex <- data.frame(
+  STUDYID = rep("S-CDSK-01", 4),
+  DOMAIN = rep("EX", 4),
+  USUBJID = c("CDISC01.001", "CDISC01.002", "CDISC01.003", "CDISC01.008"),
+  EXTRT = rep("THEOPHYLLINE", 4),
+  EXROUTE = rep("ORAL", 4),
+  EXDOSE = c(4.02, 4.4, 4.53, 4.53),
+  EXDOSU = rep("mg/kg", 4),
+  EXSTDTC = rep("29-04-2003", 4)
+)
+
+ae <- data.frame(
+  STUDYID = rep("S-CDSK-01", 3),
+  DOMAIN = rep("AE", 3),
+  USUBJID = c("CDISC01.008", "CDISC01.008", "CDISC01.001"),
+  AEDECOD = c("Agitation", "Anxiety", "Anxiety"),
+  AESTDTC = c("29-04-2002", "29-04-2001", "16-10-2003")
+)
+
+merge_df <- dplyr::full_join(ae, ex)
+
+# Specify study and grouping variables to check for duplicate rows within a study.
+check_merge_output(merge_df, study = "S-CDSK-01", USUBJID, AEDECOD, AESTDTC)
+```
+
+$$\\[0.01in]$$
+
+```{r}
+# Example with duplicate rows
+ex <- data.frame(
+  STUDYID = rep("S-CDSK-01", 5),
+  DOMAIN = rep("EX", 5),
+  USUBJID = c("CDISC01.001", "CDISC01.002", "CDISC01.002", "CDISC01.003", "CDISC01.008"),
+  EXTRT = rep("THEOPHYLLINE", 5),
+  EXROUTE = rep("ORAL", 5),
+  EXDOSE = c(4.02, 4.4, 4.4, 4.53, 4.53),
+  EXDOSU = rep("mg/kg", 5),
+  EXSTDTC = rep("29-04-2003", 5)
+)
+
+ae <- data.frame(
+  STUDYID = rep("S-CDSK-01", 3),
+  DOMAIN = rep("AE", 3),
+  USUBJID = c("CDISC01.008", "CDISC01.008", "CDISC01.001"),
+  AEDECOD = c("Agitation", "Anxiety", "Anxiety"),
+  AESTDTC = c("29-04-2002", "29-04-2001", "16-10-2003")
+)
+
+merge_df <- dplyr::full_join(ae, ex)
+
+check_merge_output(merge_df, study = "S-CDSK-01", USUBJID, AEDECOD, AESTDTC)
+```
+
+$$\\[0.01in]$$
+
+# Derived data management functions
+
+These functions support derived data management, which involves transformations to create analysis-ready datasets. Harmonization of data across multiple studies includes modifications to datetime columns, conversions to ensure units are uniform within a single parameter, and numeric extraction of planned time point name and visit data. 
+
+## Datetime conversions
+
+`date_time_format()` converts datetime to ISO 8601 format and replaces missing date and time elements with 'UN'. The conversion to ISO8601 is achieved using lubridate::format_ISO8601. The function accepts a datetime column in character as the minimum required dataset and returns a data.frame with transformed datetime column.
+
+
+Use of `date_time_format()` in the context of example data.frames:
+
+1. Accepted data classes include datetime column in character and POSIXct/POSIXt classes.
+
+```{r}
+# POSIXct and POSIXt
+pander::pandoc.table(date_time_format(data.frame(ADTC = as.POSIXct("2019-07-22 09:19:20")), "ADTC"))
+
+pander::pandoc.table(date_time_format(data.frame(ADTC = as.POSIXct("2019-07-2209:19:20")), "ADTC"))
+
+pander::pandoc.table(date_time_format(data.frame(ADTC = as.POSIXct("2019-07-22")), "ADTC"))
+
+pander::pandoc.table(date_time_format(data.frame(ADTC = c("2019-07-22")), "ADTC"))
+```
+
+$$\\[0.01in]$$
+If datetime pattern is present as `44866`, the following janitor functions can be used along with 'date_time_format': 'excel_numeric_to_date', 'convert_to_date', 'and convert_to_datetime'. 
+
+Below are some examples of how to handle numeric date and datetime using janitor functions with 'date_time_format'. 
+
+```{r, message=FALSE, warning=FALSE}
+library(janitor)
+library(lubridate)
+
+# numeric date in character format
+df1 <- data.frame(DATE = as.character("44866"), TIME = as.character("15:40"))
+
+pander::pandoc.table(df1 %>%
+  select(DATE, TIME) %>%
+  mutate(
+    date = format_ISO8601(janitor::excel_numeric_to_date(as.numeric(DATE))),
+    time = TIME,
+    ADTC = paste(date, time)
+  ) %>%
+  date_time_format("ADTC"))
+```
+
+$$\\[0.01in]$$
+
+2. Accepted format types:
+  * Handles datetime data with mixed format types.
+
+```{r}
+pander::pandoc.table(
+  date_time_format(
+    data.frame(ADTC = c(
+      "", NA,
+      "2019-07-22 09:19:20",
+      "2019-07-22T09:19:20",
+      "2019-07-2209:19:20",
+      "2019-07-22",
+      "2019-07",
+      "2019"
+    )), "ADTC"
+  )
+)
+```
+
+$$\\[0.01in]$$
+
+
+## Re-code analysis timepoint
+
+
+`recode_ATPT()` performs numeric re-coding of timepoint text in ATPT and applies below conversions to generate ATPTN variable.
+
+  * 'Predose' samples are converted to zero. 
+  * Planned time points in minutes or days are converted to hours. 
+
+Use of `recode_ATPT` in the context of example data.frames:
+
+```{r}
+# Example: ATPT data with text specifying 'post'
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 5)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:5))),
+  ATPT = c(
+    "Pre-dose", "PREDOSE", "4 mins", "2 hrs postdose", "1 day post dose"
+  )
+) %>%
+  recode_ATPT())
+
+# Example: ATPT data with text specifying 'before' or 'prior' or 'predose' with numeric value
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 4)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:4))),
+  ATPT = c(
+    "drug A (2 hours before dosing)", "2 hours prior dose", "2 hrs pre-dose", "4 mins before"
+  )
+) %>%
+  recode_ATPT())
+
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 4)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:4))),
+  ATPT = c("2.5 HRS", "2 HR", "2.5 hour", "2 hours")
+) %>%
+  recode_ATPT())
+```
+
+$$\\[0.01in]$$
+
+  * In the absence of text specifying 'min', 'hour', 'day' in source data, the function assumes numeric values represent hours.
+
+```{r}
+# Extracted values from ATPT column are assumed to be in hours
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 2)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:2))),
+  ATPT = c("34", "20")
+) %>%
+  recode_ATPT())
+```
+
+$$\\[0.01in]$$
+
+  * The function extracts the greater value where data is present as range. 
+
+```{r}
+# Example: ATPT data in range format
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 4)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:4))),
+  ATPT = c("-18 TO -14 HOURS", "-18 TO -24 hrs", "24 TO 14 HRS", "18 TO 24 HRS")
+) %>%
+  recode_ATPT())
+```
+
+$$\\[0.01in]$$
+
+## Re-code visit data
+
+`recode_VISIT()` extracts VISIT data and converts 'week' and 'cycle' data to number of days. The resulting data.frame includes derived variables:'VISITDY', 'PERIOD', and 'PERIODN'. 
+
+
+Use of `recode_VISIT` in the context of example data.frames:
+
+```{r}
+# Example with VISIT column with 'cycle' and 'period' data
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 3)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:3))),
+  VISIT = c("Cycle 1 Day 1", "cycle 2 day 2", "Period 10 day 2")
+) %>%
+  recode_VISIT(., cycle_length = 21))
+```
+
+
+```{r}
+# Example: 'week' data
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK-01", 7)),
+  USUBJID = c(paste0("CDISC01.10000", c(1:7))),
+  VISIT = c("week 10", "week 10", "week10", "W10", "w 10", "week  10", "w   10")
+) %>%
+  recode_VISIT(., cycle_length = 21))
+```
+
+
+```{r}
+# Example:'day' data
+pander::pandoc.table(data.frame(
+  STUDYID = c(rep("CDISK01", 8)),
+  USUBJID = c(paste0("CDISC01.10", c(1:8))),
+  VISIT = c(
+    "Days 1", "D1", "D 1", "day1", "day 1", "DAY 10",
+    "SAD Visit 8, Day 9", "MAD Visit 1, Baseline to Day 2"
+  )
+) %>%
+  recode_VISIT(., cycle_length = 21), split.table = Inf)
+```
+
+$$\\[0.01in]$$
+
+In the absence of text specifying 'day' or 'week' in VISIT data, the function assumes numeric values represent days.
+
+```{r}
+# Example with VISIT column with 'cycle' and 'period' data
+pander::pandoc.table(data.frame(
+  STUDYID = paste0("CDISK-01", 1:3),
+  USUBJID = paste0("CDISC01.10000", 1:3),
+  VISIT = c("10", "-1",-2)
+) %>%
+  recode_VISIT(., cycle_length = 21))
+```
+$$\\[0.01in]$$
+
+## Replace missing values
+
+Substitute missing values with specific pattern in multiple columns.
+
+```{r}
+# Convert all missing values to "U"
+df1 <- data.frame(RACE = c("African American", "", "American"), SEX = c("F", "M", NA_character_))
+
+columns <- c("RACE", "SEX")
+pander::pandoc.table(replace_na_blank(df1, columns, "U"))
+
+
+# Convert all "" to NA
+columns <- c("AENDTC", "ADTC", "REASEX")
+
+df2 <- data.frame(
+  STUDYID = c("CDISK-001"),
+  REASEX = c(NA, ""),
+  ADTC = c("2019-07-22T09:41:UN", ""),
+  AENDTC = c("2019-07-22T09:41:UN", "")
+)
+
+pander::pandoc.table(replace_na_blank(df2, columns = columns, NA_character_))
+```
+
+$$\\[0.01in]$$
+
+# Verification functions
+
+A string of functions that support the quality check process in detecting lack of uniformity in units across studies, presence of missing values, and presence of duplicate data rows in the analysis-ready dataset.
+
+
+
+## Compare source and output datasets
+
+Data extraction and transformation steps can lead to occurrence of unexpected missing values. Functions `match_na` and `match_missing_values` compare source and output data.frames to identify differences.
+
+### Identify unexpected missing values
+
+`match_na` compares the output dataset to the source dataset, and returns an error message for any mismatches in the total number of missing values. Returns a data.frame with sum of missing values in '_Input' and '_Output' variables.
+
+```{r, message = FALSE, warning = FALSE}
+# Create two data.frames for comparison
+pander::pandoc.table((match_NA(
+  source <- data.frame(col1 = c(2, 3, NA, "")),
+  output <- data.frame(col1 = c(2, 3, NA, ""))
+)))
+
+# Data rows appearing as ".", "", or NA are counted as missing values
+source <- data.frame(col1 = c(NA, ""))
+output <- data.frame(col1 = c(".", "."))
+
+match_NA(source, output)
+```
+
+$$\\[0.01in]$$
+
+The function requires that input and output datasets have an equal number of rows and common column names to enable row-wise comparison. When data transformation steps are involved in generating the output dataset, modifications might be necessary to align source and output data rows.
+
+```{r, message = FALSE, error = FALSE}
+# Create two data.frames for comparison
+source <- data.frame(col1 = c(2, 3, NA, ""))
+
+# Output data was transformed with "U" applied for missing values
+output <- data.frame(col1 = c(2, 3, "U", "."))
+
+match_NA(source, output)
+
+# modify source dataset to match output dataset
+source_mod <- source %>% mutate(col1 = case_when(
+  col1 %in% NA ~ "U",
+  TRUE ~ col1
+))
+
+match_NA(source_mod, output)
+```
+
+$$\\[0.01in]$$
+
+### Detect mismatches
+
+`match_missing_values` compares the output dataset to source dataset. The row-wise comparison of output and source dataset variables generates corresponding '_check' columns with TRUE or FALSE values to indicate matches and mismatches, respectively. In contrast to 'match_na', this function identifies mismatches that are not limited to missing values. 
+
+
+```{r, results='hide', message=FALSE}
+# Create two data.frames for comparison
+pander::pandoc.table(match_missing_values(
+  source <- data.frame(col1 = c(2, 3, NA, NA)),
+  output <- data.frame(col1 = c(2, 3, NA, NA))
+))
+match_missing_values(source, output)
+```
+
+$$\\[0.01in]$$
+```{r, results='hide', message=FALSE}
+# Create two data.frames for comparison
+source <- data.frame(col1 = c(2, 3, 1, 2))
+output <- data.frame(col1 = c(2, 4, 1, 2))
+
+match_missing_values(source, output)
+```
+
+$$\\[0.01in]$$
+
+
+## Check derived data
+
+### A. Nominal Time since First Dose (NTSFD)
+
+
+`verify_ntsfd()` function checks for missing values in the NTSFD for applied conditions. The minimum required dataset is a data.frame with STUDYID, USUBJID, VISIT, VISITDY, ATPTN, and NTSFD variables. The function returns an error message and a data.frame with missing values in NTSFD. 
+
+Use of `verify_ntsfd` in the context of example data.frames for the following scenarios:
+
+* VISITDY<0
+```{r}
+df_nom_time1 <-
+  data.frame(
+    STUDYID = "CDISK-01",
+    USUBJID = paste0("CDISC01.100001"),
+    ATPTN = c(NA_integer_),
+    VISIT = c("DAY -1"),
+    VISITDY = c(-1),
+    NTSFD = c(-24)
+  )
+
+pander::pandoc.table(df_nom_time1)
+
+verify_ntsfd(df_nom_time1, expected_missing = {})
+```
+$$\\[0.01in]$$
+```{r}
+df_nom_time2 <-
+  data.frame(
+    STUDYID = "CDISK-01",
+    USUBJID = paste0("CDISC01.100001"),
+    ATPTN = c(0),
+    VISIT = c("Day -1"),
+    VISITDY = c(-1),
+    NTSFD = c(-24)
+  )
+
+pander::pandoc.table(df_nom_time2)
+
+verify_ntsfd(df_nom_time2, expected_missing = {})
+```
+$$\\[0.01in]$$
+
+* VISITDY>0
+```{r}
+df_nom_time3 <-
+  data.frame(
+    STUDYID = "CDISK-01",
+    USUBJID = paste0("CDISC01.100001"),
+    ATPTN = c(NA_integer_),
+    VISIT = c("week 24"),
+    VISITDY = c(169),
+    NTSFD = c(4032)
+  )
+
+pander::pandoc.table(df_nom_time3)
+
+verify_ntsfd(df_nom_time3, expected_missing = {})
+```
+
+$$\\[0.01in]$$
+```{r}
+df_nom_time4 <-
+  data.frame(
+    STUDYID = "CDISK-01",
+    USUBJID = paste0("CDISC01.100001"),
+    ATPT = c("2 hours post-dose"),
+    ATPTN = c(2),
+    VISIT = c("Day 2"),
+    VISITDY = c(2),
+    NTSFD = c(26)
+  )
+
+pander::pandoc.table(df_nom_time4)
+
+verify_ntsfd(df_nom_time4, expected_missing = {})
+```
+$$\\[0.01in]$$
+
+Specify expected missing values in VISITDY
+
+* NTSFD is not expected to have missing values and will trigger an error message unless specified in 'expected_missing'. Specifying the VISIT term where missing VISITDY and NTSFD values are expected prevents the error message. 
+
+Note: VISITDY is always expected to have missing values when VISIT and ATPT data are missing. 
+
+```{r}
+df_nom_time8 <-
+  data.frame(
+    STUDYID = "CDISK-01",
+    USUBJID = "CDISC01.100001",
+    ATPTN = c(-1320),
+    VISIT = c("Unscheduled"),
+    VISITDY = c(NA_integer_),
+    NTSFD = c(NA_integer_)
+  )
+
+pander::pandoc.table(df_nom_time8)
+
+verify_ntsfd(df_nom_time8, expected_missing = "Unscheduled")
+```
+$$\\[0.01in]$$
+
+
+### B. AVALN and ALLOQ
+
+`verify_avaln` ensures missing AVALN values correspond to missing AVALC values. The function returns an error message unless the expected missing AVALN values for specified AVALC data, such as 'BLQ', are provided in the 'expected_missing' argument.
+
+```{r}
+library(standardization)
+df2 <- data.frame(
+  STUDYID = paste("CDISK_00", 1:7),
+  PARAM = c(rep("Hb", 3), rep("Glucose", 4)),
+  AVALC = c(20.3, 21.2, 22.5, 60.5, 55.7, "BLQ", "BQL"),
+  AVALN = c(20.3, 21.2, 22.5, 60.5, 55.7, NA_integer_, NA_integer_)
+)
+
+verify_avaln(df2, expected_missing = c("BLQ", "BQL"))
+```
+
+$$\\[0.01in]$$
+
+`verify_alloq()` checks if ALLOQ values are available when AVALC data is present. The function issues an error message for missing values, except when AVALC data having missing ALLOQ data is specified in the 'expected_missing' argument.
+
+
+```{r, warning=FALSE, error=FALSE}
+df1 <- data.frame(
+  STUDYID = paste("CDISK_00", 1:4),
+  PARAM = c(rep("PK", 4)),
+  AVALC = c("BLQ", "BLOQ", "BQL", NA),
+  ALLOQ = c(NA, NA, NA_integer_, NA)
+)
+verify_alloq(df1, expected_missing = c("BLQ", "BQL", "BLOQ"))
+
+df2 <- data.frame(
+  STUDYID = paste("CDISK_00", 1:4),
+  PARAM = c(rep("PK", 4)),
+  AVALC = c("BLQ", "BLOQ", "BQL", "N/R"),
+  ALLOQ = c(20, 20, 20, NA_integer_)
+)
+verify_alloq(df2, expected_missing = c("N/R"))
+
+# Example: when ALLOQ data is not available
+df3 <- data.frame(
+  STUDYID = paste("CDISK_00", 1:4),
+  PARAM = c(rep("PK", 4)),
+  AVALC = c("0.065", "0.091", "0.113", "0.064"),
+  ALLOQ = c(NA_integer_, NA_integer_, NA_integer_, NA_integer_)
+)
+
+list <- unique(df3$AVALC)
+verify_alloq(df3, expected_missing = list)
+```
+
+$$\\[0.01in]$$
+
+
+## Verify units are uniform
+
+`check_units()` compares units within a single parameter name across all studies and returns a message if parameter names with multiple units or missing units exist. This function requires STUDYID, USUBJID, PARAM, EXDOSE, EXDOSEU, AVALN, and AVALU variables. 
+
+
+Use of `check_units()` in the context of example data.frames:
+
+
+```{r}
+# Example: analysis-ready output dataset
+df1 <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-02", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-01"),
+  USUBJID = paste0("CDISC01.10000", c(1:6)),
+  PARAM = c("CDISK dosing", "CDISK dosing", "Hemoglobin", "Glucose", "Hemoglobin", "Glucose"),
+  EXDOSE = c("28", "28", NA, NA, NA, NA),
+  EXDOSEU = c("mg", "mg", NA, NA, NA, NA),
+  AVALN = c(NA, NA, 14, 80, 18, 100),
+  AVALU = c(NA, NA, "g/dl", "mmol/L", "g/dl", "mmol/L")
+)
+
+pander::pandoc.table(check_units(df1, nstudies = 2))
+```
+
+The function returns a message when units in AVALU and EXDOSEU are missing for AVALN and EXDOSE data, respectively.
+
+
+```{r}
+# Example: Lab data
+df2 <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-02", "CDISK-02", "CDISK-01"),
+  USUBJID = paste0("CDISC01.10000", c(1:4)),
+  PARAM = c("Hemoglobin", "Glucose", "Hemoglobin", "Glucose"),
+  AVALN = c(14, 90, 17, NA),
+  AVALU = c("g/dl", "mmol/L", "g/dl", NA)
+)
+
+pander::pandoc.table(check_units(df2, nstudies = 2))
+
+# Example: Lab data
+df2_missing <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-02", "CDISK-02", "CDISK-01"),
+  USUBJID = paste0("CDISC01.10000", c(1:4)),
+  PARAM = c("Hemoglobin", "Glucose", "Hemoglobin", "Glucose"),
+  AVALN = c(14, 90, 17, 100),
+  AVALU = c(NA, "mmol/L", "g/dl", "mmol/L")
+)
+
+pander::pandoc.table(check_units(df2_missing, nstudies = 2))
+```
+
+
+```{r}
+# Example: Dosing data
+df3 <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-02"),
+  USUBJID = paste0("CDISC01.10000", c(1:2)),
+  PARAM = c("CDISK dosing", "CDISK dosing"),
+  EXDOSE = c("28", "28"),
+  ECDOSEU = c("mg", "mg"),
+  EXDOSEU = c("mg", "mg")
+)
+
+pander::pandoc.table(check_units(df3, nstudies = 2))
+```
+
+$$\\[0.01in]$$
+
+```{r}
+# Example: dataset with parameters where units do not apply, e.g., score data
+df3 <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-01", "CDISK-01", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-02", "CDISK-02"),
+  USUBJID = paste0("CDISC01.10000", c(1:8)),
+  PARAM = c(
+    "CDISK dosing", "CDISK dosing", "NAFLD Activity Score", "NAFLD Activity Score",
+    "CDISK dosing", "CDISK dosing", "NAFLD Activity Score", "NAFLD Activity Score"
+  ),
+  ECDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
+  EXDOSEU = c("mg", "mg", NA, NA, "mg", "mg", NA, NA),
+  EXDOSE = c(28, 28, NA, NA, 50, 50, NA, NA),
+  AVALN = c(NA, NA, 3.9, 4, NA, NA, 5, NA),
+  AVALU = c(NA, NA, "score", "score", NA, NA, "score", NA)
+)
+
+pander::pandoc.table(check_units(df3, nstudies = 2))
+```
+
+
+$$\\[0.01in]$$
+
+## Verify parameter names are unique
+
+`check_derived_variables()` compares output dataset with specifications file for number of elements in ‘PARAMN’ and ‘PARAM’.
+
+```{r}
+# Add specifications as a file path
+specs <- import_list("../tests/data-raw/specs.xlsx")
+
+df <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-01", "CDISK-02", "CDISK-02"),
+  PARAM = c("Hemoglobin", "Glucose", "Hemoglobin", "Glucose"),
+  PARAMN = c(1, 2, 1, 2),
+  STUDYIDN = c(1, 2, 1, 2)
+)
+check_derived_variables(df, specs)
+
+# Add specifications as a list
+list1 <- data.frame(
+  PARAM = c("Hemoglobin", "Glucose"),
+  PARAMN = c(1, 2)
+)
+specification <- list(list1)
+names(specification) <- "Recode PARAM"
+check_derived_variables(df, specification)
+```
+
+$$\\[0.01in]$$
+
+
+```{r error=FALSE}
+# Example with duplicate parameter names
+df1 <- data.frame(
+  STUDYID = c("CDISK-01", "CDISK-01", "CDISK-02", "CDISK-02", "CDISK-02"),
+  PARAM = c("Hemoglobin", "Glucose", "Hemoglobin", "Glucose", "glucose"),
+  PARAMN = c(1, 2, 1, 2, 3),
+  STUDYIDN = c(1, 2, 1, 2, 2)
+)
+
+# To be run outside of rmarkdown file as it returns an error
+# check_derived_variables(df1,specs)
+```
+
+$$\\[0.01in]$$
+
+## Check for duplicate data rows
+
+`verify_no_duplicates` identifies the presence of duplicates in the analysis-ready output dataset.
+
+```{r}
+df <- data.frame(
+  USUBJID = c(rep("CDISC01.10001", 6)),
+  PARAM = c("pk", "pk", "dosing", "dosing", "dosing", "dosing"),
+  TSFD = c(2542.9, 25421.9, 3213, 2543, 2456, 3241),
+  VISIT = c("WEEK 16", "WEEK 16", "Week 3", "Week 4", "Week 5", "Week 6"),
+  ATPT = c(NA, NA, "0 hours", "0 hours", "0 hours", "0 hours"),
+  ADTC = c("2020-03-27T10:01:UN", NA, NA, NA, NA, NA)
+)
+
+verify_no_duplicates(data = df, expected = {})
+```
+$$\\[0.01in]$$
