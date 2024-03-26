@@ -113,7 +113,7 @@ $$\\[0.01in]$$
 Example to illustrate the use of 'Column Name Variants' when required variable names differ across domains.
 
 ```{r}
-df <- data.frame(STUDYID = rep("S-CDSK-01", 2), ATPT = c("Predose", "1 hr post dose"), DOMAIN = "PC")
+df <- data.frame(STUDYID = rep("S-CDSK-01", 2), PCTPT = c("Predose", "1 hr post dose"), DOMAIN = "PC")
 
 # specifications list
 list1 <- data.frame(
