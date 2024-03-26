@@ -7,15 +7,15 @@
 verify_ntsfd(data, expected_missing)
 }
 \arguments{
-\item{data}{Data.frame with STUDYID, USUBJID, VISIT, VISITDY, ATPTN, NTSFD variables}
+\item{data}{Data.frame with STUDYID, USUBJID, VISIT, VISITDY, ATPTN, NTSFD variables.}
 
-\item{expected_missing}{Specify VISIT data for which missing values are expected in NTSFD (e.g. "Unscheduled").}
+\item{expected_missing}{Specifies VISIT data for which missing values are expected in NTSFD (e.g. "Unscheduled").}
 }
 \value{
 Data.frame with data rows where NTSFD is missing.
 }
 \description{
-Verifies there are no missing values in NTSFD column
+Verifies there are no missing values in NTSFD column.
 }
 \examples{
 df1<-

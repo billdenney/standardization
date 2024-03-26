@@ -14,15 +14,15 @@ verify_alloq(
 )
 }
 \arguments{
-\item{data}{Data.frame to be checked}
+\item{data}{Data.frame to be checked.}
 
-\item{id_col}{STUDYID variable}
+\item{id_col}{STUDYID variable.}
 
-\item{AVALC_col}{AVALC variable}
+\item{AVALC_col}{AVALC variable.}
 
-\item{ALLOQ_col}{ALLOQ variable}
+\item{ALLOQ_col}{ALLOQ variable.}
 
-\item{param_col}{PARAM variable}
+\item{param_col}{PARAM variable.}
 
 \item{expected_missing}{Character vector of AVALC data that are expected to have missing values in ALLOQ.}
 }

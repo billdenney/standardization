@@ -2,7 +2,7 @@
 % Please edit documentation in R/verify_avaln.R
 \name{verify_avaln}
 \alias{verify_avaln}
-\title{checks if missing values in AVALN column correspond to missing values in AVALC column}
+\title{checks if missing values in AVALN column correspond to missing values in AVALC column.}
 \usage{
 verify_avaln(
   data,
@@ -14,23 +14,23 @@ verify_avaln(
 )
 }
 \arguments{
-\item{data}{Data.frame to be checked}
+\item{data}{Data.frame to be checked.}
 
-\item{id_col}{STUDYID variable}
+\item{id_col}{STUDYID variable.}
 
-\item{AVALC_col}{AVALC variable}
+\item{AVALC_col}{AVALC variable.}
 
-\item{AVALN_col}{AVALN variable}
+\item{AVALN_col}{AVALN variable.}
 
-\item{param_col}{PARAM variable}
+\item{param_col}{PARAM variable.}
 
-\item{expected_missing}{Character vector of AVALC data that are expected to have missing values in AVALN}
+\item{expected_missing}{Character vector of AVALC data that are expected to have missing values in AVALN.}
 }
 \value{
-Error message for AVALN rows with missing values
+Error message for AVALN rows with missing values.
 }
 \description{
-Verifies there are no missing values in AVALN when AVALC data is present unless specified in expected_missing
+Verifies there are no missing values in AVALN when AVALC data is present unless specified in expected_missing.
 }
 \examples{
 df2<-data.frame(

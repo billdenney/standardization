@@ -7,9 +7,9 @@
 match_missing_values(input, output, ...)
 }
 \arguments{
-\item{input}{Source dataset}
+\item{input}{Source dataset.}
 
-\item{output}{Output dataset}
+\item{output}{Output dataset.}
 
 \item{...}{Specifies grouping variables used to arrange and align the two datasets.}
 }

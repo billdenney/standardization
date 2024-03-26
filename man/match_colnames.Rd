@@ -2,19 +2,19 @@
 % Please edit documentation in R/match_colnames.R
 \name{match_colnames}
 \alias{match_colnames}
-\title{Selects SDTM column names or their name variants and renames them to preferred column name in the output}
+\title{Selects SDTM column names or their name variants and renames them to preferred column name in the output.}
 \usage{
 match_colnames(data, file, coltype)
 }
 \arguments{
-\item{data}{A data.frame that serves as a source dataset}
+\item{data}{A data.frame that serves as a source dataset.}
 
-\item{file}{Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables}
+\item{file}{Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables.}
 
-\item{coltype}{Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' variables}
+\item{coltype}{Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.}
 }
 \value{
-A data.frame with specified variables selected and renamed to preferred name
+A data.frame with specified variables selected and renamed to preferred name.
 }
 \description{
 Selects SDTM column names or their name variants and renames them to preferred column name in the output.

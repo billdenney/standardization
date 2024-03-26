@@ -2,7 +2,7 @@
 % Please edit documentation in R/verify_no_duplicates.R
 \name{verify_no_duplicates}
 \alias{verify_no_duplicates}
-\title{Verify that no unexpected duplicates are in the data}
+\title{Detects duplicate data rows in the output dataset.}
 \usage{
 verify_no_duplicates(
   data,
@@ -13,17 +13,17 @@ verify_no_duplicates(
 )
 }
 \arguments{
-\item{data}{analysis-ready output dataset}
+\item{data}{analysis-ready output dataset.}
 
-\item{id_col, time_col, param_col}{Character scalars for the ID, TIME, and parameter name}
+\item{id_col, time_col, param_col}{Character scalars for the ID, TIME, and parameter name.}
 
-\item{expected}{A list of expected duplicated values}
+\item{expected}{A list of expected duplicated values.}
 }
 \value{
-The \code{data} if there is unexpected duplication, raising an error, otherwise returns data
+The \code{data} if there is unexpected duplication, raising an error, otherwise returns data.
 }
 \description{
-Verify that no unexpected duplicates are in the data
+Detects duplicate data rows in the output dataset.
 }
 \examples{
 df_wo_dup<-data.frame(
@@ -33,7 +33,7 @@ TSFD=c(2542.9,25421.9,3213,2543,2456,3241),
 VISIT=c("WEEK 16","WEEK 16","Week 3","Week 4","Week 5","Week 6"),
 ATPT=c("","","0 hours","0 hours","0 hours","0 hours"),
 ADTC=c("2020-03-27T10:01:UN","","","","","")
-) 
- 
+)
+
 verify_no_duplicates(data=df_wo_dup)
 }

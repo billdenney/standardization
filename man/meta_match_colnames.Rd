@@ -2,19 +2,19 @@
 % Please edit documentation in R/meta_match_colnames.R
 \name{meta_match_colnames}
 \alias{meta_match_colnames}
-\title{Selects variables based on metadata labels and renames them to preferred column name in the output}
+\title{Selects variables based on metadata labels and renames them to preferred column name in the output.}
 \usage{
 meta_match_colnames(data, file, coltype)
 }
 \arguments{
-\item{data}{A data.frame that serves as source dataset}
+\item{data}{A data.frame that serves as source dataset.}
 
-\item{file}{Specifications can be provided as list object in R or .xlsx file path, which informs selection of variables}
+\item{file}{'Specifications' can be provided as list object in R or .xlsx file path, which informs selection of variables.}
 
-\item{coltype}{Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' variables}
+\item{coltype}{Column type specification: 'baseline', 'demog', 'measurement', or 'dosing' to select all related variables.}
 }
 \value{
-A data frame with specified variables selected
+A data frame with specified variables selected and renamed to preferred name.
 }
 \description{
 Selects SDTM column names based on their metadata labels and renames them to preferred column name in the output.

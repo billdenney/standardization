@@ -7,17 +7,17 @@
 check_merge_output(data, study, ...)
 }
 \arguments{
-\item{data}{Data.frame}
+\item{data}{Data.frame.}
 
-\item{study}{Specifies a study ID to check the data.frame for duplicate rows within the specified study}
+\item{study}{Specifies a study ID to check for duplicate rows within the specified study.}
 
-\item{...}{Specifies grouping variables}
+\item{...}{Specifies grouping variables.}
 }
 \value{
-Returns a message if duplicate rows are present in the data and prints duplicate rows
+Returns a message if duplicate rows are present in the data and prints duplicate rows.
 }
 \description{
-Checks for presence of duplicate data rows
+Checks for presence of duplicate data rows.
 }
 \examples{
 ex <- data.frame(

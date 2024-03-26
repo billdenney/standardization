@@ -2,20 +2,20 @@
 % Please edit documentation in R/recode_VISIT.R
 \name{recode_VISIT}
 \alias{recode_VISIT}
-\title{Numeric re-coding of VISIT variable}
+\title{Numeric re-coding of VISIT variable.}
 \usage{
 recode_VISIT(data, cycle_length)
 }
 \arguments{
 \item{data}{A data.frame containing VISIT variable.}
 
-\item{cycle_length}{A numeric vector specifying length of cycle for conversion of cycle data to days}
+\item{cycle_length}{A numeric vector specifying length of cycle for conversion of cycle data to days.}
 }
 \value{
-Data.frame with the addition of VISITDY variable
+Data.frame with the addition of VISITDY variable.
 }
 \description{
-Converts VISIT data to numeric format
+Converts VISIT data to numeric format.
 }
 \examples{
 recode_VISIT(data.frame(VISIT=c("Cycle 1 Day 1","cycle 2 day 2","week 10")),cycle_length = 21)
